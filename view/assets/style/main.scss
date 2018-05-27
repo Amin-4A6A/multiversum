@@ -4,4 +4,11 @@
 // import bootstrap
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
 
+// font awesome
+$fa-font-path: "/webfonts";
+@import "../../../node_modules/@fortawesome/fontawesome-free-webfonts/scss/fontawesome.scss";
+@import "../../../node_modules/@fortawesome/fontawesome-free-webfonts/scss/fa-solid.scss";
+@import "../../../node_modules/@fortawesome/fontawesome-free-webfonts/scss/fa-regular.scss";
+@import "../../../node_modules/@fortawesome/fontawesome-free-webfonts/scss/fa-brands.scss";
+
 @import "./global.scss";

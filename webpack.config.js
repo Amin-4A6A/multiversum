@@ -19,6 +19,16 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                 }
+            },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        name: 'webfonts/[name].[ext]',
+                        context: ''
+                    }
+                }
             }
         ]
     },
