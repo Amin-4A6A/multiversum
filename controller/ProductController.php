@@ -7,7 +7,7 @@ class ProductController extends Controller {
         
         switch ($_GET["op"] ?? false) {
             default:
-                $this->render("layout/app.twig");
+                $this->render("home.twig");
                 break;
         }
 
