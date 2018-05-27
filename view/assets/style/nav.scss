@@ -3,12 +3,11 @@
     border-bottom: 2px solid #e5e5e5;
     display: block;
 }
-.logo, img {
-  width: 100px
+.logo{
+    width: 100px;
 }
 @media (min-width: 768px){
  .nav-link {
       padding-right: 1.5rem;
   }
-
 }
