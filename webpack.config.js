@@ -1,4 +1,5 @@
 // webpack.config.js
+require("dotenv").config();
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
@@ -25,9 +26,9 @@ module.exports = {
         new BrowserSyncPlugin({
             // browse to http://localhost:3000/ during development,
             // ./public directory is being served
-            host: 'localhost',
-            port: 3000,
-            proxy: "localhost",
+            host: process.env.host,
+            port: process.env.port,
+            proxy: process.env.proxy,
             files: [
                 "public/bundle/*.*",
                 "view/**/*.twig"
