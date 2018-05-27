@@ -6,3 +6,9 @@
 .logo, img {
   width: 100px
 }
+@media (min-width: 768px){
+ .nav-link {
+      padding-right: 1.5rem;
+  }
+
+}
