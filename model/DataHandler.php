@@ -35,7 +35,7 @@ class DataHandler {
         return $this->pdo->lastInsertId();
     }
 
-    public function readData($sql, $bindings = [], $multiple = true, $pagination = false) {
+    public function readData(string $sql, array $bindings = [], bool $multiple = true, int $pagination = 0) {
 
         $sql = $sql
                 . ($pagination ? " LIMIT $pagination OFFSET " . (intval(($_REQUEST["page"] ?? 0)) * $pagination ?? 0) : "");
@@ -53,18 +53,18 @@ class DataHandler {
         
     }
 
-    public function updateData($sql, $bindings = []) {
+    public function updateData(string $sql, array $bindings = []) {
         $sth = $this->pdo->prepare($sql);
         $sth->execute($bindings);
         return $this->pdo->lastInsertId();        
     }
 
-    public function deleteData($sql, $bindings = []) {
+    public function deleteData(string $sql, array $bindings = []) {
         $sth = $this->pdo->prepare($sql);
         return $sth->execute($bindings);
     }
 
-    public function exportToCSV($data) {
+    public function exportToCSV(array $data) {
 
         function addQuotes($val) {
             return "\"$val\"";
@@ -83,7 +83,7 @@ class DataHandler {
         echo $csv;
     }
 
-    public function pagination($pagination) {
+    public function pagination(int $pagination) {
 
         // remove "body" from select prev query
         $sql = preg_split("/(?s)(?<=SELECT).*?(?=FROM)/", $this->lastSelect["sql"]);
@@ -106,7 +106,7 @@ class DataHandler {
 
     }
 
-    public function showError($error) {
+    public function showError(string $error) {
         echo $error;
     }
 
