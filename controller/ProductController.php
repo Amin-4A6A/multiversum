@@ -12,7 +12,7 @@ class ProductController extends Controller {
 
 
     public function handleRequest() {
-        
+
         switch ($_GET["op"] ?? false) {
 
             case "test":
@@ -20,6 +20,15 @@ class ProductController extends Controller {
                 var_dump($this->product->readProduct(1));
                 break;
 
+            case 'home':
+                $this->render("home.twig");
+                break;
+            case 'contact':
+                $this->render("contact.twig");
+                break;
+            case 'overview':
+                $this->render("overview.twig");
+                break;
             default:
                 $this->render("home.twig");
                 break;
