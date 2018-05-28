@@ -7,6 +7,9 @@ class ProductController extends Controller {
 
         switch ($_GET["op"] ?? false) {
 
+          case 'home':
+              $this->render("home.twig");
+            break;
           case 'contact':
               $this->render("contact.twig");
             break;
