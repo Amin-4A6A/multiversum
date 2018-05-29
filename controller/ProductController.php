@@ -26,6 +26,9 @@ class ProductController extends Controller {
             case 'home':
                 $this->render("home.twig");
                 break;
+            case 'detail':
+                $this->render("product/detail.twig");
+                break;
             case 'contact':
                 $this->render("contact.twig");
                 break;
