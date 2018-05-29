@@ -60,7 +60,7 @@ class HTMLElements {
         return array_keys($keys) !== $keys;
     }
 
-    public static function generateForm($fields, $action = "", $method = "post", $class = "") {
+    public static function generateForm(array $fields, string $action = "", string $method = "post", string $class = "", string $buttonText) {
 
         $inputs = "";
 
@@ -76,6 +76,10 @@ class HTMLElements {
 
                 $pieces = preg_split("/\W+/", $value["Type"]);
 
+                if($value["Null"] === "NO") {
+                    $attribs[] = "required";
+                }
+
                 switch ($pieces[0]) {
                     case 'int':
                         $type = "number";
@@ -88,6 +92,16 @@ class HTMLElements {
                         $type = "text";
                         $attribs[] = "maxLength=\"$pieces[1]\"";
                         break;
+                    case 'text':
+                        $type = "textarea";
+                        break;
+                    case 'tinyint':
+                        if(intval($pieces[1]) > 1) {
+                            $type = "number";
+                        } else {
+                            $type = "checkbox";
+                        }
+                        break;
                 }
 
                 switch($pieces[2] ?? "") {
@@ -98,13 +112,20 @@ class HTMLElements {
 
                 $attribs[] = "type=\"$type\"";
 
-                if($pieces[0] == "text") {
+                if($type == "textarea") {
                     // $form .= "<textarea placeholder=\"$title\" name=\"$value[Field]\"></textarea>";
                     // textarea($value["Field"], $title, ($value["value"] ?? ""), implode(" ", $attribs));
                     $inputs .= "
                     <div class=\"form-group\">
                         <label for=\"$name\">$title</label>
                         <textarea id=\"$name\" class=\"form-control\" placeholder=\"$title\" name=\"$name\">$val</textarea>
+                    </div>
+                    ";
+                } else if($type == "checkbox") {
+                    $inputs .= "
+                    <div class=\"form-group form-check\">
+                        <input id=\"$name\" class=\"form-check-input\" placeholder=\"$title\" name=\"$name\" ".implode(" ", $attribs)." value=\"$val\">
+                        <label class=\"form-check-label\" for=\"$name\">$title</label>
                     </div>
                     ";
                 } else {
@@ -123,7 +144,7 @@ class HTMLElements {
 
         $inputs .= "
         <div class=\"form-group\">
-            <input value=\"".ucfirst($_GET["op"])."\" type=\"submit\" name=\"$name\" class=\"btn btn-primary\">
+            <input value=\"".ucfirst($buttonText)."\" type=\"submit\" name=\"$name\" class=\"btn btn-primary\">
         </div>
         ";
 

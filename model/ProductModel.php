@@ -7,7 +7,7 @@ require "DataHandler.php";
  * 
  * @category   Model
  * @author     Leon in 't Veld <leon3110l@gmail.com>
- * @author     Amin Zammou
+ * @author     Amin Zammou <aminzammou@hotmail.com>
  */
 class ProductModel {
 
@@ -43,6 +43,8 @@ class ProductModel {
      * @param string (optional) $color the color of the product
      * @param string (optional) $platform the platform of the product
      * @param float (optional) $discount the discount of the product
+     * 
+     * @return string $EAN product EAN
      */
     public function createProduct(string $EAN,
                                   string $name,
@@ -111,6 +113,17 @@ class ProductModel {
             [":EAN" => $EAN],
             false,
             false
+        );
+    }
+
+    /**
+     * returns the describe data from the table
+     *
+     * @return array an array with the table info
+     */
+    public function describeTable() {
+        return $this->dataHandler->readData(
+            "DESCRIBE `product`"
         );
     }
 
