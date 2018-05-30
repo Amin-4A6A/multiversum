@@ -8,5 +8,9 @@
 
 {% block body %}
 {% include "partials/head.twig" %}
-<!-- <i class="fas fa-camera-retro"></i> -->
+{{ parent() }}
+{% endblock %}
+
+{% block content %}
+{% include "partials/cards.twig" %}
 {% endblock %}
