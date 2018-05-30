@@ -2,5 +2,118 @@
 
 {% block content %}
     <h1 class="mb-5">Product toevoegen</h1>
-    {{ form|raw }}
+    
+    <form class="form" action="/product/create" method="POST" enctype="multipart/form-data">
+        
+        <div class="form-group">
+            <label for="EAN">EAN code</label>
+            <input id="EAN" class="form-control" placeholder="EAN" name="EAN" required maxLength="13" type="text" value="">
+        </div>
+        
+        <div class="form-row form-group">
+            <div class="col">
+                <label for="name">Naam</label>
+                <input id="name" class="form-control" placeholder="Naam" name="name" required maxLength="255" type="text" value="">
+            </div>
+            <div class="col">
+                <label for="brand">Merk</label>
+                <input id="brand" class="form-control" placeholder="Merk" name="brand" required maxLength="255" type="text" value="">
+            </div>
+        </div>
+        
+        <div class="form-row form-group">
+            <div class="col">
+                <label for="price">Prijs</label>
+                <input id="price" class="form-control" placeholder="Prijs" name="price" required step="0.01" type="number" value="">
+            </div>
+            <div class="col">
+                <label for="discount">Korting</label>
+                <input id="discount" class="form-control" placeholder="Korting" name="discount" step="0.01" type="number" value="">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="description">Beschrijving</label>
+            <textarea id="description" class="form-control" placeholder="Beschrijving" name="description"></textarea>
+        </div>
+        
+        
+        <div class="form-group">
+            <label for="resolution-width">Resolutie</label>
+            <div class="form-row">
+                <div class="col">
+                    <input id="resolution-width" class="form-control" placeholder="Breedte" name="resolution_width" type="number" value="">
+                </div>
+                <div class="col">
+                    <input id="resolution-height" class="form-control" placeholder="Hoogte" name="resolution_height" type="number" value="">
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-row form-group">
+            <div class="col">
+                <label for="refresh_rate">Refresh rate</label>
+                <input id="refresh_rate" class="form-control" placeholder="Refresh rate" name="refresh_rate" type="number" value="">
+            </div>
+            
+            <div class="col">
+                <label for="fov">Gezichtsveld</label>
+                <input id="fov" class="form-control" placeholder="Gezichtsveld" name="fov" type="number" value="">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="inputs">Aansluitingen</label>
+            <textarea id="inputs" class="form-control" placeholder="Aansluitingen" name="inputs"></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="accessories">Accessoires</label>
+            <textarea id="accessories" class="form-control" placeholder="Accessoires" name="accessories"></textarea>
+        </div>
+
+        <div class="form-row form-group">
+            <div class="col">
+                <label for="color">Kleur</label>
+                <input id="color" class="form-control" placeholder="Kleur" name="color" maxLength="45" type="text" value="">
+            </div>
+            
+            <div class="col">
+                <label for="platform">Platform</label>
+                <input id="platform" class="form-control" placeholder="Platform" name="platform" maxLength="255" type="text" value="">
+            </div>
+        </div>
+        
+        <div class="form-group form-check">
+            <input id="accelerometer" class="form-check-input" name="accelerometer" type="checkbox" value="">
+            <label class="form-check-label" for="accelerometer">Accelerometer</label>
+        </div>
+        
+        <div class="form-group form-check">
+            <input id="camera" class="form-check-input" name="camera" type="checkbox" value="">
+            <label class="form-check-label" for="camera">Camera</label>
+        </div>
+        
+        <div class="form-group form-check">
+            <input id="gyroscope" class="form-check-input" name="gyroscope" type="checkbox" value="">
+            <label class="form-check-label" for="gyroscope">Gyroscope</label>
+        </div>
+        
+        <div class="form-group form-check">
+            <input id="adjustable_lenses" class="form-check-input" name="adjustable_lenses" type="checkbox" value="">
+            <label class="form-check-label" for="adjustable_lenses">Verstelbare lenzen</label>
+        </div>
+
+        <div class="form-group">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile" name="product_images[]" multiple accept="image/*" lang="nl">
+                <label class="custom-file-label" for="customFile">Upload afbeeldingen</label>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <input value="Product toevoegen" type="submit" name="submit" class="btn btn-primary">
+        </div>
+        
+    </form>
 {% endblock %}

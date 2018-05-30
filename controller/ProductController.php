@@ -1,6 +1,7 @@
 <?php
 require "Controller.php";
 require "../model/ProductModel.php";
+require "../model/ImageModel.php";
 require "../model/HTMLElements.php";
 
 class ProductController extends Controller {
@@ -9,8 +10,8 @@ class ProductController extends Controller {
 
     public function __construct() {
         $this->product = new ProductModel();
+        $this->image = new ImageModel();
     }
-
 
     public function handleRequest() {
 
@@ -53,8 +54,8 @@ class ProductController extends Controller {
 
             $form = HTMLElements::generateForm(
                 $this->product->describeTable(),
-                "POST",
                 "/product/create",
+                "POST",
                 "form",
                 "product toevoegen"
             );
@@ -63,25 +64,32 @@ class ProductController extends Controller {
 
         } else {
 
+            
+            $EAN = filter_var($_POST["EAN"], FILTER_SANITIZE_STRING);
+            
             $this->product->createProduct(
-                filter_var($_POST["EAN"], FILTER_SANITIZE_STRING),
+                $EAN,
                 filter_var($_POST["name"], FILTER_SANITIZE_STRING),
                 filter_var($_POST["brand"], FILTER_SANITIZE_STRING),
-                filter_var($_POST["price"], FILTER_SANITIZE_NUMBER_FLOAT),
+                floatval(filter_var($_POST["price"], FILTER_SANITIZE_NUMBER_FLOAT)),
                 filter_var($_POST["description"], FILTER_SANITIZE_STRING),
-                filter_var($_POST["resolution"], FILTER_SANITIZE_STRING),
-                filter_var($_POST["refresh_rate"], FILTER_SANITIZE_NUMBER_INT),
-                filter_var($_POST["fov"], FILTER_SANITIZE_NUMBER_INT),
+                filter_var($_POST["resolution_width"]."x".$_POST["resolution_height"], FILTER_SANITIZE_STRING),
+                intval(filter_var($_POST["refresh_rate"], FILTER_SANITIZE_NUMBER_INT)),
+                intval(filter_var($_POST["fov"], FILTER_SANITIZE_NUMBER_INT)),
                 filter_var($_POST["inputs"], FILTER_SANITIZE_STRING),
                 filter_var($_POST["accessories"], FILTER_SANITIZE_STRING),
-                $_POST["accelerometer"] == "ON",
-                $_POST["camera"] == "ON",
-                $_POST["gyroscope"] == "ON",
-                $_POST["adjusable_lenses"] == "ON",
+                isset($_POST["accelerometer"]),
+                isset($_POST["camera"]),
+                isset($_POST["gyroscope"]),
+                isset($_POST["adjustable_lenses"]),
                 filter_var($_POST["color"], FILTER_SANITIZE_STRING),
                 filter_var($_POST["platform"], FILTER_SANITIZE_STRING),
-                filter_var($_POST["discount"], FILTER_SANITIZE_NUMBER_FLOAT)
+                floatval(filter_var($_POST["discount"], FILTER_SANITIZE_NUMBER_FLOAT))
             );
+
+            $this->image->createImagesUpload($_FILES["product_images"], $EAN);
+
+            $this->redirect("/product/read/$EAN");
 
         }
 
