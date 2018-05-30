@@ -1,6 +1,5 @@
 <?php
-require "DataHandler.php";
-
+require_once "DataHandler.php";
 
 /**
  * The model of product
@@ -59,11 +58,11 @@ class ProductModel {
                                   bool $accelerometer = null,
                                   bool $camera = null,
                                   bool $gyroscope = null,
-                                  bool $adjusable_lenses = null,
+                                  bool $adjustable_lenses = null,
                                   string $color = null,
                                   string $platform = null,
                                   float $discount = null) {
-        return $this->dataHandler->createProducts(
+        return $this->dataHandler->createData(
             "INSERT INTO `product`(`EAN`, `name`, `brand`, `price`, `description`, `resolution`, `refresh_rate`, `fov`, `inputs`, `accessories`, `accelerometer`, `camera`, `gyroscope`, `adjustable_lenses`, `color`, `platform`, `discount`)
                            VALUES (:EAN, :name, :brand, :price, :description, :resolution, :refresh_rate, :fov, :inputs, :accessories, :accelerometer, :camera, :gyroscope, :adjustable_lenses, :color, :platform, :discount)",
             [

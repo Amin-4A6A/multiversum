@@ -90,7 +90,7 @@ class DataHandler {
      *
      * @param string $sql the sql query
      * @param array (optional) $bindings the bindings used in the query
-     * @return mixed last insert id
+     * @return int last insert id
      */
     public function createData(string $sql, array $bindings = []) {
         $sth = $this->pdo->prepare($sql);
@@ -130,7 +130,7 @@ class DataHandler {
      *
      * @param string $sql the sql query
      * @param array $bindings (optional) the bindings for the query
-     * @return mixed last insert id
+     * @return int last insert id
      */
     public function updateData(string $sql, array $bindings = []) {
         $sth = $this->pdo->prepare($sql);

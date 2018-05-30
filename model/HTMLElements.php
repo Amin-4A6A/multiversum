@@ -63,10 +63,10 @@ class HTMLElements {
     public static function generateForm(array $fields, string $action = "", string $method = "post", string $class = "", string $buttonText) {
 
         $inputs = "";
-
+        
         foreach ($fields as $key => $value) {
 
-            if($value["Key"] != "PRI" || $value["Extra"] != "auto_increment") {
+            if($value["Extra"] != "auto_increment") {
 
                 $type = "text";
                 $title = ucfirst(str_replace("_", " ", $value["Field"]));
@@ -144,7 +144,7 @@ class HTMLElements {
 
         $inputs .= "
         <div class=\"form-group\">
-            <input value=\"".ucfirst($buttonText)."\" type=\"submit\" name=\"$name\" class=\"btn btn-primary\">
+            <input value=\"".ucfirst($buttonText)."\" type=\"submit\" name=\"submit\" class=\"btn btn-primary\">
         </div>
         ";
 
