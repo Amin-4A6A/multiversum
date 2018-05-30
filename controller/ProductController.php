@@ -33,7 +33,7 @@ class ProductController extends Controller {
                 $this->render("contact.twig");
                 break;
             case 'overview':
-                $this->render("overview.twig");
+                $this->render("product/overview.twig");
                 break;
             default:
                 $this->render("home.twig");
@@ -58,7 +58,7 @@ class ProductController extends Controller {
                 "form",
                 "product toevoegen"
             );
-    
+
             $this->render("product/create.twig", compact("form"));
 
         } else {
