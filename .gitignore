@@ -3,3 +3,4 @@ vendor/
 public/bundle
 .env
 sql/*.bak
+public/images/product
