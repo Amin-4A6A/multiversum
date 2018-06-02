@@ -24,6 +24,9 @@ class ProductController extends Controller {
             case "create":
                 $this->collectCreateProduct();
                 break;
+            case "read":
+                $this->collectReadProduct();
+                break;
             case 'home':
                 $this->render("home.twig");
                 break;
@@ -64,9 +67,9 @@ class ProductController extends Controller {
 
         } else {
 
-            
+
             $EAN = filter_var($_POST["EAN"], FILTER_SANITIZE_STRING);
-            
+
             $this->product->createProduct(
                 $EAN,
                 filter_var($_POST["name"], FILTER_SANITIZE_STRING),
@@ -94,5 +97,10 @@ class ProductController extends Controller {
         }
 
     }
+      public function collectReadProduct() {
+        $array = ["key" => ""]
+        $table = HTMLElements::tableSpec($array);
+          $this->render("product/detail.twig", compact("table"));
+      }
 
 }

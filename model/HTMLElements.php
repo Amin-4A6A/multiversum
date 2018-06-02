@@ -3,7 +3,7 @@
 class HTMLElements {
 
     public static function table($array, $tableClass = "") {
-        
+
         if(is_object($array)) {
             $array = (array) $array;
         }
@@ -17,7 +17,7 @@ class HTMLElements {
         if(static::is_assoc($array)) {
             $array = [$array];
         }
-        
+
         if(!is_array($array)) {
             throw new Exception("variable is not an array/object");
         }
@@ -25,7 +25,7 @@ class HTMLElements {
         $output = "";
         $output .= "<table class='$tableClass'>";
         $output .= "<thead>";
-    
+
         if(isset($array[0])) {
             $output .= "<tr>";
             foreach (array_keys($array[0]) as $key => $value) {
@@ -33,10 +33,10 @@ class HTMLElements {
             }
             $output .= "</tr>";
         }
-    
+
         $output .= "</thead>";
         $output .= "<tbody>";
-    
+
         foreach ($array as $key => $value) {
             $output .= "<tr>";
             foreach ($value as $key => $value) {
@@ -44,11 +44,61 @@ class HTMLElements {
             }
             $output .= "</tr>";
         }
-    
+
         $output .= "</tbody>";
         $output .= "</table>";
-    
+
         return $output;
+    }
+
+    public static function tableSpec($array) {
+
+        if(is_object($array)) {
+            $array = (array) $array;
+        }
+
+        if(isset($array[0]) && is_object($array[0])) {
+            foreach ($array as $key => $value) {
+                $array[$key] = (array) $value;
+            }
+        }
+
+        if(static::is_assoc($array)) {
+            $array = [$array];
+        }
+
+        if(!is_array($array)) {
+            throw new Exception("variable is not an array/object");
+        }
+
+        $table = "";
+        $table .= "<div class='row'>";
+
+      $table .= "<div class='spec-card mt-5'>
+            <div class='card mt-5>
+        <div class='card-header'>
+          <!-- Specificaties : -->
+            <h4>  Specificaties :</h4>
+        </div>
+        <div class='card-body'>
+
+
+            <table class='table'>";
+              foreach ($array as $k => $v) {
+              $table .= "<tr>
+                <th>$k</th>
+                <td>$v</td>
+              </tr>";
+            }
+      $table .= "
+            </table>
+
+            </div>
+          </div>
+          </div>";
+      $table .= "</div>";
+
+      return $table;
     }
 
     public static function is_assoc(array $array) {
@@ -63,7 +113,7 @@ class HTMLElements {
     public static function generateForm(array $fields, string $action = "", string $method = "post", string $class = "", string $buttonText) {
 
         $inputs = "";
-        
+
         foreach ($fields as $key => $value) {
 
             if($value["Extra"] != "auto_increment") {
@@ -138,7 +188,7 @@ class HTMLElements {
                     </div>
                     ";
                 }
-                
+
             }
         }
 
@@ -152,7 +202,7 @@ class HTMLElements {
         <form class=\"form\" action=\"$action\" method=\"$method\">
 
         $inputs
-    
+
         </form>";
 
         return $form;
