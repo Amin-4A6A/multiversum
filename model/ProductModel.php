@@ -13,9 +13,9 @@ class ProductModel {
 
     /**
      * @var DataHandler
-     * @access private
+     * @access public
      */
-    private $dataHandler;
+    public $dataHandler;
 
     /**
      * creates a new ProductModel
@@ -95,6 +95,15 @@ class ProductModel {
     public function readProducts($pagination = 0) {
         return $this->dataHandler->readData(
             "SELECT * FROM `product`",
+            [],
+            true,
+            $pagination
+        );
+    }
+
+    public function readProductsOneImage($pagination) {
+        return $this->dataHandler->readData(
+            "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` GROUP BY `product`.`EAN`",
             [],
             true,
             $pagination
