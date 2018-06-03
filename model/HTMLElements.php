@@ -1,29 +1,43 @@
 <?php
+require_once "ArrayHelper.php";
 
 class HTMLElements {
 
-    public static function table($array, $tableClass = "") {
+    public static function table($array, string $tableClass = "", $horizontal = true) {
         
-        if(is_object($array)) {
-            $array = (array) $array;
-        }
-
-        if(isset($array[0]) && is_object($array[0])) {
-            foreach ($array as $key => $value) {
-                $array[$key] = (array) $value;
-            }
-        }
-
-        if(static::is_assoc($array)) {
-            $array = [$array];
+        if($horizontal) {
+            return static::tableHorizontalRows($array, $tableClass);
+        } else {
+            return static::tableVerticalRows($array, $tableClass);
         }
         
-        if(!is_array($array)) {
-            throw new Exception("variable is not an array/object");
+    }
+
+    public static function tableVerticalRows($array, string $tableClass) {
+
+        $array = ArrayHelper::to2DArray($array);
+
+        $output = "<table class=\"$tableClass\">";
+
+        foreach($array[0] ?? [] as $key => $value) {
+            $output .= "
+                <tr>
+                    <th>$key</th>
+                    <td>$value</td>
+                </tr>
+            ";
         }
 
-        $output = "";
-        $output .= "<table class='$tableClass'>";
+        $output .= "</table>";
+        return $output;
+
+    }
+
+    public static function tableHorizontalRows($array, string $tableClass) {
+
+        $array = ArrayHelper::to2DArray($array);
+
+        $output = "<table class='$tableClass'>";
         $output .= "<thead>";
     
         if(isset($array[0])) {
@@ -49,15 +63,6 @@ class HTMLElements {
         $output .= "</table>";
     
         return $output;
-    }
-
-    public static function is_assoc(array $array) {
-        // Keys of the array
-        $keys = array_keys($array);
-
-        // If the array keys of the keys match the keys, then the array must
-        // not be associative (e.g. the keys array looked like {0:0, 1:1...}).
-        return array_keys($keys) !== $keys;
     }
 
     public static function generateForm(array $fields, string $action = "", string $method = "post", string $class = "", string $buttonText) {
@@ -156,6 +161,40 @@ class HTMLElements {
         </form>";
 
         return $form;
+    }
+
+    /**
+     * paginator html stuff
+     *
+     * @param integer $pages the amount of pages there are
+     * @param integer $current_page the page your currently on
+     * @param string $url the url you want to use for pages e.g. "/product/overview/{page}" or "?page={page}" or something, it replaces {page} with the page number
+     * @return string $pagination the paginator
+     */
+    public static function pagination(int $pages, int $current_page, string $url) {
+
+        if($pages <= 1)
+            return "";
+
+        $output = "
+        <nav aria-label=\"Page navigation\">
+            <ul class=\"pagination\">
+        ";
+
+        $output .= "<li class=\"page-item ". (($current_page == 0) ? 'disabled' : '') ."\"><a class=\"page-link\" href=\"". str_replace("{page}", ($current_page - 1), $url) ."\"><i class=\"fas fa-caret-left\"></i></a></li>";
+        
+        for($i = 0; $i < $pages; $i++) {
+            $output .= "<li class='page-item " . (($current_page ?? 0) == $i ? 'active' : '') . "'><a class='page-link' href='". str_replace("{page}", $i, $url) ."'>". ($i + 1) ."</a></li>";
+        }
+
+        $output .= "<li class=\"page-item ". ((($current_page + 1) == $pages) ? 'disabled' : '') ."\"><a class=\"page-link\" href=\"". str_replace("{page}", ($current_page + 1), $url) ."\"><i class=\"fas fa-caret-right\"></i></a></li>";
+
+        $output .= "
+            </ul>
+        </nav>
+        ";
+
+        return $output;
     }
 
 }
