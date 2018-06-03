@@ -38,6 +38,9 @@ class ProductController extends Controller {
             case "create":
                 $this->collectCreateProduct();
                 break;
+            case "read":
+                $this->collectReadProduct();
+                break;
             case 'home':
                 $this->render("home.twig");
                 break;
@@ -94,7 +97,7 @@ class ProductController extends Controller {
 
         } else {
 
-            
+
             $EAN = filter_var($_POST["EAN"], FILTER_SANITIZE_STRING);
             $name = filter_var($_POST["name"], FILTER_SANITIZE_STRING);
             $brand = filter_var($_POST["brand"], FILTER_SANITIZE_STRING);
@@ -122,7 +125,7 @@ class ProductController extends Controller {
             if(!$_POST["resolution_width"] && !$_POST["resolution_height"]) {
                 $resolution = null;
             }
-            
+
             $this->product->createProduct(
                 $EAN,
                 $name,
@@ -150,5 +153,10 @@ class ProductController extends Controller {
         }
 
     }
+      public function collectReadProduct() {
+        $array = ["key" => "dinges"];
+        $table = HTMLElements::tableSpec($array);
+        $this->render("product/detail.twig", compact("table"));
+      }
 
 }
