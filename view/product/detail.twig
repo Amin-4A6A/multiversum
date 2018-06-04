@@ -40,13 +40,16 @@
 
         <div class="col-md-4">
             <div class="mt-2">
-                <!-- <h2></h2> -->
-                <!-- <h4>Prijs: € 390.00</h4> -->
-                <h1 class="card-title pricing-card-title">€ 390.00</h1>
+              <div class="arrow {{ not product["korting"] is empty ? "arrow-discount" : "" }}">
+                  {% if not product["korting"] is empty %}
+                      <small class="text-danger text-line-through font-italic">{{ product["prijs"] }}</small>
+                  {% endif %}
+                  <h3 class="m-0">{{ not product["korting"] is empty ? product["korting"] : product["prijs"] }}</h3>
+              </div>
                 <form class="form mb-4" action="" method="">
                     <label class="form-control-label mt-4" for="">Aantal</label>
                     <input class="form-control col-md-4" type="number" min="0" max="99">
-                    <div class="my-3">Totaal : € 0,00</div>
+
                     <button type="submit" class="btn btn-primary">Toevoegen <i class="fas fa-shopping-cart"></i>
                     </button>
                 </form>
