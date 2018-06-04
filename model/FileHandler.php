@@ -8,6 +8,12 @@
  */
 class FileHandler {
 
+    /**
+     * last select made by the datahandler
+     *
+     * @var string the save destination
+     * @access private
+     */
     private $dest;
 
     /**

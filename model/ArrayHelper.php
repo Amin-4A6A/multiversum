@@ -1,4 +1,10 @@
 <?php
+/**
+ * a class with array methods
+ * 
+ * @category   Helper
+ * @author     Leon in 't Veld <leon3110l@gmail.com>
+ */
 
 class ArrayHelper {
     
@@ -17,6 +23,12 @@ class ArrayHelper {
         return array_keys($keys) !== $keys;
     }
 
+    /**
+     * converts an object and an array to an 2 dimensional array
+     *
+     * @param mixed $array the array or object
+     * @return array the 2d array
+     */
     public static function to2DArray($array) {
         if(is_object($array)) {
             $array = (array) $array;

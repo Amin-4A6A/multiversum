@@ -4,10 +4,31 @@ require "../model/ProductModel.php";
 require "../model/ImageModel.php";
 require "../model/HTMLElements.php";
 
+/**
+ * The base controller
+ * 
+ * @category   Controller
+ * @author     Leon in 't Veld <leon3110l@gmail.com>
+ * @author     Amin Zammou <aminzammou@hotmail.com>
+ */
 class ProductController extends Controller {
 
+    /**
+     * @var ProductModel
+     * @access private
+     */
     private $product;
 
+    /**
+     * @var ImageModel
+     * @access private
+     */
+    private $image;
+
+    /**
+     * @var array the array with an priority list for the card
+     * @access private
+     */
     private $cardPriority = [
         "resolution",
         "refresh_rate",
@@ -22,11 +43,19 @@ class ProductController extends Controller {
         "accessories"
     ];
 
+    /**
+     * creates a new ProductController
+     */
     public function __construct() {
         $this->product = new ProductModel();
         $this->image = new ImageModel();
     }
 
+    /**
+     * handles the request
+     *
+     * @return void
+     */
     public function handleRequest() {
 
         switch ($_GET["op"] ?? false) {

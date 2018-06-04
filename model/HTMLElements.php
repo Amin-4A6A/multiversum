@@ -1,8 +1,22 @@
 <?php
 require_once "ArrayHelper.php";
-
+/**
+ * The HTMLElements used for creating html elements e.g. tables, forms
+ * 
+ * @category   Model
+ * @author     Leon in 't Veld <leon3110l@gmail.com>
+ */
 class HTMLElements {
 
+    /**
+     * wrapper around the tableVerticalRows and tableHorizontalRows methods
+     * for more documentation loot a the other methods
+     *
+     * @param mixed $array
+     * @param string $tableClass the class for the table
+     * @param boolean (optional) $horizontal if you want an horizontal table or not, default: true
+     * @return string the table
+     */
     public static function table($array, string $tableClass = "", $horizontal = true) {
         
         if($horizontal) {
@@ -13,6 +27,20 @@ class HTMLElements {
         
     }
 
+    /**
+     * creates a table with vertical rows
+     *
+     * +-----+-------+
+     * | key | value |
+     * +-----+-------+
+     * | key | value |
+     * +-----+-------+
+     * 
+     * @param mixed $array array or object you want to make a table with
+     * @param string $tableClass a class you want to add to the table
+     * @return string the table
+     * 
+     */
     public static function tableVerticalRows($array, string $tableClass) {
 
         $array = ArrayHelper::to2DArray($array);
@@ -33,6 +61,21 @@ class HTMLElements {
 
     }
 
+    /**
+     * creates a table with horizontal rows
+     * 
+     * +-------+-------+-------+-------+
+     * | key   | key   | key   | key   |
+     * +-------+-------+-------+-------+
+     * | value | value | value | value |
+     * +-------+-------+-------+-------+
+     * | value | value | value | value |
+     * +-------+-------+-------+-------+
+     *
+     * @param mixed $array array or object you want to make a table with
+     * @param string $tableClass a class you want to add to the table
+     * @return string the table
+     */
     public static function tableHorizontalRows($array, string $tableClass) {
 
         $array = ArrayHelper::to2DArray($array);
@@ -99,6 +142,13 @@ class HTMLElements {
       return $table;
     }
 
+
+    /**
+     * checks if array is an associative array
+     *
+     * @param array $array the array you want to check
+     * @return boolean
+     */
     public static function is_assoc(array $array) {
         // Keys of the array
         $keys = array_keys($array);
@@ -108,6 +158,16 @@ class HTMLElements {
         return array_keys($keys) !== $keys;
     }
 
+    /**
+     * generates a form
+     *
+     * @param array $fields
+     * @param string $action
+     * @param string $method
+     * @param string $class
+     * @param string $buttonText
+     * @return string the form
+     */
     public static function generateForm(array $fields, string $action = "", string $method = "post", string $class = "", string $buttonText) {
 
         $inputs = "";
