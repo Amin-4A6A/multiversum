@@ -135,7 +135,13 @@ class ProductModel {
         );
     }
 
-    public function addCheckMark(array $product) {
+    /**
+     * adds a checkmark to the product
+     *
+     * @param array $product the product you want to add checkmarks on
+     * @return array the finished product
+     */
+    public function addCheckmark(array $product) {
         foreach(["accelerometer", "camera", "gyroscope", "adjustable_lenses"] as $value) {
 
             $class = $product[$value] == 1 ? "far fa-check-circle text-success" : "far fa-times-circle text-danger";
@@ -145,6 +151,12 @@ class ProductModel {
         return $product;
     }
 
+    /**
+     * adds a degree symbol to the product
+     *
+     * @param array $product the product you want to add degree symbols on
+     * @return array the finished product
+     */
     public function addDegreeSymbol(array $product) {
 
         if(!isset($product["fov"]))
@@ -155,6 +167,12 @@ class ProductModel {
         return $product;
     }
 
+    /**
+     * adds a hz symbol to the product
+     *
+     * @param array $product the product you want to add hz symbols on
+     * @return array the finished product
+     */
     public function addHz(array $product) {
 
         if(!isset($product["refresh_rate"]))

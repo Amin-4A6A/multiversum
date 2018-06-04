@@ -94,8 +94,8 @@ class ProductController extends Controller {
         $products = $this->product->readProductsOneImage(9);
 
         foreach($products as $key => $product) {
-            
-            $products[$key] = $this->product->addCheckMark($products[$key]);
+
+            $products[$key] = $this->product->addCheckmark($products[$key]);
             $products[$key] = $this->product->addHz($products[$key]);
             $products[$key] = $this->product->addDegreeSymbol($products[$key]);
 
