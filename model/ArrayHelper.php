@@ -57,10 +57,10 @@ class ArrayHelper {
      *
      * @param array $array the array that you want a couple of items from
      * @param array $priority the array with priority keys
-     * @param integer $amount
+     * @param integer (optional) $amount the amount of items you want to get(limits the amount of items you get back)
      * @return array the items
      */
-    public static function getPriority(array $array, array $priority, int $amount) {
+    public static function getPriority(array $array, array $priority, int $amount = 0) {
         $output = [];
 
         foreach ($priority as $priority_item) {
@@ -69,7 +69,7 @@ class ArrayHelper {
             }
 
 
-            if(sizeof($output) == $amount) {
+            if($amount != 0 && sizeof($output) == $amount) {
                 break;
             }
         }
