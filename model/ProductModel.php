@@ -28,40 +28,76 @@ class ProductModel {
      * @param string $EAN the EAN of the product
      * @param string $name the name of the product
      * @param string $brand the brand of the product
-     * @param float $price the price of the product
+     * @param string $price the price of the product
      * @param string $description the description of the product
-     * @param string (optional) $resolution the resolution of the product
-     * @param int (optional) $refresh_rate the refresh_rate of the product
-     * @param int (optional) $fov the fov of the product
+     * @param string (optional) $resolution_width the resolution width of the product
+     * @param string (optional) $resolution_height the resolution height of the product
+     * @param string (optional) $refresh_rate the refresh_rate of the product
+     * @param string (optional) $fov the fov of the product
      * @param string (optional) $inputs the inputs of the product
      * @param string (optional) $accessories the accessories of the product
-     * @param bool (optional) $accelerometer the accelerometer of the product
-     * @param bool (optional) $camera the camera of the product
-     * @param bool (optional) $gyroscope the gyroscope of the product
-     * @param bool (optional) $adjusable_lenses the adjusable_lenses of the product
+     * @param string (optional) $accelerometer the accelerometer of the product
+     * @param string (optional) $camera the camera of the product
+     * @param string (optional) $gyroscope the gyroscope of the product
+     * @param string (optional) $adjusable_lenses the adjusable_lenses of the product
      * @param string (optional) $color the color of the product
      * @param string (optional) $platform the platform of the product
-     * @param float (optional) $discount the discount of the product
+     * @param string (optional) $discount the discount of the product
      * 
      * @return string $EAN product EAN
      */
     public function createProduct(string $EAN,
                                   string $name,
                                   string $brand,
-                                  float $price,
+                                  $price,
                                   string $description,
-                                  string $resolution = null,
-                                  int $refresh_rate = null,
-                                  int $fov = null,
+                                  string $resolution_width = null,
+                                  string $resolution_height = null,
+                                  $refresh_rate = null,
+                                  $fov = null,
                                   string $inputs = null,
                                   string $accessories = null,
-                                  bool $accelerometer = null,
-                                  bool $camera = null,
-                                  bool $gyroscope = null,
-                                  bool $adjustable_lenses = null,
+                                  $accelerometer = null,
+                                  $camera = null,
+                                  $gyroscope = null,
+                                  $adjustable_lenses = null,
                                   string $color = null,
                                   string $platform = null,
-                                  float $discount = null) {
+                                  $discount = null) {
+
+        $EAN = filter_var($EAN, FILTER_SANITIZE_STRING);
+        $name = filter_var($name, FILTER_SANITIZE_STRING);
+        $brand = filter_var($brand, FILTER_SANITIZE_STRING);
+        $price = floatval(filter_var($price, FILTER_SANITIZE_NUMBER_FLOAT));
+        $description = filter_var($description, FILTER_SANITIZE_STRING);
+        $discount = floatval(filter_var($discount, FILTER_SANITIZE_NUMBER_FLOAT));
+        $resolution =  filter_var($resolution_width."x".$resolution_height, FILTER_SANITIZE_STRING);
+        $refresh_rate = intval(filter_var($refresh_rate, FILTER_SANITIZE_NUMBER_INT));
+        $fov = intval(filter_var($fov, FILTER_SANITIZE_NUMBER_INT));
+        $inputs = filter_var($inputs, FILTER_SANITIZE_STRING);
+        $accessories = filter_var($accessories, FILTER_SANITIZE_STRING);
+        $color = filter_var($color, FILTER_SANITIZE_STRING);
+        $platform = filter_var($platform, FILTER_SANITIZE_STRING);
+
+        $accelerometer = isset($accelerometer);
+        $camera = isset($camera);
+        $gyroscope = isset($gyroscope);
+        $adjustable_lenses = isset($adjustable_lenses);
+
+
+        if($discount == 0) {
+            $discount = null;
+        }
+        if($refresh_rate == 0) {
+            $refresh_rate = null;
+        }
+        if($fov == 0) {
+            $fov = null;
+        }
+        if(!$resolution_width && !$resolution_height) {
+            $resolution = null;
+        }
+        
         return $this->dataHandler->createData(
             "INSERT INTO `product`(`EAN`, `name`, `brand`, `price`, `description`, `resolution`, `refresh_rate`, `fov`, `inputs`, `accessories`, `accelerometer`, `camera`, `gyroscope`, `adjustable_lenses`, `color`, `platform`, `discount`)
                            VALUES (:EAN, :name, :brand, :price, :description, :resolution, :refresh_rate, :fov, :inputs, :accessories, :accelerometer, :camera, :gyroscope, :adjustable_lenses, :color, :platform, :discount)",
