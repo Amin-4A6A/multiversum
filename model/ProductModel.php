@@ -99,7 +99,7 @@ class ProductModel {
         }
         
         return $this->dataHandler->createData(
-            "INSERT INTO `product`(`EAN`, `name`, `brand`, `price`, `description`, `resolution`, `refresh_rate`, `fov`, `inputs`, `accessories`, `accelerometer`, `camera`, `gyroscope`, `adjustable_lenses`, `color`, `platform`, `discount`)
+            "INSERT INTO `product`(`EAN`, `naam`, `merk`, `prijs`, `beschrijving`, `resolutie`, `refresh rate`, `gezichtsveld`, `aansluitingen`, `accessoires`, `accelerometer`, `camera`, `gyroscoop`, `verstelbare lenzen`, `kleur`, `platform`, `korting`)
                            VALUES (:EAN, :name, :brand, :price, :description, :resolution, :refresh_rate, :fov, :inputs, :accessories, :accelerometer, :camera, :gyroscope, :adjustable_lenses, :color, :platform, :discount)",
             [
                 ":EAN" => $EAN,
@@ -161,7 +161,7 @@ class ProductModel {
      */
     public function searchProductsOneImage(string $query, int $pagination) {
         return $this->dataHandler->readData(
-            "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` WHERE `product`.`ean` LIKE :q OR `product`.`description` LIKE :q OR `product`.`name` LIKE :q OR `product`.`brand` LIKE :q GROUP BY `product`.`EAN`",
+            "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` WHERE `product`.`ean` LIKE :q OR `product`.`beschrijving` LIKE :q OR `product`.`naam` LIKE :q OR `product`.`merk` LIKE :q GROUP BY `product`.`EAN`",
             [":q" => "%$query%"],
             true,
             $pagination
@@ -200,7 +200,7 @@ class ProductModel {
      * @return array the finished product
      */
     public function addCheckmark(array $product) {
-        foreach(["accelerometer", "camera", "gyroscope", "adjustable_lenses"] as $value) {
+        foreach(["accelerometer", "camera", "gyroscoop", "verstelbare lenzen"] as $value) {
 
             $class = $product[$value] == 1 ? "far fa-check-circle text-success" : "far fa-times-circle text-danger";
             $product[$value] = "<i class=\"$class\"></i>";
@@ -217,10 +217,10 @@ class ProductModel {
      */
     public function addDegreeSymbol(array $product) {
 
-        if(!isset($product["fov"]))
+        if(!isset($product["gezichtsveld"]))
             return $product;
 
-        $product["fov"] = $product["fov"] . "°";
+        $product["gezichtsveld"] = $product["gezichtsveld"] . "°";
 
         return $product;
     }
@@ -233,10 +233,29 @@ class ProductModel {
      */
     public function addHz(array $product) {
 
-        if(!isset($product["refresh_rate"]))
+        if(!isset($product["refresh rate"]))
             return $product;
 
-        $product["refresh_rate"] = $product["refresh_rate"] . "Hz";
+        $product["refresh rate"] = $product["refresh rate"] . "Hz";
+
+        return $product;
+    }
+
+    /**
+     * adds a euro symbol to the product
+     *
+     * @param array $product the product you want to add euro symbols on
+     * @return array the finished product
+     */
+    public function addEuro(array $product) {
+
+        if(!isset($product["prijs"]))
+            return $product;
+
+        $product["prijs"] = "€ ". $product["prijs"];
+        
+        if(isset($product["korting"]))
+            $product["korting"] = "€ ". $product["korting"];
 
         return $product;
     }

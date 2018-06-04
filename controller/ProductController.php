@@ -30,17 +30,17 @@ class ProductController extends Controller {
      * @access private
      */
     private $cardPriority = [
-        "resolution",
-        "refresh_rate",
+        "resolutie",
+        "refresh rate",
         "platform",
-        "fov",
-        "color",
+        "gezichtsveld",
+        "kleur",
         "accelerometer",
         "camera",
-        "gyroscope",
-        "adjustable_lenses",
-        "inputs",
-        "accessories"
+        "gyroscoop",
+        "verstelbare lenzen",
+        "aansluitingen",
+        "accessoires",
     ];
 
 
@@ -102,6 +102,7 @@ class ProductController extends Controller {
             $products[$key] = $this->product->addCheckmark($products[$key]);
             $products[$key] = $this->product->addHz($products[$key]);
             $products[$key] = $this->product->addDegreeSymbol($products[$key]);
+            $products[$key] = $this->product->addEuro($products[$key]);
 
             $items = ArrayHelper::getPriority($products[$key], $this->cardPriority, 3);
             $products[$key]["priority_table"] = HTMLElements::table($items, "table", false);
@@ -133,6 +134,7 @@ class ProductController extends Controller {
             $products[$key] = $this->product->addCheckmark($products[$key]);
             $products[$key] = $this->product->addHz($products[$key]);
             $products[$key] = $this->product->addDegreeSymbol($products[$key]);
+            $products[$key] = $this->product->addEuro($products[$key]);
 
             $items = ArrayHelper::getPriority($products[$key], $this->cardPriority, 3);
             $products[$key]["priority_table"] = HTMLElements::table($items, "table", false);
@@ -197,17 +199,17 @@ class ProductController extends Controller {
 
         $detailProducts =
         [
-            "resolution",
-            "refresh_rate",
+            "resolutie",
+            "refresh rate",
             "platform",
-            "fov",
-            "color",
+            "gezichtsveld",
+            "kleur",
             "accelerometer",
             "camera",
-            "gyroscope",
-            "adjustable_lenses",
-            "inputs",
-            "accessories",
+            "gyroscoop",
+            "verstelbare lenzen",
+            "aansluitingen",
+            "accessoires",
             "EAN"
         ];
 
