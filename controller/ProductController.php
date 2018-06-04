@@ -218,11 +218,14 @@ class ProductController extends Controller {
 
     }
       public function collectReadProduct() {
-        $product = $this->$product->readProduct($_get['EAN'])
-        $array = ["key" => "value"];
+        $products = $this->product->readProduct($_GET['EAN']);
+        $array = [$products];
         $tableClass = "table";
         $table = HTMLElements::tableVerticalRows($array, $tableClass);
         $this->render("product/detail.twig", compact("table"));
+
+        $items = ArrayHelper::getPriority($products[$key], $this->cardPriority, 3);
+        $products[$key]["priority_table"] = HTMLElements::table($items, "table", false);
       }
 
 }
