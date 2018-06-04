@@ -101,10 +101,32 @@ class ProductModel {
         );
     }
 
-    public function readProductsOneImage($pagination) {
+    /**
+     * reads multiple products and gets one image with the product
+     *
+     * @param int $pagination the amount of products you want to read per page, pagination works with the page get variable
+     * @return array a 2d array with all the products
+     */
+    public function readProductsOneImage(int $pagination) {
         return $this->dataHandler->readData(
             "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` GROUP BY `product`.`EAN`",
             [],
+            true,
+            $pagination
+        );
+    }
+
+    /**
+     * searches multiple products and gets one image with the product
+     *
+     * @param string $query what to search for
+     * @param int $pagination the amount of products you want to read per page, pagination works with the page get variable
+     * @return array a 2d array with all the products
+     */
+    public function searchProductsOneImage(string $query, int $pagination) {
+        return $this->dataHandler->readData(
+            "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` WHERE `product`.`ean` LIKE :q OR `product`.`description` LIKE :q OR `product`.`name` LIKE :q OR `product`.`brand` LIKE :q GROUP BY `product`.`EAN`",
+            [":q" => "%$query%"],
             true,
             $pagination
         );
@@ -133,6 +155,54 @@ class ProductModel {
         return $this->dataHandler->readData(
             "DESCRIBE `product`"
         );
+    }
+
+    /**
+     * adds a checkmark to the product
+     *
+     * @param array $product the product you want to add checkmarks on
+     * @return array the finished product
+     */
+    public function addCheckmark(array $product) {
+        foreach(["accelerometer", "camera", "gyroscope", "adjustable_lenses"] as $value) {
+
+            $class = $product[$value] == 1 ? "far fa-check-circle text-success" : "far fa-times-circle text-danger";
+            $product[$value] = "<i class=\"$class\"></i>";
+        }
+
+        return $product;
+    }
+
+    /**
+     * adds a degree symbol to the product
+     *
+     * @param array $product the product you want to add degree symbols on
+     * @return array the finished product
+     */
+    public function addDegreeSymbol(array $product) {
+
+        if(!isset($product["fov"]))
+            return $product;
+
+        $product["fov"] = $product["fov"] . "°";
+
+        return $product;
+    }
+
+    /**
+     * adds a hz symbol to the product
+     *
+     * @param array $product the product you want to add hz symbols on
+     * @return array the finished product
+     */
+    public function addHz(array $product) {
+
+        if(!isset($product["refresh_rate"]))
+            return $product;
+
+        $product["refresh_rate"] = $product["refresh_rate"] . "Hz";
+
+        return $product;
     }
 
 }

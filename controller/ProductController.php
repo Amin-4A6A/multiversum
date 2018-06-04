@@ -75,6 +75,9 @@ class ProductController extends Controller {
             case 'overview':
                 $this->collectOverviewProduct();
                 break;
+            case 'search':
+                $this->collectSearchProduct();
+                break;
             case 'home':
             default:
                 $this->render("home.twig");
@@ -94,7 +97,12 @@ class ProductController extends Controller {
         $products = $this->product->readProductsOneImage(9);
 
         foreach($products as $key => $product) {
-            $items = ArrayHelper::getPriority($product, $this->cardPriority, 3);
+
+            $products[$key] = $this->product->addCheckmark($products[$key]);
+            $products[$key] = $this->product->addHz($products[$key]);
+            $products[$key] = $this->product->addDegreeSymbol($products[$key]);
+
+            $items = ArrayHelper::getPriority($products[$key], $this->cardPriority, 3);
             $products[$key]["priority_table"] = HTMLElements::table($items, "table", false);
         }
 
@@ -104,7 +112,41 @@ class ProductController extends Controller {
             "/product/overview/{page}"
         );
 
-        $this->render("product/overview.twig", compact("products", "pagination"));
+        $this->render("product/paginated_content.twig", compact("products", "pagination"));
+    }
+
+    /**
+     * the search product page controller method
+     *
+     * @return void
+     */
+    public function collectSearchProduct() {
+
+        if(!isset($_GET["q"]) || empty($_GET["q"]))
+            $this->redirect("/product/overview");
+
+        $products = $this->product->searchProductsOneImage($_GET["q"], 9);
+
+        foreach($products as $key => $product) {
+
+            $products[$key] = $this->product->addCheckmark($products[$key]);
+            $products[$key] = $this->product->addHz($products[$key]);
+            $products[$key] = $this->product->addDegreeSymbol($products[$key]);
+
+            $items = ArrayHelper::getPriority($products[$key], $this->cardPriority, 3);
+            $products[$key]["priority_table"] = HTMLElements::table($items, "table", false);
+        }
+
+        $pagination = HTMLElements::pagination(
+            $this->product->dataHandler->pagination(9),
+            $_GET["page"] ?? 0,
+            "/product/search/{page}?q=" . urlencode($_GET["q"])
+        );
+
+        $page_title = "Zoek resultaten";
+
+        $this->render("product/paginated_content.twig", compact("products", "pagination", "page_title"));
+
     }
 
     /**

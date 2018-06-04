@@ -13,7 +13,7 @@ class HTMLElements {
      * for more documentation loot a the other methods
      *
      * @param mixed $array
-     * @param string $tableClass the class for the table
+     * @param string (optional) $tableClass the class for the table
      * @param boolean (optional) $horizontal if you want an horizontal table or not, default: true
      * @return string the table
      */
@@ -37,11 +37,11 @@ class HTMLElements {
      * +-----+-------+
      *
      * @param mixed $array array or object you want to make a table with
-     * @param string $tableClass a class you want to add to the table
+     * @param string (optional) $tableClass a class you want to add to the table
      * @return string the table
      *
      */
-    public static function tableVerticalRows($array, string $tableClass) {
+    public static function tableVerticalRows($array, string $tableClass = "") {
 
         $array = ArrayHelper::to2DArray($array);
 
@@ -73,10 +73,10 @@ class HTMLElements {
      * +-------+-------+-------+-------+
      *
      * @param mixed $array array or object you want to make a table with
-     * @param string $tableClass a class you want to add to the table
+     * @param string (optional) $tableClass a class you want to add to the table
      * @return string the table
      */
-    public static function tableHorizontalRows($array, string $tableClass) {
+    public static function tableHorizontalRows($array, string $tableClass = "") {
 
         $array = ArrayHelper::to2DArray($array);
 
