@@ -176,8 +176,10 @@ class ProductController extends Controller {
 
     }
       public function collectReadProduct() {
+        $product = $this->$product->readProduct($_get['EAN'])
         $array = ["key" => "value"];
-        $table = HTMLElements::tableSpec($array);
+        $tableClass = "table";
+        $table = HTMLElements::tableVerticalRows($array, $tableClass);
         $this->render("product/detail.twig", compact("table"));
       }
 
