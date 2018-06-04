@@ -8,10 +8,6 @@
 
     <div class="row">
       <h2 class="col-md-12 mb-4">Htc 300</h2>
-        <h5 class="col-md-12 mb-4 card-title">{{ product["merk"] }} {{ product["naam"] }}</h5>
-      <a class="text-secondary" href="/product/{{ product["EAN"] }}">
-          <h5 class="col-md-12 mb-4 card-title">{{ product["merk"] }} {{ product["naam"] }}</h5>
-      </a>
         <div class="col-md-8">
           <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -43,18 +39,22 @@
 
         <div class="col-md-4">
             <div class="mt-2">
-              <div class="arrow {{ not product["korting"] is empty ? "arrow-discount" : "" }}">
+              <!-- <div class="arrow {{ not product["korting"] is empty ? "arrow-discount" : "" }}">
                   {% if not product["korting"] is empty %}
                       <small class="text-danger text-line-through font-italic">{{ product["prijs"] }}</small>
                   {% endif %}
                   <h3 class="m-0">{{ not product["korting"] is empty ? product["korting"] : product["prijs"] }}</h3>
-              </div>
-                <form class="form mb-4" action="" method="">
+              </div> -->
+                <form class="form mb-4 col-md-12" action="" method="">
+                    <div class="col-md-6">
                     <label class="form-control-label mt-4" for="">Aantal</label>
                     <input class="form-control col-md-4" type="number" min="0" max="99">
+                  </div>
 
+                    <div class="col-md-6">
                     <button type="submit" class="btn btn-primary">Toevoegen <i class="fas fa-shopping-cart"></i>
                     </button>
+                          </div>
                 </form>
             </div>
         </div>
