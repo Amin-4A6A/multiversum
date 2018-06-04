@@ -31,18 +31,11 @@ class ProductController extends Controller {
 
         switch ($_GET["op"] ?? false) {
 
-            case "test":
-                echo "<pre>";
-                var_dump($this->product->readProduct(1));
-                break;
             case "create":
                 $this->collectCreateProduct();
                 break;
             case "read":
                 $this->collectReadProduct();
-                break;
-            case 'home':
-                $this->render("home.twig");
                 break;
             case 'detail':
                 $this->render("product/detail.twig");
@@ -53,6 +46,7 @@ class ProductController extends Controller {
             case 'overview':
                 $this->collectOverviewProduct();
                 break;
+            case 'home':
             default:
                 $this->render("home.twig");
                 break;
@@ -96,7 +90,6 @@ class ProductController extends Controller {
             $this->render("product/create.twig");
 
         } else {
-
 
             $EAN = filter_var($_POST["EAN"], FILTER_SANITIZE_STRING);
             $name = filter_var($_POST["name"], FILTER_SANITIZE_STRING);
@@ -148,7 +141,7 @@ class ProductController extends Controller {
 
             $this->image->createImagesUpload($_FILES["product_images"], $EAN);
 
-            $this->redirect("/product/read/$EAN");
+            $this->redirect("/product/$EAN");
 
         }
 

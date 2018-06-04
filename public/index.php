@@ -6,7 +6,7 @@ $dotenv = new Dotenv\Dotenv(dirname(__DIR__));
 $dotenv->load();
 
 // route to the correct
-$controllerName = ucfirst($_GET["controller"]) . "Controller";
+$controllerName = ucfirst($_GET["controller"] ?? "product") . "Controller";
 
 $file = dirname(__DIR__) . "/controller/" . $controllerName . ".php";
 
