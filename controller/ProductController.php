@@ -43,6 +43,7 @@ class ProductController extends Controller {
         "accessories"
     ];
 
+
     /**
      * creates a new ProductController
      */
@@ -191,12 +192,30 @@ class ProductController extends Controller {
 
     }
 
+
     public function collectReadProduct() {
-        $product = $this->$product->readProduct($_get['EAN']);
-        $array = ["key" => "value"];
-        $tableClass = "table";
-        $table = HTMLElements::tableVerticalRows($array, $tableClass);
+
+        $detailProducts =
+        [
+            "resolution",
+            "refresh_rate",
+            "platform",
+            "fov",
+            "color",
+            "accelerometer",
+            "camera",
+            "gyroscope",
+            "adjustable_lenses",
+            "inputs",
+            "accessories",
+            "EAN"
+        ];
+
+        $product = $this->product->readProduct($_GET['EAN']);
+        $items = ArrayHelper::getPriority($product, $detailProducts);
+        $table = HTMLElements::table($items, "table", false);
         $this->render("product/detail.twig", compact("table"));
+
     }
 
 }
