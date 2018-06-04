@@ -6,7 +6,7 @@ require "../model/HTMLElements.php";
 
 /**
  * The base controller
- * 
+ *
  * @category   Controller
  * @author     Leon in 't Veld <leon3110l@gmail.com>
  * @author     Amin Zammou <aminzammou@hotmail.com>
@@ -175,7 +175,7 @@ class ProductController extends Controller {
             $accessories = filter_var($_POST["accessories"], FILTER_SANITIZE_STRING);
             $color = filter_var($_POST["color"], FILTER_SANITIZE_STRING);
             $platform = filter_var($_POST["platform"], FILTER_SANITIZE_STRING);
-            
+
 
             if($discount == 0) {
                 $discount = null;
@@ -218,7 +218,7 @@ class ProductController extends Controller {
 
     }
       public function collectReadProduct() {
-        $array = ["key" => "dinges"];
+        $array = ["key" => "value"];
         $table = HTMLElements::tableSpec($array);
         $this->render("product/detail.twig", compact("table"));
       }

@@ -2,7 +2,7 @@
 require_once "ArrayHelper.php";
 /**
  * The HTMLElements used for creating html elements e.g. tables, forms
- * 
+ *
  * @category   Model
  * @author     Leon in 't Veld <leon3110l@gmail.com>
  */
@@ -18,13 +18,13 @@ class HTMLElements {
      * @return string the table
      */
     public static function table($array, string $tableClass = "", $horizontal = true) {
-        
+
         if($horizontal) {
             return static::tableHorizontalRows($array, $tableClass);
         } else {
             return static::tableVerticalRows($array, $tableClass);
         }
-        
+
     }
 
     /**
@@ -35,11 +35,11 @@ class HTMLElements {
      * +-----+-------+
      * | key | value |
      * +-----+-------+
-     * 
+     *
      * @param mixed $array array or object you want to make a table with
      * @param string $tableClass a class you want to add to the table
      * @return string the table
-     * 
+     *
      */
     public static function tableVerticalRows($array, string $tableClass) {
 
@@ -63,7 +63,7 @@ class HTMLElements {
 
     /**
      * creates a table with horizontal rows
-     * 
+     *
      * +-------+-------+-------+-------+
      * | key   | key   | key   | key   |
      * +-------+-------+-------+-------+
@@ -285,7 +285,7 @@ class HTMLElements {
         ";
 
         $output .= "<li class=\"page-item ". (($current_page == 0) ? 'disabled' : '') ."\"><a class=\"page-link\" href=\"". str_replace("{page}", ($current_page - 1), $url) ."\"><i class=\"fas fa-caret-left\"></i></a></li>";
-        
+
         for($i = 0; $i < $pages; $i++) {
             $output .= "<li class='page-item " . (($current_page ?? 0) == $i ? 'active' : '') . "'><a class='page-link' href='". str_replace("{page}", $i, $url) ."'>". ($i + 1) ."</a></li>";
         }
