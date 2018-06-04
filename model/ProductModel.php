@@ -135,4 +135,34 @@ class ProductModel {
         );
     }
 
+    public function addCheckMark(array $product) {
+        foreach(["accelerometer", "camera", "gyroscope", "adjustable_lenses"] as $value) {
+
+            $class = $product[$value] == 1 ? "far fa-check-circle text-success" : "far fa-times-circle text-danger";
+            $product[$value] = "<i class=\"$class\"></i>";
+        }
+
+        return $product;
+    }
+
+    public function addDegreeSymbol(array $product) {
+
+        if(!isset($product["fov"]))
+            return $product;
+
+        $product["fov"] = $product["fov"] . "°";
+
+        return $product;
+    }
+
+    public function addHz(array $product) {
+
+        if(!isset($product["refresh_rate"]))
+            return $product;
+
+        $product["refresh_rate"] = $product["refresh_rate"] . "Hz";
+
+        return $product;
+    }
+
 }

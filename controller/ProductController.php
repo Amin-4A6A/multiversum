@@ -94,7 +94,12 @@ class ProductController extends Controller {
         $products = $this->product->readProductsOneImage(9);
 
         foreach($products as $key => $product) {
-            $items = ArrayHelper::getPriority($product, $this->cardPriority, 3);
+            
+            $products[$key] = $this->product->addCheckMark($products[$key]);
+            $products[$key] = $this->product->addHz($products[$key]);
+            $products[$key] = $this->product->addDegreeSymbol($products[$key]);
+
+            $items = ArrayHelper::getPriority($products[$key], $this->cardPriority, 3);
             $products[$key]["priority_table"] = HTMLElements::table($items, "table", false);
         }
 
