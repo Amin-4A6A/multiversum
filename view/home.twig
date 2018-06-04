@@ -2,15 +2,17 @@
 
 {% block title %}multiversum | home{% endblock %}
 
-{% block head %}
+{% block body %}
+    {% include "partials/head.twig" %}
     {{ parent() }}
 {% endblock %}
 
-{% block body %}
-{% include "partials/head.twig" %}
-{{ parent() }}
-{% endblock %}
-
 {% block content %}
-{% include "partials/cards.twig" %}
+    <div class="titel-home">
+        <h3>
+            Uitgelicht
+            <small class="text-muted">De beste vr headsets voor de beste prijs</small>
+        </h3>
+    </div>
+    {% include "partials/cards.twig" %}
 {% endblock %}
