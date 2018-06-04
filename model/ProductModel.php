@@ -101,10 +101,32 @@ class ProductModel {
         );
     }
 
-    public function readProductsOneImage($pagination) {
+    /**
+     * reads multiple products and gets one image with the product
+     *
+     * @param int $pagination the amount of products you want to read per page, pagination works with the page get variable
+     * @return array a 2d array with all the products
+     */
+    public function readProductsOneImage(int $pagination) {
         return $this->dataHandler->readData(
             "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` GROUP BY `product`.`EAN`",
             [],
+            true,
+            $pagination
+        );
+    }
+
+    /**
+     * searches multiple products and gets one image with the product
+     *
+     * @param string $query what to search for
+     * @param int $pagination the amount of products you want to read per page, pagination works with the page get variable
+     * @return array a 2d array with all the products
+     */
+    public function searchProductsOneImage(string $query, int $pagination) {
+        return $this->dataHandler->readData(
+            "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` WHERE `product`.`ean` LIKE :q OR `product`.`description` LIKE :q OR `product`.`name` LIKE :q OR `product`.`brand` LIKE :q GROUP BY `product`.`EAN`",
+            [":q" => "%$query%"],
             true,
             $pagination
         );

@@ -1,7 +1,7 @@
 {% extends "layout/app.twig" %}
 
 {% block content %}
-<h5 class="col-md-12 mb-4 display-4">Overzicht:</h5>
+<h5 class="col-md-12 mb-4 display-4">{{ page_title|default("Overzicht") }}:</h5>
 
 <div class="row d-flex align-items-stretch">
   {% for product in products %}
