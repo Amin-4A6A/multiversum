@@ -53,50 +53,17 @@ class HTMLElements {
 
     public static function tableSpec($array) {
 
-        if(is_object($array)) {
-            $array = (array) $array;
-        }
+      $table = "";
 
-        if(isset($array[0]) && is_object($array[0])) {
-            foreach ($array as $key => $value) {
-                $array[$key] = (array) $value;
-            }
-        }
-
-        if(static::is_assoc($array)) {
-            $array = [$array];
-        }
-
-        if(!is_array($array)) {
-            throw new Exception("variable is not an array/object");
-        }
-
-        $table = "";
-        $table .= "<div class='row'>";
-
-      $table .= "<div class='spec-card mt-5'>
-            <div class='card mt-5>
-        <div class='card-header'>
-          <!-- Specificaties : -->
-            <h4>  Specificaties :</h4>
-        </div>
-        <div class='card-body'>
-
-
-            <table class='table'>";
-              foreach ($array as $k => $v) {
-              $table .= "<tr>
-                <th>$k</th>
-                <td>$v</td>
-              </tr>";
-            }
-      $table .= "
-            </table>
-
-            </div>
-          </div>
-          </div>";
-      $table .= "</div>";
+        $table .= "<table class='table'>";
+                foreach ($array as $k => $v) {
+                $table .= "<tr>
+                  <th>$k</th>
+                  <td>$v</td>
+                </tr>";
+              }
+        $table .= "
+              </table>";
 
       return $table;
     }

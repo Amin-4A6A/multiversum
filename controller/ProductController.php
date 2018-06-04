@@ -98,7 +98,7 @@ class ProductController extends Controller {
 
     }
       public function collectReadProduct() {
-        $array = ["key" => ""]
+        $array = ["key" => "value"];
         $table = HTMLElements::tableSpec($array);
           $this->render("product/detail.twig", compact("table"));
       }
