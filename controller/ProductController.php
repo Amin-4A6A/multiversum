@@ -81,12 +81,35 @@ class ProductController extends Controller {
                 break;
             case 'home':
             default:
-                $this->render("home.twig");
+                $this->collectHomeProduct();
                 break;
         }
 
     }
 
+    /**
+     * the home page method
+     *
+     * @return void
+     */
+    public function collectHomeProduct() {
+
+        $products = $this->product->readProductsOneImage(6, "korting");
+
+        foreach($products as $key => $product) {
+
+            $products[$key] = $this->product->addCheckmark($products[$key]);
+            $products[$key] = $this->product->addHz($products[$key]);
+            $products[$key] = $this->product->addDegreeSymbol($products[$key]);
+            $products[$key] = $this->product->addEuro($products[$key]);
+
+            $items = ArrayHelper::getPriority($products[$key], $this->cardPriority, 3);
+            $products[$key]["priority_table"] = HTMLElements::table($items, "table", false);
+        }
+
+        $this->render("home.twig", compact("products"));
+
+    }
 
     /**
      * the overview product page controller method

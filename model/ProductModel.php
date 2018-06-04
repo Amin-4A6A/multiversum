@@ -141,11 +141,12 @@ class ProductModel {
      * reads multiple products and gets one image with the product
      *
      * @param int $pagination the amount of products you want to read per page, pagination works with the page get variable
+     * @param string $orderBy what table to order by
      * @return array a 2d array with all the products
      */
-    public function readProductsOneImage(int $pagination) {
+    public function readProductsOneImage(int $pagination, string $orderBy = null) {
         return $this->dataHandler->readData(
-            "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` GROUP BY `product`.`EAN`",
+            "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` GROUP BY `product`.`EAN`" . (isset($orderBy) ? "ORDER BY `product`.`$orderBy`" : ""),
             [],
             true,
             $pagination

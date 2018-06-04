@@ -2,15 +2,11 @@
 
 {% block title %}multiversum | home{% endblock %}
 
-{% block head %}
+{% block body %}
+    {% include "partials/head.twig" %}
     {{ parent() }}
 {% endblock %}
 
-{% block body %}
-{% include "partials/head.twig" %}
-{{ parent() }}
-{% endblock %}
-
 {% block content %}
-{% include "partials/cards.twig" %}
+    {% include "partials/cards.twig" %}
 {% endblock %}
