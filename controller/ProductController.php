@@ -163,65 +163,40 @@ class ProductController extends Controller {
 
         } else {
 
-            $EAN = filter_var($_POST["EAN"], FILTER_SANITIZE_STRING);
-            $name = filter_var($_POST["name"], FILTER_SANITIZE_STRING);
-            $brand = filter_var($_POST["brand"], FILTER_SANITIZE_STRING);
-            $price = floatval(filter_var($_POST["price"], FILTER_SANITIZE_NUMBER_FLOAT));
-            $description = filter_var($_POST["description"], FILTER_SANITIZE_STRING);
-            $discount = floatval(filter_var($_POST["discount"], FILTER_SANITIZE_NUMBER_FLOAT));
-            $resolution =  filter_var($_POST["resolution_width"]."x".$_POST["resolution_height"], FILTER_SANITIZE_STRING);
-            $refresh_rate = intval(filter_var($_POST["refresh_rate"], FILTER_SANITIZE_NUMBER_INT));
-            $fov = intval(filter_var($_POST["fov"], FILTER_SANITIZE_NUMBER_INT));
-            $inputs = filter_var($_POST["inputs"], FILTER_SANITIZE_STRING);
-            $accessories = filter_var($_POST["accessories"], FILTER_SANITIZE_STRING);
-            $color = filter_var($_POST["color"], FILTER_SANITIZE_STRING);
-            $platform = filter_var($_POST["platform"], FILTER_SANITIZE_STRING);
-
-
-            if($discount == 0) {
-                $discount = null;
-            }
-            if($refresh_rate == 0) {
-                $refresh_rate = null;
-            }
-            if($fov == 0) {
-                $fov = null;
-            }
-            if(!$_POST["resolution_width"] && !$_POST["resolution_height"]) {
-                $resolution = null;
-            }
-
             $this->product->createProduct(
-                $EAN,
-                $name,
-                $brand,
-                $price,
-                $description,
-                $resolution,
-                $refresh_rate,
-                $fov,
-                $inputs,
-                $accessories,
-                isset($_POST["accelerometer"]),
-                isset($_POST["camera"]),
-                isset($_POST["gyroscope"]),
-                isset($_POST["adjustable_lenses"]),
-                $color,
-                $platform,
-                $discount
+                $_POST["EAN"],
+                $_POST["name"],
+                $_POST["brand"],
+                $_POST["price"],
+                $_POST["description"],
+                $_POST["resolution_width"],
+                $_POST["resolution_height"],
+                $_POST["refresh_rate"],
+                $_POST["fov"],
+                $_POST["inputs"],
+                $_POST["accessories"],
+                $_POST["accelerometer"],
+                $_POST["camera"],
+                $_POST["gyroscope"],
+                $_POST["adjustable_lenses"],
+                $_POST["color"],
+                $_POST["platform"],
+                $_POST["discount"]
             );
 
-            $this->image->createImagesUpload($_FILES["product_images"], $EAN);
+            $this->image->createImagesUpload($_FILES["product_images"], $_POST["EAN"]);
 
-            $this->redirect("/product/$EAN");
+            $this->redirect("/product/" . $_POST["EAN"]);
 
         }
 
     }
-      public function collectReadProduct() {
 
-         $detailProducts =
-       [
+
+    public function collectReadProduct() {
+
+        $detailProducts =
+        [
             "resolution",
             "refresh_rate",
             "platform",
@@ -241,7 +216,6 @@ class ProductController extends Controller {
         $table = HTMLElements::table($items, "table", false);
         $this->render("product/detail.twig", compact("table"));
 
-
-      }
+    }
 
 }

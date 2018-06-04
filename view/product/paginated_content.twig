@@ -1,13 +1,17 @@
 {% extends "layout/app.twig" %}
 
 {% block content %}
-<h5 class="col-md-12 mb-4 display-4">{{ page_title|default("Overzicht") }}:</h5>
+	<h5 class="mb-4 display-4">{{ page_title|default("Overzicht") }}:</h5>
 
-<div class="row d-flex align-items-stretch">
-  {% for product in products %}
-    {% include "partials/card.twig" %}
-  {% endfor %}
-</div>
+	{% if products|length > 0 %}
+		<div class="row d-flex align-items-stretch">
+			{% for product in products %}
+				{% include "partials/card.twig" %}
+			{% endfor %}
+		</div>
+	{% else %}
+		<h3>Geen producten gevonden.</h3>
+	{% endif %}
 
-{{ pagination|raw }}
+	{{ pagination|raw }}
 {% endblock %}
