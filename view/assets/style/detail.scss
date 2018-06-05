@@ -1,3 +1,24 @@
-// .spec-card {
-//  border-top: 1px solid  #3f4f5f;
-// }
+.arrow {
+    background-color: $primary;
+    padding: 0.5em 1em;
+    &::before {
+        content: "";
+        position: absolute;
+        right: -$arrow-height;
+        bottom: 0;
+        width: 0;
+        height: 0;
+        border-left: $arrow-height solid $arrow-bg;
+        border-top: $arrow-height solid transparent;
+        border-bottom: $arrow-height solid transparent;
+    }
+}
+
+.arrow-discount {
+    &::before {
+        right: -$arrow-discount-height;
+        border-left: $arrow-discount-height solid $arrow-bg;
+        border-top: $arrow-discount-height solid transparent;
+        border-bottom: $arrow-discount-height solid transparent;
+    }
+}
