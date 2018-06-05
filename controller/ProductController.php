@@ -1,8 +1,8 @@
 <?php
-require "Controller.php";
-require "../model/ProductModel.php";
-require "../model/ImageModel.php";
-require "../model/HTMLElements.php";
+require_once "Controller.php";
+require_once "../model/ProductModel.php";
+require_once "../model/ImageModel.php";
+require_once "../model/HTMLElements.php";
 
 /**
  * The base controller
@@ -96,16 +96,7 @@ class ProductController extends Controller {
 
         $products = $this->product->readProductsOneImage(6, "korting");
 
-        foreach($products as $key => $product) {
-
-            $products[$key] = $this->product->addCheckmark($products[$key]);
-            $products[$key] = $this->product->addHz($products[$key]);
-            $products[$key] = $this->product->addDegreeSymbol($products[$key]);
-            $products[$key] = $this->product->addEuro($products[$key]);
-
-            $items = ArrayHelper::getPriority($products[$key], $this->cardPriority, 3);
-            $products[$key]["priority_table"] = HTMLElements::table($items, "table", false);
-        }
+        $products = $this->product->applySymbols($products, $this->cardPriority, 3);
 
         $this->render("home.twig", compact("products"));
 
@@ -120,16 +111,7 @@ class ProductController extends Controller {
 
         $products = $this->product->readProductsOneImage(9);
 
-        foreach($products as $key => $product) {
-
-            $products[$key] = $this->product->addCheckmark($products[$key]);
-            $products[$key] = $this->product->addHz($products[$key]);
-            $products[$key] = $this->product->addDegreeSymbol($products[$key]);
-            $products[$key] = $this->product->addEuro($products[$key]);
-
-            $items = ArrayHelper::getPriority($products[$key], $this->cardPriority, 3);
-            $products[$key]["priority_table"] = HTMLElements::table($items, "table", false);
-        }
+        $products = $this->product->applySymbols($products, $this->cardPriority, 3);
 
         $pagination = HTMLElements::pagination(
             $this->product->dataHandler->pagination(9),
@@ -152,16 +134,7 @@ class ProductController extends Controller {
 
         $products = $this->product->searchProductsOneImage($_GET["q"], 9);
 
-        foreach($products as $key => $product) {
-
-            $products[$key] = $this->product->addCheckmark($products[$key]);
-            $products[$key] = $this->product->addHz($products[$key]);
-            $products[$key] = $this->product->addDegreeSymbol($products[$key]);
-            $products[$key] = $this->product->addEuro($products[$key]);
-
-            $items = ArrayHelper::getPriority($products[$key], $this->cardPriority, 3);
-            $products[$key]["priority_table"] = HTMLElements::table($items, "table", false);
-        }
+        $products = $this->product->applySymbols($products, $this->cardPriority, 3);
 
         $pagination = HTMLElements::pagination(
             $this->product->dataHandler->pagination(9),

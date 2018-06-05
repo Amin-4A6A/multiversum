@@ -1,5 +1,7 @@
 <?php
 require_once "DataHandler.php";
+require_once "ArrayHelper.php";
+require_once "HTMLElements.php";
 
 /**
  * The model of product
@@ -192,6 +194,20 @@ class ProductModel {
         return $this->dataHandler->readData(
             "DESCRIBE `product`"
         );
+    }
+
+    public function applySymbols(array $products, array $priority, $amount = 0) {
+        foreach($products as $key => $product) {
+
+            $products[$key] = $this->addCheckmark($products[$key]);
+            $products[$key] = $this->addHz($products[$key]);
+            $products[$key] = $this->addDegreeSymbol($products[$key]);
+            $products[$key] = $this->addEuro($products[$key]);
+
+            $items = ArrayHelper::getPriority($products[$key], $priority, $amount);
+            $products[$key]["priority_table"] = HTMLElements::table($items, "table", false);
+        }
+        return $products;
     }
 
     /**
