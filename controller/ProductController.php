@@ -155,6 +155,8 @@ class ProductController extends Controller {
      */
     public function collectCreateProduct() {
 
+        $this->requireLogin();
+
         if(!isset($_POST["submit"])) {
 
             $this->render("product/create.twig");

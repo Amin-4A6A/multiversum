@@ -36,6 +36,23 @@ abstract class Controller {
         header("Location: $url");
     }
 
+    public function requireLogin() {
+        session_start();
+        if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true) {
+            return;
+        }
+
+        if(isset($_GET["username"]) &&
+           isset($_GET["password"]) &&
+           $_GET["username"] == $_ENV["ADMIN_USERNAME"] &&
+           $_GET["password"] == $_ENV["ADMIN_PASSWORD"]) {
+            $_SESSION["logged_in"] = true;
+            return;
+        }
+
+        die("U moet inloggen om op de pagina te mogen.");
+    }
+
     abstract public function handleRequest();
 
 }
