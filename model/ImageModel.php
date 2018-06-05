@@ -161,7 +161,7 @@ class ImageModel {
         }
 
         return $this->dataHandler->deleteData(
-            "DELETE FROM `image` WHERE EAN = :EAN",
+            "DELETE FROM `image` WHERE product_EAN = :EAN",
             [":EAN" => $EAN]
         );
 

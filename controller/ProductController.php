@@ -61,8 +61,14 @@ class ProductController extends Controller {
 
         switch ($_GET["op"] ?? false) {
 
+            case "admin":
+                $this->collectAdminProduct();
+                break;
             case "create":
                 $this->collectCreateProduct();
+                break;
+            case "delete":
+                $this->collectDeleteProduct();
                 break;
             case "read":
                 $this->collectReadProduct();
@@ -145,6 +151,47 @@ class ProductController extends Controller {
         $page_title = "Zoek resultaten";
 
         $this->render("product/paginated_content.twig", compact("products", "pagination", "page_title"));
+
+    }
+
+    public function collectDeleteProduct() {
+
+        $this->requireLogin();
+
+        if(!isset($_GET["EAN"]))
+            $this->redirect("/product/admin");
+            
+        $this->image->deleteImages($_GET["EAN"]);
+        $this->product->deleteProduct($_GET["EAN"]);
+
+        $this->redirect("/product/admin");
+
+    }
+
+    public function collectAdminProduct() {
+
+        $this->requireLogin();
+
+        $products = $this->product->readProducts();
+
+        foreach($products as $key => $product) {
+            // <a class=\"btn btn-warning\" href=\"?op=update&id=".$row["product_id"]."\"><i class='fas fa-edit'></i> Update</a>
+
+            $products[$key]["actions"] = "
+            <a class=\"btn btn-danger\" href=\"/product/delete?EAN=$product[EAN]\"><i class='fas fa-trash-alt'></i> Verwijder</a>
+            ";
+
+            $products[$key] = ArrayHelper::getPriority($products[$key], [
+                "EAN",
+                "merk",
+                "naam",
+                "actions"
+            ]);
+        }
+
+        $table = HTMLElements::table($products, "table");
+
+        $this->render("product/admin.twig", compact("table"));
 
     }
 
