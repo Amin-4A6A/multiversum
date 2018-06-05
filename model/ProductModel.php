@@ -196,6 +196,14 @@ class ProductModel {
         );
     }
 
+    /**
+     * adds all the symbols, like Hz and euro, and adds an table
+     *
+     * @param array $products the products you want to apply it on
+     * @param array $priority the priority table
+     * @param integer $amount the amount of items in the table
+     * @return array the product with all the symbols applied
+     */
     public function applySymbols(array $products, array $priority, $amount = 0) {
         foreach($products as $key => $product) {
 
