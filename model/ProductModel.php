@@ -70,9 +70,9 @@ class ProductModel {
         $EAN = filter_var($EAN, FILTER_SANITIZE_STRING);
         $name = filter_var($name, FILTER_SANITIZE_STRING);
         $brand = filter_var($brand, FILTER_SANITIZE_STRING);
-        $price = floatval(filter_var($price, FILTER_SANITIZE_NUMBER_FLOAT));
+        $price = floatval(filter_var($price, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION));
         $description = filter_var($description, FILTER_SANITIZE_STRING);
-        $discount = floatval(filter_var($discount, FILTER_SANITIZE_NUMBER_FLOAT));
+        $discount = floatval(filter_var($discount, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION));
         $resolution =  filter_var($resolution_width."x".$resolution_height, FILTER_SANITIZE_STRING);
         $refresh_rate = intval(filter_var($refresh_rate, FILTER_SANITIZE_NUMBER_INT));
         $fov = intval(filter_var($fov, FILTER_SANITIZE_NUMBER_INT));
