@@ -214,7 +214,7 @@ class ProductController extends Controller {
         $product = $this->product->readProduct($_GET['EAN']);
         $items = ArrayHelper::getPriority($product, $detailProducts);
         $table = HTMLElements::table($items, "table", false);
-        $this->render("product/detail.twig", compact("table"));
+        $this->render("product/detail.twig", compact("table","product"));
 
     }
 
