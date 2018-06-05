@@ -98,4 +98,14 @@ class FileHandler {
 
     }
 
+    /**
+     * deletes a file relative to the dest folder
+     *
+     * @param string $path the file you want to delete
+     * @return bool TRUE on success or FALSE on failure.
+     */
+    public function deleteFile(string $path, string $dest = null) {
+        return unlink(($dest ?? $this->dest) . $path);
+    }
+
 }

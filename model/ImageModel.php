@@ -114,16 +114,57 @@ class ImageModel {
     /**
      * gets one image from the database
      *
-     * @param string $EAN the EAN of the product you want the image from
+     * @param string $id the id of image
      * @return array the image
      */
-    public function readImage(string $EAN) {
+    public function readImage(int $id) {
         return $this->dataHandler->readData(
             "SELECT * FROM `image` WHERE `product_EAN` = :product_EAN LIMIT 1",
             [
                 ":product_EAN" => $EAN
             ]
         );
+    }
+
+    /**
+     * deletes an image from id
+     *
+     * @param integer $id the image id you want to delete
+     * @return bool if it worked or not
+     */
+    public function deleteImage(int $id) {
+
+        $image = $this->readImage($id);
+
+        if($this->fileHandler->deleteFile($image["path"])) {
+            return $this->dataHandler->deleteData(
+                "DELETE FROM `image` WHERE id = :id",
+                [":id" => $id]
+            );
+        }
+
+        return false;
+    }
+
+    /**
+     * deletes images from product EAN code
+     *
+     * @param integer $EAN the product you want to delete the images from
+     * @return bool if it worked or not
+     */
+    public function deleteImages(string $EAN) {
+
+        $images = $this->readImages($EAN);
+
+        foreach($images as $image) {
+            $this->fileHandler->deleteFile($image["path"]);
+        }
+
+        return $this->dataHandler->deleteData(
+            "DELETE FROM `image` WHERE EAN = :EAN",
+            [":EAN" => $EAN]
+        );
+
     }
 
 }
