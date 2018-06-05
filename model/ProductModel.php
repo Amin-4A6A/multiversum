@@ -186,6 +186,19 @@ class ProductModel {
     }
 
     /**
+     * deletes a product
+     *
+     * @param string $EAN the EAN of the product you want to delete
+     * @return bool if it worked or not
+     */
+    public function deleteProduct(string $EAN) {
+        return $this->dataHandler->deleteData(
+            "DELETE FROM `product` WHERE EAN = :EAN",
+            [":EAN" => $EAN]
+        );
+    }
+
+    /**
      * returns the describe data from the table
      *
      * @return array an array with the table info

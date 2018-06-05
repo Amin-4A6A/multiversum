@@ -105,7 +105,7 @@ class FileHandler {
      * @return bool TRUE on success or FALSE on failure.
      */
     public function deleteFile(string $path, string $dest = null) {
-        return unlink(($dest ?? $this->dest) . $path);
+        return unlink(($dest ?? $this->dest) . "/" . $path);
     }
 
 }

@@ -1,0 +1,7 @@
+{% extends "layout/app.twig" %}
+
+{% block content %}
+<h1 class="mb-4 display-4">Admin:</h1>
+<a class="btn btn-primary my-3" href="/product/create"><i class='fas fa-plus-square'></i> Toevoegen</a>
+{{ table|raw }}
+{% endblock %}
