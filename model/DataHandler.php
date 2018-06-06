@@ -183,16 +183,8 @@ class DataHandler {
      */
     public function pagination(int $pagination) {
 
-        // remove "body" from select prev query
-        $sql = preg_split("/(?s)(?<=SELECT).*?(?=FROM)/", $this->lastSelect["sql"]);
-        // shuffle
-        $sql[2] = $sql[1];
-        // add count
-        $sql[1] = "COUNT(*) AS count";
-        // implode
-        $sql = implode($sql, " ");
-
-        $sql = preg_replace("/LIMIT [0-9]+ OFFSET [0-9]+/", "", $sql);
+        $sql = preg_replace("/LIMIT [0-9]+ OFFSET [0-9]+/", "", $this->lastSelect["sql"]);
+        $sql = "SELECT COUNT(*) AS count FROM (" . $sql . ") AS countTable";
                 
         $count =  $this->readData(
             $sql,

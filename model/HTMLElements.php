@@ -275,7 +275,6 @@ class HTMLElements {
      * @return string $pagination the paginator
      */
     public static function pagination(int $pages, int $current_page, string $url) {
-        $pages++;
 
         if($pages <= 1)
             return "";
