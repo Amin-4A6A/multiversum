@@ -70,7 +70,8 @@ class DataHandler {
      */
     public function __construct(string $host, string $database, string $username, string $password, string $dbtype = "mysql") {
         try {
-            $this->pdo = new PDO("$dbtype:host=$host;dbname=$database", $username, $password, [
+            $this->pdo = new PDO("$dbtype:host=$host;dbname=$database;charset=utf8mb4", $username, $password, [
+                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8mb4'",
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             ]);
