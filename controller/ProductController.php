@@ -160,7 +160,7 @@ class ProductController extends Controller {
 
         if(!isset($_GET["EAN"]))
             $this->redirect("/product/admin");
-            
+
         $this->image->deleteImages($_GET["EAN"]);
         $this->product->deleteProduct($_GET["EAN"]);
 
@@ -258,10 +258,11 @@ class ProductController extends Controller {
             "EAN"
         ];
 
+        $images = $this->image->readImages($_GET['EAN']);
         $product = $this->product->readProduct($_GET['EAN']);
         $items = ArrayHelper::getPriority($product, $detailProducts);
         $table = HTMLElements::table($items, "table", false);
-        $this->render("product/detail.twig", compact("table","product"));
+        $this->render("product/detail.twig", compact("table","product","images"));
 
     }
 
