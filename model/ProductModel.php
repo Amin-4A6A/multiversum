@@ -218,6 +218,13 @@ class ProductModel {
      * @return array the product with all the symbols applied
      */
     public function applySymbols(array $products, array $priority, $amount = 0) {
+
+        $assoc = ArrayHelper::isAssoc($products);
+
+        if($assoc) {
+            $products = ArrayHelper::to2DArray($products); 
+        }
+
         foreach($products as $key => $product) {
 
             $products[$key] = $this->addCheckmark($products[$key]);
@@ -228,6 +235,11 @@ class ProductModel {
             $items = ArrayHelper::getPriority($products[$key], $priority, $amount);
             $products[$key]["priority_table"] = HTMLElements::table($items, "table", false);
         }
+
+        if($assoc) {
+            $products = $products[0];
+        }
+
         return $products;
     }
 
