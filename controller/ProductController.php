@@ -260,7 +260,8 @@ class ProductController extends Controller {
 
         $images = $this->image->readImages($_GET['EAN']);
         $product = $this->product->readProduct($_GET['EAN']);
-        $items = ArrayHelper::getPriority($product, $detailProducts);
+        $symbol = $this->applySymbols($product);
+        $items = ArrayHelper::getPriority($symbol, $detailProducts);
         $table = HTMLElements::table($items, "table", false);
         $this->render("product/detail.twig", compact("table","product","images"));
 
