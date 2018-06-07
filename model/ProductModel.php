@@ -219,7 +219,7 @@ class ProductModel {
      */
     public function applySymbols(array $products, array $priority, $amount = 0) {
 
-        $assoc = ArrayHelper::isAssoc($products);
+        $assoc = ArrayHelper::is_assoc($products);
 
         if($assoc) {
             $products = ArrayHelper::to2DArray($products); 
