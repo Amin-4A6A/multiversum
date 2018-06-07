@@ -39,6 +39,9 @@ class ProductController extends Controller {
         "camera",
         "gyroscoop",
         "verstelbare lenzen",
+        "magnetometer",
+        "microfoon",
+        "koptelefoon",
         "aansluitingen",
         "accessoires",
     ];
@@ -226,6 +229,9 @@ class ProductController extends Controller {
                 $_POST["camera"] ?? null,
                 $_POST["gyroscope"] ?? null,
                 $_POST["adjustable_lenses"] ?? null,
+                $_POST["magnetometer"] ?? null,
+                $_POST["koptelefoon"] ?? null,
+                $_POST["microfoon"] ?? null,
                 $_POST["color"],
                 $_POST["platform"],
                 $_POST["discount"]
@@ -253,6 +259,9 @@ class ProductController extends Controller {
             "camera",
             "gyroscoop",
             "verstelbare lenzen",
+            "magnetometer",
+            "microfoon",
+            "koptelefoon",
             "aansluitingen",
             "accessoires",
             "EAN"

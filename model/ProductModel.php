@@ -63,6 +63,9 @@ class ProductModel {
                                   $camera = null,
                                   $gyroscope = null,
                                   $adjustable_lenses = null,
+                                  $magnetometer = null,
+                                  $koptelefoon = null,
+                                  $microfoon = null,
                                   string $color = null,
                                   string $platform = null,
                                   $discount = null) {
@@ -85,6 +88,9 @@ class ProductModel {
         $camera = isset($camera);
         $gyroscope = isset($gyroscope);
         $adjustable_lenses = isset($adjustable_lenses);
+        $magnetometer = isset($magnetometer);
+        $koptelefoon = isset($koptelefoon);
+        $microfoon = isset($microfoon);
 
 
         if($discount == 0) {
@@ -101,8 +107,8 @@ class ProductModel {
         }
         
         return $this->dataHandler->createData(
-            "INSERT INTO `product`(`EAN`, `naam`, `merk`, `prijs`, `beschrijving`, `resolutie`, `refresh rate`, `gezichtsveld`, `aansluitingen`, `accessoires`, `accelerometer`, `camera`, `gyroscoop`, `verstelbare lenzen`, `kleur`, `platform`, `korting`)
-                           VALUES (:EAN, :name, :brand, :price, :description, :resolution, :refresh_rate, :fov, :inputs, :accessories, :accelerometer, :camera, :gyroscope, :adjustable_lenses, :color, :platform, :discount)",
+            "INSERT INTO `product`(`EAN`, `naam`, `merk`, `prijs`, `beschrijving`, `resolutie`, `refresh rate`, `gezichtsveld`, `aansluitingen`, `accessoires`, `accelerometer`, `camera`, `gyroscoop`, `verstelbare lenzen`, `magnetometer`, `koptelefoon`, `microfoon`, `kleur`, `platform`, `korting`)
+                           VALUES (:EAN, :name, :brand, :price, :description, :resolution, :refresh_rate, :fov, :inputs, :accessories, :accelerometer, :camera, :gyroscope, :adjustable_lenses, :magnetometer, :koptelefoon, :microfoon, :color, :platform, :discount)",
             [
                 ":EAN" => $EAN,
                 ":name" => $name,
@@ -118,6 +124,9 @@ class ProductModel {
                 ":camera" => $camera,
                 ":gyroscope" => $gyroscope,
                 ":adjustable_lenses" => $adjustable_lenses,
+                ":magnetometer" => $magnetometer,
+                ":koptelefoon" => $koptelefoon,
+                ":microfoon" => $microfoon,
                 ":color" => $color,
                 ":platform" => $platform,
                 ":discount" => $discount
@@ -250,7 +259,7 @@ class ProductModel {
      * @return array the finished product
      */
     public function addCheckmark(array $product) {
-        foreach(["accelerometer", "camera", "gyroscoop", "verstelbare lenzen"] as $value) {
+        foreach(["accelerometer", "camera", "gyroscoop", "verstelbare lenzen", "magnetometer", "microfoon", "koptelefoon"] as $value) {
 
             $class = $product[$value] == 1 ? "far fa-check-circle text-success" : "far fa-times-circle text-danger";
             $product[$value] = "<i class=\"$class\"></i>";
