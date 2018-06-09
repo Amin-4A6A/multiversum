@@ -27,6 +27,128 @@ class ProductModel {
     }
 
     /**
+     * @param string $old_EAN the old EAN of the product
+     * @param string $new_EAN the new EAN of the product
+     * @param string $name the name of the product
+     * @param string $brand the brand of the product
+     * @param string $price the price of the product
+     * @param string $description the description of the product
+     * @param string (optional) $resolution_width the resolution width of the product
+     * @param string (optional) $resolution_height the resolution height of the product
+     * @param string (optional) $refresh_rate the refresh_rate of the product
+     * @param string (optional) $fov the fov of the product
+     * @param string (optional) $inputs the inputs of the product
+     * @param string (optional) $accessories the accessories of the product
+     * @param string (optional) $accelerometer the accelerometer of the product
+     * @param string (optional) $camera the camera of the product
+     * @param string (optional) $gyroscope the gyroscope of the product
+     * @param string (optional) $adjusable_lenses the adjusable_lenses of the product
+     * @param string (optional) $color the color of the product
+     * @param string (optional) $platform the platform of the product
+     * @param string (optional) $discount the discount of the product
+     * 
+     * @return void
+     */
+    public function updateProduct(
+        string $old_EAN,
+        string $new_EAN,
+        string $name,
+        string $brand,
+        $price,
+        string $description,
+        string $resolution_width = null,
+        string $resolution_height = null,
+        $refresh_rate = null,
+        $fov = null,
+        string $inputs = null,
+        string $accessories = null,
+        $accelerometer = null,
+        $camera = null,
+        $gyroscope = null,
+        $adjustable_lenses = null,
+        $magnetometer = null,
+        $koptelefoon = null,
+        $microfoon = null,
+        string $color = null,
+        string $platform = null,
+        $discount = null
+    ) {
+
+        extract($this->sanitizeProductInput(get_defined_vars()));
+
+        return $this->dataHandler->updateData(
+            "UPDATE `product` SET `EAN` = :new_EAN, `naam` = :name, `merk` = :brand, `prijs` = :price, `beschrijving` = :description, `resolutie` = :resolution, `refresh rate` = :refresh_rate, `gezichtsveld` = :fov, `aansluitingen` = :inputs, `accessoires` = :accessories, `accelerometer` = :accelerometer, `camera` = :camera, `gyroscoop` = :gyroscope, `verstelbare lenzen` = :adjustable_lenses, `magnetometer` = :magnetometer, `koptelefoon` = :koptelefoon, `microfoon` = :microfoon, `kleur` = :color, `platform` = :platform, `korting` = :discount WHERE `product`.`EAN` = :old_EAN",
+            [
+                ":old_EAN" => $old_EAN,
+                ":new_EAN" => $new_EAN,
+                ":name" => $name,
+                ":brand" => $brand,
+                ":price" => $price,
+                ":description" => $description,
+                ":resolution" => $resolution,
+                ":refresh_rate" => $refresh_rate,
+                ":fov" => $fov,
+                ":inputs" => $inputs,
+                ":accessories" => $accessories,
+                ":accelerometer" => $accelerometer,
+                ":camera" => $camera,
+                ":gyroscope" => $gyroscope,
+                ":adjustable_lenses" => $adjustable_lenses,
+                ":magnetometer" => $magnetometer,
+                ":koptelefoon" => $koptelefoon,
+                ":microfoon" => $microfoon,
+                ":color" => $color,
+                ":platform" => $platform,
+                ":discount" => $discount
+            ]
+        );
+
+    }
+
+    public function sanitizeProductInput(array $inputs) {
+
+        $inputs["EAN"] = filter_var(($inputs["EAN"] ?? ""), FILTER_SANITIZE_STRING);
+        $inputs["old_EAN"] = filter_var(($inputs["old_EAN"] ?? ""), FILTER_SANITIZE_STRING);
+        $inputs["new_EAN"] = filter_var(($inputs["new_EAN"] ?? ""), FILTER_SANITIZE_STRING);
+        $inputs["name"] = filter_var($inputs["name"], FILTER_SANITIZE_STRING);
+        $inputs["brand"] = filter_var($inputs["brand"], FILTER_SANITIZE_STRING);
+        $inputs["price"] = floatval(filter_var($inputs["price"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION));
+        $inputs["description"] = filter_var($inputs["description"], FILTER_SANITIZE_STRING);
+        $inputs["discount"] = floatval(filter_var($inputs["discount"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION));
+        $inputs["resolution"] =  filter_var($inputs["resolution_width"]."x".$inputs["resolution_height"], FILTER_SANITIZE_STRING);
+        $inputs["refresh_rate"] = intval(filter_var($inputs["refresh_rate"], FILTER_SANITIZE_NUMBER_INT));
+        $inputs["fov"] = intval(filter_var($inputs["fov"], FILTER_SANITIZE_NUMBER_INT));
+        $inputs["inputs"] = filter_var($inputs["inputs"], FILTER_SANITIZE_STRING);
+        $inputs["accessories"] = filter_var($inputs["accessories"], FILTER_SANITIZE_STRING);
+        $inputs["color"] = filter_var($inputs["color"], FILTER_SANITIZE_STRING);
+        $inputs["platform"] = filter_var($inputs["platform"], FILTER_SANITIZE_STRING);
+
+        $inputs["accelerometer"] = isset($inputs["accelerometer"]);
+        $inputs["camera"] = isset($inputs["camera"]);
+        $inputs["gyroscope"] = isset($inputs["gyroscope"]);
+        $inputs["adjustable_lenses"] = isset($inputs["adjustable_lenses"]);
+        $inputs["magnetometer"] = isset($inputs["magnetometer"]);
+        $inputs["koptelefoon"] = isset($inputs["koptelefoon"]);
+        $inputs["microfoon"] = isset($inputs["microfoon"]);
+
+
+        if($inputs["discount"] == 0) {
+            $inputs["discount"] = null;
+        }
+        if($inputs["refresh_rate"] == 0) {
+            $inputs["refresh_rate"] = null;
+        }
+        if($inputs["fov"] == 0) {
+            $inputs["fov"] = null;
+        }
+        if(!$inputs["resolution_width"] && !$inputs["resolution_height"]) {
+            $inputs["resolution"] = null;
+        }
+
+        return $inputs;
+    }
+
+    /**
      * @param string $EAN the EAN of the product
      * @param string $name the name of the product
      * @param string $brand the brand of the product
@@ -48,64 +170,32 @@ class ProductModel {
      * 
      * @return string $EAN product EAN
      */
-    public function createProduct(string $EAN,
-                                  string $name,
-                                  string $brand,
-                                  $price,
-                                  string $description,
-                                  string $resolution_width = null,
-                                  string $resolution_height = null,
-                                  $refresh_rate = null,
-                                  $fov = null,
-                                  string $inputs = null,
-                                  string $accessories = null,
-                                  $accelerometer = null,
-                                  $camera = null,
-                                  $gyroscope = null,
-                                  $adjustable_lenses = null,
-                                  $magnetometer = null,
-                                  $koptelefoon = null,
-                                  $microfoon = null,
-                                  string $color = null,
-                                  string $platform = null,
-                                  $discount = null) {
-
-        $EAN = filter_var($EAN, FILTER_SANITIZE_STRING);
-        $name = filter_var($name, FILTER_SANITIZE_STRING);
-        $brand = filter_var($brand, FILTER_SANITIZE_STRING);
-        $price = floatval(filter_var($price, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION));
-        $description = filter_var($description, FILTER_SANITIZE_STRING);
-        $discount = floatval(filter_var($discount, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION));
-        $resolution =  filter_var($resolution_width."x".$resolution_height, FILTER_SANITIZE_STRING);
-        $refresh_rate = intval(filter_var($refresh_rate, FILTER_SANITIZE_NUMBER_INT));
-        $fov = intval(filter_var($fov, FILTER_SANITIZE_NUMBER_INT));
-        $inputs = filter_var($inputs, FILTER_SANITIZE_STRING);
-        $accessories = filter_var($accessories, FILTER_SANITIZE_STRING);
-        $color = filter_var($color, FILTER_SANITIZE_STRING);
-        $platform = filter_var($platform, FILTER_SANITIZE_STRING);
-
-        $accelerometer = isset($accelerometer);
-        $camera = isset($camera);
-        $gyroscope = isset($gyroscope);
-        $adjustable_lenses = isset($adjustable_lenses);
-        $magnetometer = isset($magnetometer);
-        $koptelefoon = isset($koptelefoon);
-        $microfoon = isset($microfoon);
-
-
-        if($discount == 0) {
-            $discount = null;
-        }
-        if($refresh_rate == 0) {
-            $refresh_rate = null;
-        }
-        if($fov == 0) {
-            $fov = null;
-        }
-        if(!$resolution_width && !$resolution_height) {
-            $resolution = null;
-        }
+    public function createProduct(
+        string $EAN,
+        string $name,
+        string $brand,
+        $price,
+        string $description,
+        string $resolution_width = null,
+        string $resolution_height = null,
+        $refresh_rate = null,
+        $fov = null,
+        string $inputs = null,
+        string $accessories = null,
+        $accelerometer = null,
+        $camera = null,
+        $gyroscope = null,
+        $adjustable_lenses = null,
+        $magnetometer = null,
+        $koptelefoon = null,
+        $microfoon = null,
+        string $color = null,
+        string $platform = null,
+        $discount = null
+    ) {
         
+        extract($this->sanitizeProductInput(get_defined_vars()));
+
         return $this->dataHandler->createData(
             "INSERT INTO `product`(`EAN`, `naam`, `merk`, `prijs`, `beschrijving`, `resolutie`, `refresh rate`, `gezichtsveld`, `aansluitingen`, `accessoires`, `accelerometer`, `camera`, `gyroscoop`, `verstelbare lenzen`, `magnetometer`, `koptelefoon`, `microfoon`, `kleur`, `platform`, `korting`)
                            VALUES (:EAN, :name, :brand, :price, :description, :resolution, :refresh_rate, :fov, :inputs, :accessories, :accelerometer, :camera, :gyroscope, :adjustable_lenses, :magnetometer, :koptelefoon, :microfoon, :color, :platform, :discount)",

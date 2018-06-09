@@ -60,6 +60,9 @@ class ImageModel {
      * @return int last insert id
      */
     public function createImages(array $paths, string $EAN) {
+
+        if(sizeof($paths) === 0)
+            return false;
         
         $bindings = [
             ":product_EAN" => $EAN
@@ -119,10 +122,11 @@ class ImageModel {
      */
     public function readImage(int $id) {
         return $this->dataHandler->readData(
-            "SELECT * FROM `image` WHERE `product_EAN` = :product_EAN LIMIT 1",
+            "SELECT * FROM `image` WHERE `id` = :id",
             [
-                ":product_EAN" => $EAN
-            ]
+                ":id" => $id
+            ],
+            false
         );
     }
 
@@ -135,6 +139,8 @@ class ImageModel {
     public function deleteImage(int $id) {
 
         $image = $this->readImage($id);
+
+        var_dump($image);
 
         if($this->fileHandler->deleteFile($image["path"])) {
             return $this->dataHandler->deleteData(

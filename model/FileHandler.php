@@ -36,6 +36,9 @@ class FileHandler {
         $output = [];
 
         for($i = 0; $i < sizeof($files["name"]); $i++) {
+            if(empty($files["name"][$i]))
+                break;
+                
             $output[] = [];
             foreach ($files as $key => $value) {
                 $output[$i][$key] = $value[$i];
@@ -54,6 +57,7 @@ class FileHandler {
      * @return array $paths an array with the image path info
      */
     public function uploadImages(array $files, string $dest = null) {
+
         $files = $this->remapUploadArray($files);
 
         $paths = [];

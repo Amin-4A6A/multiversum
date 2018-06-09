@@ -70,6 +70,9 @@ class ProductController extends Controller {
             case "create":
                 $this->collectCreateProduct();
                 break;
+            case "update":
+                $this->collectUpdateProduct();
+                break;
             case "delete":
                 $this->collectDeleteProduct();
                 break;
@@ -92,6 +95,73 @@ class ProductController extends Controller {
             default:
                 $this->collectHomeProduct();
                 break;
+        }
+
+    }
+
+    /**
+     * the update page method
+     *
+     * @return void
+     */
+    public function collectUpdateProduct() {
+
+        $this->requireLogin();
+
+        
+        if(!isset($_POST["submit"])) {
+
+            if(!isset($_GET["EAN"]))
+                $this->redirect("/product/admin");
+
+            $product = $this->product->readProduct($_GET["EAN"]);
+
+            $resolution = explode("x", $product["resolutie"]);
+
+            $product["resolution_width"] = $resolution[0] ?? "";
+            $product["resolution_height"] = $resolution[1] ?? "";
+
+            $images = $this->image->readImages($_GET["EAN"]);
+
+            $update = true;
+
+            $this->render("product/form.twig", compact("product", "images", "update"));
+
+        } else {
+
+            $this->product->updateProduct(
+                $_GET["EAN"],
+                $_POST["EAN"],
+                $_POST["name"],
+                $_POST["brand"],
+                $_POST["price"],
+                $_POST["description"],
+                $_POST["resolution_width"],
+                $_POST["resolution_height"],
+                $_POST["refresh_rate"],
+                $_POST["fov"],
+                $_POST["inputs"],
+                $_POST["accessories"],
+                $_POST["accelerometer"] ?? null,
+                $_POST["camera"] ?? null,
+                $_POST["gyroscope"] ?? null,
+                $_POST["adjustable_lenses"] ?? null,
+                $_POST["magnetometer"] ?? null,
+                $_POST["koptelefoon"] ?? null,
+                $_POST["microfoon"] ?? null,
+                $_POST["color"],
+                $_POST["platform"],
+                $_POST["discount"]
+            );
+
+            $this->image->createImagesUpload($_FILES["product_images"], $_POST["EAN"]);
+
+            foreach ($_POST["delete_image"] as $key => $value) {
+                $this->image->deleteImage($key);
+            }
+
+            $this->redirect("/product/" . $_POST["EAN"]);
+
         }
 
     }
@@ -182,6 +252,7 @@ class ProductController extends Controller {
 
             $products[$key]["actions"] = "
             <a class=\"btn btn-danger\" href=\"/product/delete?EAN=$product[EAN]\"><i class='fas fa-trash-alt'></i> Verwijder</a>
+            <a class=\"btn btn-warning\" href=\"/product/update?EAN=$product[EAN]\"><i class='fas fa-edit'></i> Wijzig</a>
             ";
 
             $products[$key] = ArrayHelper::getPriority($products[$key], [
@@ -209,7 +280,7 @@ class ProductController extends Controller {
 
         if(!isset($_POST["submit"])) {
 
-            $this->render("product/create.twig");
+            $this->render("product/form.twig");
 
         } else {
 
