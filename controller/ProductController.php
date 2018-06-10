@@ -5,7 +5,7 @@ require_once "../model/ImageModel.php";
 require_once "../model/HTMLElements.php";
 
 /**
- * The base controller
+ * The product controller
  *
  * @category   Controller
  * @author     Leon in 't Veld <leon3110l@gmail.com>
