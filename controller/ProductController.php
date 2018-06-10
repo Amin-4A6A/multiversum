@@ -82,6 +82,9 @@ class ProductController extends Controller {
             case 'detail':
                 $this->render("product/detail.twig");
                 break;
+            case 'cart':
+                $this->render("product/shopping_cart.twig");
+                break;
             case 'contact':
                 $this->render("contact.twig");
                 break;
@@ -108,7 +111,7 @@ class ProductController extends Controller {
 
         $this->requireLogin();
 
-        
+
         if(!isset($_POST["submit"])) {
 
             if(!isset($_GET["EAN"]))
