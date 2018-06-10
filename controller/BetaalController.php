@@ -32,17 +32,29 @@ class BetaalController extends Controller {
         $this->order = new OrderModel();
     }
 
+    /**
+     * handles the request
+     *
+     * @return void
+     */
     public function handleRequest() {
 
         switch ($_GET["op"] ?? false) {
-            case 'value':
-                # code...
-                break;
-            
-            default:
-                echo "hoi";
+            case 'formulier':
+                $this->collectFormBetaal();
                 break;
         }
+
+    }
+    
+    /**
+     * the betaal form method
+     *
+     * @return void
+     */
+    public function collectFormBetaal() {
+
+        $this->render("betaal/form.twig");
 
     }
 
