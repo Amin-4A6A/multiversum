@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 07, 2018 at 08:31 PM
+-- Generation Time: Jun 11, 2018 at 06:19 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -21,6 +21,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `multiversum`
 --
+CREATE DATABASE IF NOT EXISTS `multiversum` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `multiversum`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `adres`
+--
+
+DROP TABLE IF EXISTS `adres`;
+CREATE TABLE `adres` (
+  `id` int(11) NOT NULL,
+  `straat` varchar(255) NOT NULL,
+  `huisnummer` int(11) NOT NULL,
+  `toevoeging` varchar(10) DEFAULT NULL,
+  `postcode` varchar(6) NOT NULL,
+  `land` varchar(255) DEFAULT NULL,
+  `stad` varchar(255) NOT NULL,
+  `voornaam` varchar(255) NOT NULL,
+  `tussenvoegsel` varchar(255) DEFAULT NULL,
+  `achternaam` varchar(255) NOT NULL,
+  `geslacht` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -28,10 +51,11 @@ SET time_zone = "+00:00";
 -- Table structure for table `image`
 --
 
+DROP TABLE IF EXISTS `image`;
 CREATE TABLE `image` (
   `id` int(11) NOT NULL,
   `path` varchar(255) NOT NULL,
-  `product_EAN` char(13) NOT NULL
+  `product_EAN` varchar(13) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -136,7 +160,11 @@ INSERT INTO `image` (`id`, `path`, `product_EAN`) VALUES
 (109, '5b16b8fee7c96.jpeg', '5412810223176'),
 (110, '5b16b8fee84d4.jpeg', '5412810223176'),
 (111, '5b16b8fee8c5a.jpeg', '5412810223176'),
-(112, '5b16b8fee93b0.jpeg', '5412810223176');
+(112, '5b16b8fee93b0.jpeg', '5412810223176'),
+(119, '5b1c4751ec8bb.png', '8917164709174'),
+(120, '5b1c4751ecb45.png', '8917164709174'),
+(121, '5b1c4751ecb78.png', '8917164709174'),
+(123, '5b1c4751ecbd7.png', '8917164709174');
 
 -- --------------------------------------------------------
 
@@ -144,23 +172,15 @@ INSERT INTO `image` (`id`, `path`, `product_EAN`) VALUES
 -- Table structure for table `order`
 --
 
+DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `id` int(11) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `prijs` decimal(9,2) NOT NULL,
-  `voornaam` varchar(255) NOT NULL,
-  `tussenvoegsel` varchar(45) DEFAULT NULL,
-  `achternaam` varchar(255) NOT NULL,
-  `telefoon nummer` varchar(45) DEFAULT NULL,
-  `iban` varchar(34) NOT NULL,
-  `aanhef` tinyint(1) DEFAULT NULL,
+  `telefoonnummer` varchar(45) DEFAULT NULL,
   `email` varchar(254) DEFAULT NULL,
-  `straat` varchar(255) NOT NULL,
-  `huisnummer` int(11) NOT NULL,
-  `huisnummer toevoeging` varchar(10) DEFAULT NULL,
-  `postcode` varchar(6) NOT NULL,
-  `land` varchar(255) DEFAULT NULL,
-  `stad` varchar(255) NOT NULL
+  `betaaladres_id` int(11) NOT NULL,
+  `bezorgadres_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -169,9 +189,10 @@ CREATE TABLE `order` (
 -- Table structure for table `order_has_product`
 --
 
+DROP TABLE IF EXISTS `order_has_product`;
 CREATE TABLE `order_has_product` (
   `order_id` int(11) NOT NULL,
-  `product_EAN` char(13) NOT NULL,
+  `product_EAN` varchar(13) NOT NULL,
   `aantal` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -181,6 +202,7 @@ CREATE TABLE `order_has_product` (
 -- Table structure for table `product`
 --
 
+DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `EAN` char(13) NOT NULL,
   `naam` varchar(255) NOT NULL,
@@ -196,9 +218,9 @@ CREATE TABLE `product` (
   `camera` tinyint(1) DEFAULT NULL,
   `gyroscoop` tinyint(1) DEFAULT NULL,
   `verstelbare lenzen` tinyint(1) DEFAULT NULL,
-  `magnetometer` tinyint(1) NOT NULL,
-  `koptelefoon` tinyint(1) NOT NULL,
-  `microfoon` tinyint(1) NOT NULL,
+  `magnetometer` tinyint(1) DEFAULT NULL,
+  `koptelefoon` tinyint(1) DEFAULT NULL,
+  `microfoon` tinyint(1) DEFAULT NULL,
   `kleur` varchar(45) DEFAULT NULL,
   `platform` varchar(255) DEFAULT NULL,
   `korting` decimal(9,2) DEFAULT NULL
@@ -233,11 +255,18 @@ INSERT INTO `product` (`EAN`, `naam`, `prijs`, `beschrijving`, `merk`, `resoluti
 ('8718868990570', 'VR Gecko', '24.95', '', 'Salora', NULL, NULL, NULL, '', '', 0, 0, 0, 0, 0, 0, 0, 'Wit', 'Smartphone', NULL),
 ('8801643063863', 'Gear VR 4 + Gear VR Controller ', '114.95', '	Werkt met Samsung Galaxy Note 8, S8, S8 Plus of S7 Edge, S7, S6 edge Plus, S6', 'Samsung', '207x98', NULL, NULL, '', '	Controller(s)', 1, 0, 1, 0, 0, 0, 0, '	Zwart', 'Smartphone', NULL),
 ('8806088503141', 'Gear VR 2', '79.90', '	Geschikt voor:\r\nSamsung Galaxy S6\r\nSamsung Galaxy S6 Edge\r\nSamsung Galaxy S6 Edge+\r\nSamsung Galaxy S7\r\nSamsung Galaxy S7 Edge\r\nSamsung Galaxy Note 7', 'Samsung', '207x98', NULL, NULL, '', '', 1, 0, 1, 0, 0, 0, 0, 'Zwart', 'Smartphone', NULL),
-('8806088773391', 'New Gear VR + Gear VR Controller', '121.59', '', 'Samsung', NULL, NULL, 101, '', '', 1, 0, 1, 0, 0, 0, 0, 'Zwart', 'Smartphone', NULL);
+('8806088773391', 'New Gear VR + Gear VR Controller', '121.59', '', 'Samsung', NULL, NULL, 101, '', '', 1, 0, 1, 0, 0, 0, 0, 'Zwart', 'Smartphone', NULL),
+('8917164709174', 'test1', '599.00', 'dinges', 'test', '1024x1024', 90, 110, '', '', 0, 1, 1, 1, 1, 1, 1, 'dinges', 'dinges', '550.00');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `adres`
+--
+ALTER TABLE `adres`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `image`
@@ -250,7 +279,9 @@ ALTER TABLE `image`
 -- Indexes for table `order`
 --
 ALTER TABLE `order`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_order_adres1_idx` (`betaaladres_id`),
+  ADD KEY `fk_order_adres2_idx` (`bezorgadres_id`);
 
 --
 -- Indexes for table `order_has_product`
@@ -271,10 +302,16 @@ ALTER TABLE `product`
 --
 
 --
+-- AUTO_INCREMENT for table `adres`
+--
+ALTER TABLE `adres`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `image`
 --
 ALTER TABLE `image`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 
 --
 -- AUTO_INCREMENT for table `order`
@@ -291,6 +328,13 @@ ALTER TABLE `order`
 --
 ALTER TABLE `image`
   ADD CONSTRAINT `fk_image_product` FOREIGN KEY (`product_EAN`) REFERENCES `product` (`EAN`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `order`
+--
+ALTER TABLE `order`
+  ADD CONSTRAINT `fk_order_adres1` FOREIGN KEY (`betaaladres_id`) REFERENCES `adres` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_order_adres2` FOREIGN KEY (`bezorgadres_id`) REFERENCES `adres` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `order_has_product`
