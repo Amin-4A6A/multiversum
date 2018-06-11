@@ -1,0 +1,80 @@
+{% macro adresForm(name) %}
+    <div class="form-row">
+        
+        <div class="form-group col-md-1">
+            <label for="">Aanhef:</label>
+        </div>
+
+        <div class="form-group col-md-1">
+            <div class="form-check">
+                <input id="aanhef-{{ name }}-man" name="{{ name }}[aanhef]" type="radio" class="form-check-input" value="m" checked>
+                <label for="aanhef-{{ name }}-man">Dhr.</label>
+            </div>
+        </div>
+
+        <div class="form-group col-md-1">
+            <div class="form-check">
+                <input id="aanhef-{{ name }}-vrouw" name="{{ name }}[aanhef]" type="radio" class="form-check-input" value="v">
+                <label for="aanhef-{{ name }}-vrouw">Mevr.</label>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-row">
+
+        <div class="form-group col-md">
+            <label for="voornaam-{{ name }}">Voornaam</label>
+            <input type="text" name="{{ name }}[voornaam]" placeholder="Voornaam" id="voornaam-{{ name }}" class="form-control" required>
+        </div>
+
+        <div class="form-group col-md-2">
+            <label for="tussenvoegsel-{{ name }}">Tussenvoegsel</label>
+            <input type="text" name="{{ name }}[tussenvoegsel]" placeholder="Tussenvoegsel" id="tussenvoegsel-{{ name }}" class="form-control">
+        </div>
+
+        <div class="form-group col-md">
+            <label for="achternaam-{{ name }}">Achternaam</label>
+            <input type="text" name="{{ name }}[achternaam]" placeholder="Achternaam" id="achternaam-{{ name }}" class="form-control" required>
+        </div>
+
+    </div>
+
+    <div class="form-row">
+
+        <div class="form-group col-md">
+            <label for="land-{{ name }}">Land</label>
+            <input type="text" name="{{ name }}[land]" placeholder="Land" id="land-{{ name }}" class="form-control" value="Nederland" required>
+        </div>
+
+        <div class="form-group col-md">
+            <label for="woonplaats-{{ name }}">Woonplaats</label>
+            <input type="text" name="{{ name }}[woonplaats]" placeholder="Woonplaats" id="woonplaats-{{ name }}" class="form-control" required>
+        </div>
+
+    </div>
+
+    <div class="form-row">
+
+        <div class="form-group col-md">
+            <label for="straat-{{ name }}">Straat</label>
+            <input type="text" name="{{ name }}[straat]" placeholder="Straat" id="straat-{{ name }}" class="form-control" required>
+        </div>
+
+        <div class="form-group col-md-2">
+            <label for="huisnummer-{{ name }}">Huisnummer</label>
+            <input type="number" name="{{ name }}[huisnummer]" placeholder="Huisnummer" id="huisnummer-{{ name }}" class="form-control" required>
+        </div>
+
+        <div class="form-group col-md-2">
+            <label for="toevoeging-{{ name }}">Toevoeging</label>
+            <input type="text" name="{{ name }}[toevoeging]" placeholder="Toevoeging" id="toevoeging-{{ name }}" class="form-control">
+        </div>
+
+        <div class="form-group col-md-3">
+            <label for="postcode-{{ name }}">Postcode</label>
+            <input type="text" name="{{ name }}[postcode]" placeholder="Postcode" id="postcode-{{ name }}" class="form-control" required>
+        </div>
+
+    </div>
+{% endmacro adresForm %}

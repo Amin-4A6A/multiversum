@@ -1,4 +1,6 @@
 import "../style/main.scss";
 import "bootstrap";
-import "jquery";
+import $ from "jquery";
 import "popper.js";
+
+import "./betaal.js";
