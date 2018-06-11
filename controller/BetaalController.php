@@ -43,10 +43,13 @@ class BetaalController extends Controller {
             case 'formulier':
                 $this->collectFormBetaal();
                 break;
+            case 'cart':
+                $this->collectCard();
+                break;
         }
 
     }
-    
+
     /**
      * the betaal form method
      *
@@ -55,6 +58,15 @@ class BetaalController extends Controller {
     public function collectFormBetaal() {
 
         $this->render("betaal/form.twig");
+
+    }
+    /**
+     * the card method
+     *
+     * @return void
+     */
+    public function collectCard() {
+        $this->render("betaal/side_cart.twig");
 
     }
 

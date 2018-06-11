@@ -15,12 +15,15 @@
   {% include "partials/nav.twig" %}
 
   {% block body %}
-  <div class="container my-5 content-container">
-    {% block content %}
+  <div class="row my-5 content-container">
+    <div class="col-md-1"></div>
+    <div class="col-md-8">
+      {% block content %}
 
+      {% endblock %}
+    </div>
+    <div id="cart-col" class="col-md-3"></div>
 
-
-    {% endblock %}
   </div>
   {% endblock %}
 

@@ -83,7 +83,7 @@ class ProductController extends Controller {
                 $this->render("product/detail.twig");
                 break;
             case 'cart':
-                $this->render("product/shopping_cart.twig");
+                $this->render("partials/side_cart.twig");
                 break;
             case 'contact':
                 $this->render("contact.twig");
