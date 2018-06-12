@@ -402,7 +402,6 @@ class ProductModel {
             return $product;
 
         $product["prijs"] = "€ ". str_replace(".", ",", $product["prijs"]);
-        ;
 
         if(isset($product["korting"]))
             $product["korting"] = "€ ". str_replace(".", ",", $product["korting"]);
