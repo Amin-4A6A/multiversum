@@ -62,8 +62,14 @@ class AdresModel {
         $achternaam = filter_var($achternaam, FILTER_SANITIZE_STRING);
         $geslacht = filter_var($geslacht, FILTER_SANITIZE_STRING);
 
-        return $this->dataHandler(
-            "INSERT INTO `adres`(`straat`, `huisnummer`, `toevoeging`, `postcode`, `land`, `stad`, `voornaam`, `tussenvoegsel`, `achternaam`, `geslacht`) VALUES (:straat, :huisnummer, :toevoeging, :postcode, :land, :stad, :voornaam, :geslacht)",
+        if($geslacht == "m") {
+            $geslacht = 1;
+        } else {
+            $geslacht = 0;
+        }
+
+        return $this->dataHandler->createData(
+            "INSERT INTO `adres`(`straat`, `huisnummer`, `toevoeging`, `postcode`, `land`, `stad`, `voornaam`, `tussenvoegsel`, `achternaam`, `geslacht`) VALUES (:straat, :huisnummer, :toevoeging, :postcode, :land, :stad, :voornaam, :tussenvoegsel, :achternaam, :geslacht)",
             [
                 ":straat" => $straat,
                 ":huisnummer" => $huisnummer,
