@@ -231,7 +231,7 @@ class ProductModel {
      */
     public function readProducts($pagination = 0) {
         return $this->dataHandler->readData(
-            "SELECT * FROM `product`",
+            "SELECT * FROM `product` ORDER BY `korting` ASC",
             [],
             true,
             $pagination
@@ -245,9 +245,9 @@ class ProductModel {
      * @param string $orderBy what table to order by
      * @return array a 2d array with all the products
      */
-    public function readProductsOneImage(int $pagination, string $orderBy = null) {
+    public function readProductsOneImage(int $pagination) {
         return $this->dataHandler->readData(
-            "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` GROUP BY `product`.`EAN`" . (isset($orderBy) ? "ORDER BY `product`.`$orderBy`" : ""),
+            "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` GROUP BY `product`.`EAN` ORDER BY `product`.`korting` ASC",
             [],
             true,
             $pagination
@@ -263,7 +263,7 @@ class ProductModel {
      */
     public function searchProductsOneImage(string $query, int $pagination) {
         return $this->dataHandler->readData(
-            "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` WHERE `product`.`ean` LIKE :q OR `product`.`beschrijving` LIKE :q OR `product`.`naam` LIKE :q OR `product`.`merk` LIKE :q GROUP BY `product`.`EAN`",
+            "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` WHERE `product`.`ean` LIKE :q OR `product`.`beschrijving` LIKE :q OR `product`.`naam` LIKE :q OR `product`.`merk` LIKE :q GROUP BY `product`.`EAN` ORDER BY `product`.`korting` ASC",
             [":q" => "%$query%"],
             true,
             $pagination

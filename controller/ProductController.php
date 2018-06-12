@@ -176,7 +176,7 @@ class ProductController extends Controller {
      */
     public function collectHomeProduct() {
 
-        $products = $this->product->readProductsOneImage(6, "korting");
+        $products = $this->product->readProductsOneImage(6);
 
         $products = $this->product->applySymbols($products, $this->cardPriority, 3);
 
