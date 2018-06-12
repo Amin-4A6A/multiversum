@@ -1,25 +1,27 @@
 <div class="col-sm-6 col-lg-4 my-3">
 
-    <div class="w-100 h-100 card product-card">
-        <div class="product-img">
-            <div class="arrow {{ not product["korting"] is empty ? "arrow-discount" : "" }}">
-                {% if not product["korting"] is empty %}
-                    <small class="text-danger text-line-through font-italic">{{ product["prijs"] }}</small>
-                {% endif %}
-                <h3 class="m-0">{{ not product["korting"] is empty ? product["korting"] : product["prijs"] }}</h3>
-            </div>
-            <img class="card-img-top" src="/images/product/{{ product["path"] }}" alt="Card image cap">
-        </div>
-        <div class="card-body d-flex align-items-start flex-column">
-            <a class="text-secondary" href="/product/{{ product["EAN"] }}">
-                <h5 class="card-title">{{ product["merk"] }} {{ product["naam"] }}</h5>
+        <div class="w-100 h-100 card product-card">
+            <a href="/product/{{ product["EAN"] }}" class="text-dark">
+                <div class="product-img">
+                    <div class="arrow {{ not product["korting"] is empty ? "arrow-discount" : "" }}">
+                        {% if not product["korting"] is empty %}
+                            <small class="text-danger text-line-through font-italic">{{ product["prijs"] }}</small>
+                        {% endif %}
+                        <h3 class="m-0">{{ not product["korting"] is empty ? product["korting"] : product["prijs"] }}</h3>
+                    </div>
+                    <img class="card-img-top" src="/images/product/{{ product["path"] }}" alt="Card image cap">
+                </div>
             </a>
-            {{ product["priority_table"]|raw }}
-            <div class="btn-group mt-auto" role="group">
-                <a href="/product/{{ product["EAN"] }}" class="btn btn-primary">Lees verder</a>
-                {# <a href="#" class="btn btn-secondary">Koop nu!</a> #}
+            <div class="card-body d-flex align-items-start flex-column">
+                <a class="text-secondary" href="/product/{{ product["EAN"] }}">
+                    <h5 class="card-title">{{ product["merk"] }} {{ product["naam"] }}</h5>
+                </a>
+                {{ product["priority_table"]|raw }}
+                <div class="btn-group mt-auto" role="group">
+                    <a href="/product/{{ product["EAN"] }}" class="btn btn-primary">Lees verder</a>
+                    {# <a href="#" class="btn btn-secondary">Koop nu!</a> #}
+                </div>
             </div>
         </div>
-    </div>
 
 </div>
