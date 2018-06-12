@@ -14,7 +14,7 @@
             </a>
             <div class="card-body d-flex align-items-start flex-column">
                 <a class="text-secondary" href="/product/{{ product["EAN"] }}">
-                    <h5 class="card-title">{{ product["merk"] }} {{ product["naam"] }}</h5>
+                    <h5 class="card-title">{{ product["merk"] }} {{ product["naam"] }} {% if not product["korting"] is empty %}<span class="badge badge-danger">Korting!</span>{% endif %}</h5>
                 </a>
                 {{ product["priority_table"]|raw }}
                 <div class="btn-group mt-auto" role="group">
