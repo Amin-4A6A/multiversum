@@ -1,87 +1,60 @@
 {% extends "layout/app.twig" %}
 
+{% import "partials/adresForm.twig" as form %}
+
 {% block content %}
 
 <h1 class="mb-5">Betaal</h1>
 
 <form class="form" action="" method="POST">
 
-    <div class="form-group form-row">
+    {{ form.adresForm("betaaladres") }}
+
+    <div class="form-row">
         
-        <div class="col-md-1">
-            <label for="">Aanhef:</label>
+        <div class="form-group col-md-2">
+            <label for="">Afleveradres:</label>
         </div>
 
-        <div class="col-md-1">
+        <div class="form-group col-md-4">
             <div class="form-check">
-                <input id="aanhef-man" name="aanhef" type="radio" class="form-check-input" value="m" checked>
-                <label for="aanhef-man">Dhr.</label>
+                <input id="afleveradres-boven" name="afleveradres" type="radio" class="form-check-input" value="boven" checked>
+                <label for="afleveradres-boven">Op bovenstaand adres bezorgen</label>
             </div>
         </div>
 
-        <div class="col-md-1">
+        <div class="form-group col-md-4">
             <div class="form-check">
-                <input id="aanhef-vrouw" name="aanhef" type="radio" class="form-check-input" value="v">
-                <label for="aanhef-vrouw">Mevr.</label>
+                <input id="afleveradres-nieuw" name="afleveradres" type="radio" class="form-check-input" value="nieuw">
+                <label for="afleveradres-nieuw">Op ander adres bezorgen</label>
             </div>
         </div>
 
     </div>
 
-    <div class="form-group form-row">
+    <div class="collapse" id="bezorgadres-container">
+
+        {{ form.adresForm("bezorgadres") }}
     
-        <div class="col-md">
-            <label for="voornaam">Voornaam</label>
-            <input type="text" name="voornaam" placeholder="Voornaam" id="voornaam" class="form-control" required>
+    </div>
+
+    <div class="form-row">
+        
+        <div class="form-group col-md">
+            <label for="emailadres">Email</label>
+            <input type="email" name="email" placeholder="Email" id="emailadres" class="form-control" required>
         </div>
 
-        <div class="col-md-2">
-            <label for="tussenvoegsel">Tussenvoegsel</label>
-            <input type="text" name="tussenvoegsel" placeholder="Tussenvoegsel" id="tussenvoegsel" class="form-control">
-        </div>
-
-        <div class="col-md">
-            <label for="achternaam">Achternaam</label>
-            <input type="text" name="achternaam" placeholder="Achternaam" id="achternaam" class="form-control" required>
+        <div class="form-group col-md">
+            <label for="telefoonnummer">Telefoonnummer</label>
+            <input type="phone" name="telefoonnummer" placeholder="Telefoonnummer" id="telefoonnummer" class="form-control" required>
         </div>
     
     </div>
 
-    <div class="form-group form-row">
+    <div class="form-group">
     
-        <div class="col-md">
-            <label for="land">Land</label>
-            <input type="text" name="land" placeholder="Land" id="land" class="form-control" value="Nederland" required>
-        </div>
-
-        <div class="col-md">
-            <label for="woonplaats">Woonplaats</label>
-            <input type="text" name="woonplaats" placeholder="Woonplaats" id="woonplaats" class="form-control" required>
-        </div>
-    
-    </div>
-
-    <div class="form-group form-row">
-    
-        <div class="col-md">
-            <label for="straat">Straat</label>
-            <input type="text" name="straat" placeholder="Straat" id="straat" class="form-control" required>
-        </div>
-
-        <div class="col-md-2">
-            <label for="huisnummer">Huisnummer</label>
-            <input type="number" name="huisnummer" placeholder="Huisnummer" id="huisnummer" class="form-control" required>
-        </div>
-
-        <div class="col-md-2">
-            <label for="toevoeging">Toevoeging</label>
-            <input type="text" name="toevoeging" placeholder="Toevoeging" id="toevoeging" class="form-control">
-        </div>
-
-        <div class="col-md-3">
-            <label for="postcode">Postcode</label>
-            <input type="text" name="postcode" placeholder="Postcode" id="postcode" class="form-control" required>
-        </div>
+        <input class="btn btn-primary" type="submit" value="Volgende">
     
     </div>
 
