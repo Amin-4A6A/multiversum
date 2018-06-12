@@ -30,6 +30,8 @@ class BetaalController extends Controller {
     public function __construct() {
         $this->adres = new AdresModel();
         $this->order = new OrderModel();
+        $this->mollie = new Mollie\Api\MollieApiClient();
+        $this->mollie->setApiKey($_ENV["MOLLIE_KEY"]);
     }
 
     /**
@@ -99,9 +101,8 @@ class BetaalController extends Controller {
 
             // TODO: put products in the divot table thingy from the cart cookie
 
-
             var_dump($orderId);
-
+            
         } else {
 
             $this->render("betaal/form.twig");
