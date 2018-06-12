@@ -5,7 +5,7 @@ require_once "HTMLElements.php";
 
 /**
  * The model of product
- * 
+ *
  * @category   Model
  * @author     Leon in 't Veld <leon3110l@gmail.com>
  * @author     Amin Zammou <aminzammou@hotmail.com>
@@ -46,7 +46,7 @@ class ProductModel {
      * @param string (optional) $color the color of the product
      * @param string (optional) $platform the platform of the product
      * @param string (optional) $discount the discount of the product
-     * 
+     *
      * @return void
      */
     public function updateProduct(
@@ -167,7 +167,7 @@ class ProductModel {
      * @param string (optional) $color the color of the product
      * @param string (optional) $platform the platform of the product
      * @param string (optional) $discount the discount of the product
-     * 
+     *
      * @return string $EAN product EAN
      */
     public function createProduct(
@@ -193,7 +193,7 @@ class ProductModel {
         string $platform = null,
         $discount = null
     ) {
-        
+
         extract($this->sanitizeProductInput(get_defined_vars()));
 
         return $this->dataHandler->createData(
@@ -269,7 +269,7 @@ class ProductModel {
             $pagination
         );
     }
-    
+
     /**
      * reads one product from the database
      * @param string $EAN the EAN code of the product
@@ -321,7 +321,7 @@ class ProductModel {
         $assoc = ArrayHelper::is_assoc($products);
 
         if($assoc) {
-            $products = ArrayHelper::to2DArray($products); 
+            $products = ArrayHelper::to2DArray($products);
         }
 
         foreach($products as $key => $product) {
@@ -401,10 +401,12 @@ class ProductModel {
         if(!isset($product["prijs"]))
             return $product;
 
-        $product["prijs"] = "€ ". $product["prijs"];
-        
+        $product["prijs"] = "€ ". str_replace(".", ",", $product["prijs"]);
+        ;
+
         if(isset($product["korting"]))
-            $product["korting"] = "€ ". $product["korting"];
+            $product["korting"] = "€ ". str_replace(".", ",", $product["korting"]);
+
 
         return $product;
     }
