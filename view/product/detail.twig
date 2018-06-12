@@ -8,7 +8,7 @@
 
     <div class="row">
 
-          <h3 class="text-secondary card-title col-md-12 mb-4">{{ product["merk"] }} {{ product["naam"] }}</h3>
+          <h3 class="text-secondary card-title col-md-12 mb-4">{{ product["merk"] }} {{ product["naam"] }} {% if not product["korting"] is empty %}<span class="badge badge-danger ml-2">Korting!</span>{% endif %}</h3>
 
         <div class="col-md-8">
           <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -41,11 +41,11 @@
 
         <div class="col-md-4">
             <div class="mt-2">
-              <div class="arrow {{ not product["korting"] is empty ? "arrow-discount" : "" }}">
+              <div class="arrow  {{ not product["korting"] is empty ? "arrow-discount" : "" }}">
                   {% if not product["korting"] is empty %}
                       <small class="text-danger text-line-through font-italic">{{ product["prijs"] }}</small>
                   {% endif %}
-                  <h2 class="m-0">{{ not product["korting"] is empty ? product["korting"] : product["prijs"] }}</h2>
+                  <h2 class="m-0 font-weight-bold">{{ not product["korting"] is empty ? product["korting"] : product["prijs"] }}</h2>
               </div>
                 <form class="form mb-4" action="" method="">
                     <div class="">
