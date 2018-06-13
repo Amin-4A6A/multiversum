@@ -1,0 +1,8 @@
+input[type="radio"][name="bank"]:checked+label .card {
+    box-shadow: 0 0 0 0.2rem $secondary;
+    border-color: $secondary;
+}
+
+input[type="radio"][name="bank"]+label .card {
+    transition: box-shadow 0.15s ease-in-out, border 0.15s ease-in-out;
+}

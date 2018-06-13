@@ -1,0 +1,28 @@
+{% extends "layout/app.twig" %}
+
+{% block content %}
+    <form action="" method="POST">
+        <div class="row">
+            {% for issuer in issuers %}
+
+                <div class="col-md-4 my-3">
+                    <input class="d-none" type="radio" name="bank" id="bank-{{ issuer.id }}" value="{{ issuer.id }}" required>
+                    <label class="w-100 m-0" for="bank-{{ issuer.id }}">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h3 class="card-title">{{ issuer.name }}</h3>
+                                <img src="{{ issuer.image.size2x }}" alt="{{ issuer.name }}" class="d-inline-block">
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+            {% endfor %}
+
+            <div class="col-md-4 my-3">
+                <input class="btn btn-primary w-100 h-100" name="submit" type="submit" value="Betaal">
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
