@@ -59,4 +59,37 @@ class OrderModel {
         );
     }
 
+    /**
+     * sets the payment id of an order
+     *
+     * @param integer $orderId
+     * @param string $paymentId
+     * @return void
+     */
+    public function setPaymentId(int $orderId, string $paymentId) {
+        return $this->dataHandler->updateData(
+            "UPDATE `order` SET `payment_id` = :paymentId WHERE `id` = :orderId",
+            [
+                ":paymentId" => $paymentId,
+                ":orderId" => $orderId,
+            ]
+        );
+    }
+
+    /**
+     * reads an order
+     *
+     * @param integer $id
+     * @return array the order
+     */
+    public function readOrder(int $id) {
+        return $this->dataHandler->readData(
+            "SELECT * FROM `order` WHERE id = :id",
+            [
+                ":id" => $id
+            ],
+            false
+        );
+    }
+
 }

@@ -25,6 +25,12 @@ class BetaalController extends Controller {
     private $order;
 
     /**
+     * @var Mollie\Api\MollieApiClient
+     * @access private
+     */
+    private $mollie;
+
+    /**
      * creates a new BetaalController
      */
     public function __construct() {
@@ -42,12 +48,86 @@ class BetaalController extends Controller {
     public function handleRequest() {
 
         switch ($_GET["op"] ?? false) {
-            case 'formulier':
-                $this->collectFormBetaal();
+            case 'bank':
+                $this->collectBankForm();
+                break;
+            case 'order':
+                $this->collectOrderStatus();
                 break;
             case 'cart':
                 $this->collectCard();
                 break;
+            case 'formulier':
+            default:
+                $this->collectAdresForm();
+        }
+
+    }
+
+    /**
+     * the order status method
+     *
+     * @return void
+     */
+    public function collectOrderStatus() {
+        
+        if(!isset($_GET["order"]))
+            $this->redirect("/betaal");
+
+        $order = $this->order->readOrder($_GET["order"]);
+
+        if(empty($order["payment_id"]))
+            $this->redirect("/betaal/bank");
+
+        $payment = $this->mollie->payments->get($order["payment_id"]);
+
+        $this->render("/betaal/paid.twig", ["status" => $payment->status]);
+
+    }
+
+    /**
+     * the bank form method
+     *
+     * @return void
+     */
+    public function collectBankForm() {
+        
+        if(isset($_POST["submit"])) {
+
+            if(!isset($_GET["order"]))
+                $this->redirect("/betaal/formulier");
+
+            $order = $this->order->readOrder($_GET["order"]);
+
+            $protocol = isset($_SERVER['HTTPS']) && strcasecmp('off', $_SERVER['HTTPS']) !== 0 ? "https" : "http";
+            $hostname = $_SERVER['HTTP_HOST'];
+
+            $payment = $this->mollie->payments->create([
+                "locale" => "nl_NL",
+                "amount" => [
+                    "currency" => "EUR",
+                    "value" => $order["prijs"]
+                ],
+                "method" => Mollie\Api\Types\PaymentMethod::IDEAL,
+                "description" => "Order #{$order["id"]}",
+                "redirectUrl" => "{$protocol}://{$hostname}:3000/betaal/order?order={$order["id"]}",
+                "metadata" => [
+                    "order_id" => $order["id"]
+                ],
+                "issuer" => $_POST["bank"]
+            ]);
+
+            $this->order->setPaymentId($order["id"], $payment->id);
+
+            $this->redirect(
+                $payment->getCheckoutUrl()
+            );
+
+        } else {
+            $method = $this->mollie->methods->get(\Mollie\Api\Types\PaymentMethod::IDEAL, ["include" => "issuers"]);
+            $issuers = $method->issuers;
+    
+            $this->render("betaal/bank.twig", compact("issuers"));
         }
 
     }
@@ -57,7 +137,7 @@ class BetaalController extends Controller {
      *
      * @return void
      */
-    public function collectFormBetaal() {
+    public function collectAdresForm() {
 
         if(isset($_POST["submit"])) {
 
@@ -101,7 +181,11 @@ class BetaalController extends Controller {
 
             // TODO: put products in the divot table thingy from the cart cookie
 
-            var_dump($orderId);
+
+
+            // TODO: naar een soort overview pagina met betaal knop naar /betaal/bank?order=1
+            $this->redirect("/betaal/bank?order=" . $orderId); // tijdelijk ding
+
             
         } else {
 
