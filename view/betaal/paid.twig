@@ -1,0 +1,16 @@
+{% extends "layout/app.twig" %}
+
+{% block content %}
+    
+    {% if status == "paid" %}
+        <h1>U heeft betaald!</h1>
+        <h3>Uw pakketje wordt bezorgd :)</h3>
+    {% elseif status == "open" or status == "pending" %}
+        <h1>Uw betaaling wordt verwerkt.</h1>
+        <h3>Ververs de pagina om te zien of het gelukt is.</h3>
+    {% else %}
+        <h1>Uw betaling is niet gelukt :(</h1>
+        <h3>U kunt proberen om <a href="/betaal/bank">opnieuw te betalen</a></h3>
+    {% endif %}
+
+{% endblock %}
