@@ -43,7 +43,7 @@
             <div class="mt-2">
               <div class="arrow  {{ not product["korting"] is empty ? "arrow-discount" : "" }}">
                   {% if not product["korting"] is empty %}
-                      <h5 class="text-danger text-line-through font-italic font-weight-light">{{ product["prijs"] }}</h5>
+                      <h5 class="text-danger text-line-through font-italic font-weight-li">{{ product["prijs"] }}</h5>
                   {% endif %}
                   <h2 class="m-0 font-weight-bold">{{ not product["korting"] is empty ? product["korting"] : product["prijs"] }}</h2>
               </div>

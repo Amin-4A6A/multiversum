@@ -70,7 +70,7 @@ class BetaalController extends Controller {
      * @return void
      */
     public function collectOrderStatus() {
-        
+
         if(!isset($_GET["order"]))
             $this->redirect("/betaal");
 
@@ -91,7 +91,7 @@ class BetaalController extends Controller {
      * @return void
      */
     public function collectBankForm() {
-        
+
         if(isset($_POST["submit"])) {
 
             if(!isset($_GET["order"]))
@@ -126,7 +126,7 @@ class BetaalController extends Controller {
         } else {
             $method = $this->mollie->methods->get(\Mollie\Api\Types\PaymentMethod::IDEAL, ["include" => "issuers"]);
             $issuers = $method->issuers;
-    
+
             $this->render("betaal/bank.twig", compact("issuers"));
         }
 
@@ -186,7 +186,7 @@ class BetaalController extends Controller {
             // TODO: naar een soort overview pagina met betaal knop naar /betaal/bank?order=1
             $this->redirect("/betaal/bank?order=" . $orderId); // tijdelijk ding
 
-            
+
         } else {
 
             $this->render("betaal/form.twig");
