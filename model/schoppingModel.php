@@ -28,7 +28,7 @@ class schoppingCart {
         header("location:product/detail.twig?success=1")
 
     }
-    if(!isset($_GETSS["success"])) {
+    if(!isset($_GETS["success"])) {
       $message = 'gelukt ?';
   }
 
