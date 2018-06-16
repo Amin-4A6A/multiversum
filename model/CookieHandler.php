@@ -24,6 +24,8 @@ class CookieHandler
 
         if (!isset($_COOKIE[$name])) {
             setcookie($name, null, time() + $time);
+        } else {
+            $this->data = unserialize($_COOKIE[$name]);
         }
 
     }
