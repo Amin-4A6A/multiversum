@@ -1,5 +1,6 @@
 <?php
 require_once "CookieHandler.php";
+require_once "ProductModel.php";
 
 /**
  * The model of ShoppingModel
@@ -8,8 +9,14 @@ require_once "CookieHandler.php";
  * @author     Leon in 't Veld <leon3110l@gmail.com>
  * @author     Amin Zammou <aminzammou@hotmail.com>
  */
+
 class ShoppingModel
 {
+      /**
+     * @var ProductModel
+     * @access private
+     */
+    private $product;
 
     /**
      * @var CookieHandler the name of the cookie .
@@ -22,14 +29,25 @@ class ShoppingModel
     {
 
         $this->cookieHandler = new CookieHandler("shoppingCart", (24 * 60 * 60 * 2));
-
+        $this->product = new ProductModel();
     }
     public function addToCart($ean, $amount = 1)
     {
-        $product_array = array(
-            'ean' => $amount,
-            // 'amount'  =>$amount
-        );
+        $this->cookieHandler->data[$ean] = $amount;
+
+    }
+    public function updateCartProduct($ean, $amount = 2)
+    {
+        $this->addToCart($ean, $amount);
+    }
+    public function deleteCartProduct()
+    {
+        unset($this->cookieHandler->data[$ean]);
+    }
+    public function readCart() {
+   
+        $this->cookieHandler->data;
+        
 
     }
 
