@@ -348,5 +348,36 @@ class ProductController extends Controller {
         $this->render("product/detail.twig", compact("product","images"));
 
     }
+    public function shoppingCart() {
+
+    if(isset($_COOKIE["shopping_cart"])) {
+      $total = 0;
+      $product_data = stripslashes($_COOKIE["shopping_cart"]);
+      $cart_data = json_decode($product_data, true);
+      foreach($cart_data as $key => $value){
+
+        ?>
+        <h5 class='card-title'><?php echo $value["product_name"] ?></h5>
+        <h5 class='card-title'><?php echo $value["product_price"] ?></h5>
+        <h5 class='card-title'><?php echo $value["product_quantity"] ?></h5>
+        <h5 class='card-title'><?php echo number_format($values["
+            product_quantity"] * $values["
+            product_price "], 2) ?></h5>
+            <?php
+     $total = $total + ($value["product_quantity"] * $value["product_price"]);
+    }
+   ?>
+
+     <h5 colspan="3" align="right">Total</h5>
+     <h5 align="right">$ <?php echo number_format($total, 2); ?></h5>
+
+        <?php
+      }
+
+    }
+    else {
+      echo'cart is empty';
+    }
+    }
 
 }

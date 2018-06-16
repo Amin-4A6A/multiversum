@@ -25,12 +25,12 @@ class schoppingCart {
         $cart_data[] = $product_array;
         $product_data = json_encode($cart_data);
         setcookie('schoppingCart','$product_data', time() + (86400 * 30));
-        header("location:product/detail.twig?success=1")
+        // header("location:product/detail.twig?success=1")
 
     }
-    if(!isset($_GETS["success"])) {
-      $message = 'gelukt ?';
-  }
+  //   if(!isset($_GETS["success"])) {
+  //     $message = 'gelukt ?';
+  // }
 
 }
 
