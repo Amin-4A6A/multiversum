@@ -47,7 +47,12 @@ class ShoppingModel
     public function readCart() {
    
         $this->cookieHandler->data;
+        $products = [];
+        foreach ($this->cookieHandler->data as $ean => $amount) {
+            $product[] = $this->product->readProduct($ean);
+        }
         
+        return $products;
 
     }
 

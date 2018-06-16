@@ -253,7 +253,20 @@ class ProductModel {
             $pagination
         );
     }
-
+    /**
+     * read product and gets an image with the product
+     *
+     * @param string $EAN the product you want to get
+     * @return array a 2d array with all the product
+     */
+    public function readProductOneImage(string $EAN) {
+        return $this->dataHandler->readData(
+            "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` GROUP BY `product`.`EAN` WHERE `product`.`EAN` = :EAN",
+            [
+                ":EAN" => $EAN
+            ]
+        );
+    }
     /**
      * searches multiple products and gets one image with the product
      *
