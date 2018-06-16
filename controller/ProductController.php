@@ -373,11 +373,11 @@ class ProductController extends Controller {
 
         <?php
       }
+      else {
+        echo'cart is empty';
+      }
+    
 
-    }
-    else {
-      echo'cart is empty';
-    }
     }
 
 }
