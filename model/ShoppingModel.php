@@ -49,7 +49,9 @@ class ShoppingModel
         $this->cookieHandler->data;
         $products = [];
         foreach ($this->cookieHandler->data as $ean => $amount) {
-            $product[] = $this->product->readProduct($ean);
+            $product = $this->product->readProductOneImage($ean);
+            $product["amount"] = $amount;
+            $products[] = $product;
         }
         
         return $products;
