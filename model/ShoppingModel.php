@@ -49,14 +49,25 @@ class ShoppingModel
     }
     public function readCart() {
 
-        $products = [];
+        $products = [
+            "products" => [],
+        ];
         foreach ($this->cookieHandler->data as $ean => $amount) {
             $product = $this->product->readProductOneImage($ean);
             $product["amount"] = $amount;
-            $products[] = $product;
+            $products["products"][] = $product;
         }
+        $products["subtotaal"] = array_reduce($products["products"],
+            function($carry, $item){
+                $carry += floatval($item["prijs"]) * intval($item["amount"]);
+                return $carry;
 
-        $products = $this->product->applySymbols($products);
+            }
+        );
+        $products["exBTW"] = $products["subtotaal"]/ 121 * 100;
+        $products["verzendkosten"] = 6.50 ;
+        $products["totaal"] = $products["subtotaal"] + $products["verzendkosten"];
+        $products["products"] = $this->product->applySymbols($products["products"]);
         return $products;
 
     }

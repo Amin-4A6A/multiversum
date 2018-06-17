@@ -3,7 +3,7 @@
 <div class="card sticky-top mx-3" style="top: 5em; z-index: -1;">
   <h5 class="card-header">Winkelwagen</h5>
   <div class="card-body">
-  {% for product in products %}
+  {% for product in products["products"] %}
   <div class="row">
     <div class="col-md-3">
       <img class="w-100 mb-auto d-block" src="/images/product/{{ product["path"] }}" alt="">
@@ -26,10 +26,22 @@
   
 
   </div>
-  <ul class="list-group list-group-flush">
-      <li class="list-group-item">subtotaal</li>
-      <li class="list-group-item">totaal</li>
-      <a  href="/betaal/formulier" class="btn btn-primary">betaal</a>
-
-    </ul>
+ <table class="table">
+  <tr>
+    <th>Subtotaal</th>
+    <td>{{products['subtotaal']}}</td>
+  </tr>
+   <tr>
+    <th>exclusief btw</th>
+    <td>{{products['exBTW']}}</td>
+  </tr>
+   <tr>
+    <th>verzendkosten</th>
+    <td>{{products['verzendkosten']}}</td>
+  </tr>
+   <tr>
+    <th>Totaal</th>
+    <td>{{products['totaal']}}</td>
+  </tr>
+ </table>
 </div>
