@@ -22,8 +22,7 @@ class ShoppingModel
      * @var CookieHandler the name of the cookie .
      * @access public
      */
-
-    public $cookieHandler; /* deze is leeg*/
+    public $cookieHandler;
 
     public function __construct()
     {
