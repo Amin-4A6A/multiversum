@@ -234,7 +234,7 @@ class BetaalController extends Controller {
             
             
         }
-        // $this->redirect($_SERVER['HTTP_REFERER']);
+        $this->redirect($_SERVER['HTTP_REFERER']);
       
     }
 
