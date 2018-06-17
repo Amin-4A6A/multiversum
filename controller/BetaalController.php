@@ -88,6 +88,10 @@ class BetaalController extends Controller {
 
         $payment = $this->mollie->payments->get($order["payment_id"]);
 
+        if($payment->status === "paid") {
+            $this->cart->cookieHandler->deleteCookie(); // if paid remove from cart
+        }
+
         $this->render("/betaal/paid.twig", ["status" => $payment->status]);
 
     }

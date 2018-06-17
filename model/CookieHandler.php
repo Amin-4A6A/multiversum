@@ -35,5 +35,13 @@ class CookieHandler
         setcookie($this->name, serialize($this->data));
     }
 
+    /**
+     * deletes the cookie
+     *
+     * @return bool if it will delete
+     */
+    public function deleteCookie() {
+        return setcookie($this->name, "", time()-3600);
+    }
 
 }
