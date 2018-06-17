@@ -44,19 +44,45 @@ class OrderProductsModel {
     }
 
     /**
-     * reads the product from an order
+     * reads the order and the products
      *
      * @param int $order_id
      * @return void
      */
     public function readOrderProducts($order_id) {
 
-        return $this->dataHandler->readData(
-            "SELECT * FROM `order_has_product` INNER JOIN `product` ON `product`.`EAN` = `order_has_product`.`product_EAN` WHERE `order_has_product`.`order_id` = :order_id",
+        $res = $this->dataHandler->readData(
+            "SELECT * FROM `order` WHERE `order`.`id` = :order_id",
+            [
+                ":order_id" => $order_id
+            ],
+            false
+        );
+
+        $res["betaaladres"] = $this->dataHandler->readData(
+            "SELECT * FROM `adres` WHERE `adres`.`id` = :id",
+            [
+                ":id" => $res["betaaladres_id"]
+            ],
+            false
+        );
+
+        $res["bezorgadres"] = $this->dataHandler->readData(
+            "SELECT * FROM `adres` WHERE `adres`.`id` = :id",
+            [
+                ":id" => $res["bezorgadres_id"]
+            ],
+            false
+        );
+
+        $res["products"] =  $this->dataHandler->readData(
+            "SELECT * FROM `order_has_product` INNER JOIN `product` ON `product`.`EAN` = `order_has_product`.`product_EAN` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` WHERE `order_has_product`.`order_id` = :order_id GROUP BY `product`.`EAN`",
             [
                 ":order_id" => $order_id
             ]
         );
+
+        return $res;
 
     }
 
