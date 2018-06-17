@@ -261,10 +261,11 @@ class ProductModel {
      */
     public function readProductOneImage(string $EAN) {
         return $this->dataHandler->readData(
-            "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` GROUP BY `product`.`EAN` WHERE `product`.`EAN` = :EAN",
+            "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` WHERE `product`.`EAN` = :EAN GROUP BY `product`.`EAN` ",
             [
                 ":EAN" => $EAN
-            ]
+            ],
+            false
         );
     }
     /**
@@ -329,7 +330,7 @@ class ProductModel {
      * @param integer $amount the amount of items in the table
      * @return array the product with all the symbols applied
      */
-    public function applySymbols(array $products, array $priority, $amount = 0) {
+    public function applySymbols(array $products, array $priority = [], $amount = 0) {
 
         $assoc = ArrayHelper::is_assoc($products);
 

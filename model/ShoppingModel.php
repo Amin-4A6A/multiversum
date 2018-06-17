@@ -48,15 +48,15 @@ class ShoppingModel
         $this->cookieHandler->saveCookie();
     }
     public function readCart() {
-   
-        $this->cookieHandler->data;
+
         $products = [];
         foreach ($this->cookieHandler->data as $ean => $amount) {
             $product = $this->product->readProductOneImage($ean);
             $product["amount"] = $amount;
             $products[] = $product;
         }
-        
+
+        $products = $this->product->applySymbols($products);
         return $products;
 
     }

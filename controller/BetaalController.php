@@ -202,14 +202,16 @@ class BetaalController extends Controller {
 
     }
     /**
-     * the card method
+     * the cart method
      *
      * @return void
      */
     public function collectCart() {
-        $products = $this->card->readCart();
+        $products = $this->cart->readCart();
+        // var_dump($products);
         $this->render("betaal/side_cart.twig", compact("products"));
     }
+    
     /**
      * add product to shopingcart
      *
@@ -224,9 +226,12 @@ class BetaalController extends Controller {
             }else {
                 $amount= $_GET['amount'];
             }
+            
             $this->cart->addToCart($_GET['ean'], $amount);
+            
+            
         }
-        $this->redirect($_SERVER['HTTP_REFERER']);
+        // $this->redirect($_SERVER['HTTP_REFERER']);
       
     }
 

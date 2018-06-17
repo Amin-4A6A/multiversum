@@ -31,6 +31,7 @@ class CookieHandler
     }
     public function saveCookie()
     {
+        // var_dump($this->data);
         setcookie($this->name, serialize($this->data));
     }
 

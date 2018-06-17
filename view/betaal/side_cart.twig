@@ -4,8 +4,26 @@
   <h5 class="card-header">Winkelwagen</h5>
   <div class="card-body">
   {% for product in products %}
-    <h5 class="card-title">htc</h5>
-    <p class="card-text"></p>
+  <div class="row">
+    <div class="col-md-3">
+      <img class="w-100 mb-auto d-block" src="/images/product/{{ product["path"] }}" alt="">
+    </div>
+    <div class="col-md-7">
+      <div class="row">
+        <div class="col-md-12">
+          <h5>{{ product["naam"] }}</h5>
+        </div>
+        <div class="col-md-12">
+          <small>{{ product["prijs"] }}</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+  <hr>
+  {% endfor %}
+   
+  
 
   </div>
   <ul class="list-group list-group-flush">
