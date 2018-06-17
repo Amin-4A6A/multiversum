@@ -29,9 +29,10 @@ class CookieHandler
         }
 
     }
-    public function __destruct()
+    public function saveCookie()
     {
         setcookie($this->name, serialize($this->data));
     }
+
 
 }

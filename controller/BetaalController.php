@@ -2,6 +2,7 @@
 require "Controller.php";
 require "../model/AdresModel.php";
 require "../model/OrderModel.php";
+require "../model/ShoppingModel.php";
 
 /**
  * The betaal controller
@@ -29,6 +30,7 @@ class BetaalController extends Controller {
      * @access private
      */
     private $mollie;
+    private $cart;
 
     /**
      * creates a new BetaalController
@@ -38,6 +40,7 @@ class BetaalController extends Controller {
         $this->order = new OrderModel();
         $this->mollie = new Mollie\Api\MollieApiClient();
         $this->mollie->setApiKey($_ENV["MOLLIE_KEY"]);
+        $this->cart = new ShoppingModel();
     }
 
     /**
@@ -55,11 +58,15 @@ class BetaalController extends Controller {
                 $this->collectOrderStatus();
                 break;
             case 'cart':
-                $this->collectCard();
+                $this->collectCart();
+                break;
+            case 'addtocart':
+            $this->collectAddToCart();
                 break;
             case 'formulier':
             default:
                 $this->collectAdresForm();
+                
         }
 
     }
@@ -199,9 +206,27 @@ class BetaalController extends Controller {
      *
      * @return void
      */
-    public function collectCard() {
+    public function collectCart() {
         $this->render("betaal/side_cart.twig");
 
+    }
+    /**
+     * add product to shopingcart
+     *
+     * @param Type $var
+     * @return void
+     */
+    public function collectAddToCart()
+    {
+        if (isset($_GET['ean'])) {
+            if (!isset($_GET['amount'])) {
+               $amount = 1;
+            }else {
+                $amount= $_GET['amount'];
+            }
+            $this->cart->addToCart($_GET['ean'], $amount);
+        }
+      
     }
 
 }

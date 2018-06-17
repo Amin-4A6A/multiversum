@@ -34,15 +34,18 @@ class ShoppingModel
     public function addToCart($ean, $amount = 1)
     {
         $this->cookieHandler->data[$ean] = $amount;
+        $this->cookieHandler->saveCookie();
 
     }
     public function updateCartProduct($ean, $amount = 2)
     {
         $this->addToCart($ean, $amount);
+        
     }
     public function deleteCartProduct()
     {
         unset($this->cookieHandler->data[$ean]);
+        $this->cookieHandler->saveCookie();
     }
     public function readCart() {
    
@@ -59,26 +62,3 @@ class ShoppingModel
     }
 
 }
-
-// public function addToProductCart($value='') {
-// // setcookie("schoppingCart", "0192371098237:1,0238409283409:1,02348092348:2");
-//
-//     if(!isset($_POST["add_cart"])) {
-//
-//         $product_array = array(
-//           'product_name'    => $_POST["naam"],
-//           'product_price'   => $_POST["prijs"],
-//           'product_ean'     => $_POST["EAN"],
-//           'product_quantity'=> $_POST["aantal"],
-//         );
-//         $cart_data[] = $product_array;
-//         $product_data = json_encode($cart_data);
-//         setcookie("schoppingCart", "$product_data", time() + (86400 * 30));
-//
-//
-//     }
-//   //   if(!isset($_GETS["success"])) {
-//   //     $message = 'gelukt ?';
-//   // }
-// }
-// }
