@@ -208,7 +208,10 @@ class BetaalController extends Controller {
      */
     public function collectCart() {
         $products = $this->cart->readCart();
-        // var_dump($products);
+        $products["subtotaal"] = "€ ". str_replace(".", ",", $products["subtotaal"]);
+        $products["exBTW"] = "€ ". str_replace(".", ",", $products["exBTW"]);
+        $products["verzendkosten"] = "€ ". str_replace(".", ",", $products["verzendkosten"]);
+        $products["totaal"] = "€ ". str_replace(".", ",", $products["totaal"]);
         $this->render("betaal/side_cart.twig", compact("products"));
     }
     
