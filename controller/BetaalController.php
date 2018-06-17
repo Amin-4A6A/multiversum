@@ -3,6 +3,7 @@ require "Controller.php";
 require "../model/AdresModel.php";
 require "../model/OrderModel.php";
 require "../model/ShoppingModel.php";
+require "../model/OrderProductsModel.php";
 
 /**
  * The betaal controller
@@ -41,6 +42,7 @@ class BetaalController extends Controller {
         $this->mollie = new Mollie\Api\MollieApiClient();
         $this->mollie->setApiKey($_ENV["MOLLIE_KEY"]);
         $this->cart = new ShoppingModel();
+        $this->orderProducts = new OrderProductsModel();
     }
 
     /**
@@ -182,17 +184,19 @@ class BetaalController extends Controller {
                 $bezorgAdres = $betaalAdres;
             }
 
+            $cart = $this->cart->readCart();
+
             $orderId = $this->order->createOrder(
-                "599",                      // TODO: get price from cart cookie
+                $cart["totaal"],
                 $_POST["telefoonnummer"],
                 $_POST["email"],
                 $betaalAdres,
                 $bezorgAdres
             );
 
-            // TODO: put products in the divot table thingy from the cart cookie
-
-
+            foreach($cart["products"] as $product) {
+                $this->orderProducts->createOrderProduct($orderId, $product["EAN"], $product["amount"]);
+            }
 
             // TODO: naar een soort overview pagina met betaal knop naar /betaal/bank?order=1
             $this->redirect("/betaal/bank?order=" . $orderId); // tijdelijk ding
