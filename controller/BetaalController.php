@@ -33,6 +33,11 @@ class BetaalController extends Controller {
      * @access private
      */
     private $mollie;
+
+    /**
+     * @var ShoppingModel
+     * @access private
+     */
     private $cart;
 
     /**
@@ -64,12 +69,6 @@ class BetaalController extends Controller {
                 break;
             case 'confirm':
                 $this->collectConfirm();
-                break;
-            case 'cart':
-                $this->collectCart();
-                break;
-            case 'addtocart':
-                $this->collectAddToCart();
                 break;
             case 'formulier':
             default:
@@ -260,39 +259,6 @@ class BetaalController extends Controller {
 
         $this->render("betaal/confirm.twig", compact("order", "betaaladresTable", "bezorgadresTable", "priceTable"));
 
-    }
-
-    /**
-     * the cart method
-     *
-     * @return void
-     */
-    public function collectCart() {
-        $products = $this->cart->readCart();
-
-        $this->render("betaal/side_cart.twig", compact("products"));
-    }
-    
-    /**
-     * add product to shopingcart
-     *
-     * @return void
-     */
-    public function collectAddToCart()
-    {
-        if (isset($_GET['ean'])) {
-            if (!isset($_GET['amount'])) {
-               $amount = 1;
-            }else {
-                $amount= $_GET['amount'];
-            }
-            
-            $this->cart->addToCart($_GET['ean'], $amount);
-            
-            
-        }
-        $this->redirect($_SERVER['HTTP_REFERER']);
-      
     }
 
 }
