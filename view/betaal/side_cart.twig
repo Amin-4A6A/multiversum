@@ -14,7 +14,8 @@
           <h5>{{ product["naam"] }}</h5>
         </div>
         <div class="col-md-12">
-          <small>{{ product["prijs"] }}</small>
+          {# <small>{{ product["prijs"] }}</small> #}
+          <small>{{ not product["korting"] is empty ? product["korting"] : product["prijs"] }}</small>
         </div>
       </div>
     </div>

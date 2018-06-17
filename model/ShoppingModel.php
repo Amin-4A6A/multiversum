@@ -59,10 +59,11 @@ class ShoppingModel
         }
         $products["subtotaal"] = array_reduce($products["products"],
             function($carry, $item){
-                $carry += floatval($item["prijs"]) * intval($item["amount"]);
+                $carry += floatval(if (empty($item["prijs"])){}else{$item["korting"]}) * intval($item["amount"]);
                 return $carry;
 
             }
+           
         );
         $products["exBTW"] = $products["subtotaal"]/ 121 * 100;
         $products["verzendkosten"] = 6.50 ;
