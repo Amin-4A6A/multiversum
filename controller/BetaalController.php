@@ -207,8 +207,8 @@ class BetaalController extends Controller {
      * @return void
      */
     public function collectCart() {
-        $this->render("betaal/side_cart.twig");
-
+        $products = $this->card->readCart();
+        $this->render("betaal/side_cart.twig", compact("products"));
     }
     /**
      * add product to shopingcart
@@ -226,6 +226,7 @@ class BetaalController extends Controller {
             }
             $this->cart->addToCart($_GET['ean'], $amount);
         }
+        $this->redirect($_SERVER['HTTP_REFERER']);
       
     }
 
