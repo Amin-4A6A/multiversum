@@ -43,7 +43,7 @@
 					{% endif %}
 					<h2 class="m-0 font-weight-bold">{{ not product["korting"] is empty ? product["korting"] : product["prijs"] }}</h2>
 				</div>
-                <form class="form mb-4" action="/cart/addtocart" method="GET">
+                <form class="form mb-4" action="/cart/addtocart" method="get">
                     <div>
 						<label class="form-control-label mt-4" for="">Aantal</label>
 						<input name="ean" value="{{ product["EAN"] }}" type="hidden">
