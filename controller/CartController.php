@@ -75,7 +75,7 @@ class CartController extends Controller {
     {
         if (isset($_GET['ean'])) {
             if (!isset($_GET['aantal'])) {
-               $amount = 1;
+                $amount = 1;
             }else {
                 $amount= $_GET['aantal'];
             }
