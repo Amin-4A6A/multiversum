@@ -43,10 +43,6 @@ class CartController extends Controller {
             default:
                 $this->collectCart();
                 break;
-           
-                
-
-                
         }
 
     }

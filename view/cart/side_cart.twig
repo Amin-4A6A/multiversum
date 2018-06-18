@@ -19,7 +19,7 @@
       </div>
     </div>
      <div class="col-md-2">
-        <a class="btn btn-danger" href="/cart/deletecart?ean={{ product["naam"] }}" ><i class='fa fa-trash-alt'></i></a>
+        <a class="btn btn-danger" href="/cart/deletecart?ean={{ product["EAN"] }}"><i class='fa fa-trash-alt'></i></a>
     </div>
     
   </div>
@@ -36,9 +36,7 @@
   </div>
   <hr>
   {% endfor %}
-   
-  
-
+ 
   </div>
   {{ priceTable|raw }}
   <a href="/betaal/formulier" class="btn btn-primary">betaal</a>
