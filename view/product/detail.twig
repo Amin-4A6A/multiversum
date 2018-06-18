@@ -47,10 +47,11 @@
                   {% endif %}
                   <h2 class="m-0 font-weight-bold">{{ not product["korting"] is empty ? product["korting"] : product["prijs"] }}</h2>
               </div>
-                <form class="form mb-4" action="/cart/addtocart?" method="post">
-                    <div class="">
+                <form class="form mb-4" action="/cart/addtocart" method="GET">
+                    <div>
                     <label class="form-control-label mt-4" for="">Aantal</label>
-                    <input name="count" value="ean={{ product["EAN"] }}" class="form-control col-md-4" type="hidden" min="0" max="99">
+                    <input name="count" value="{{ product["EAN"] }}" type="hidden" min="0" max="99">
+                    <input name="count" value="" type="number" min="0" max="99">
                   </div>
 
                     <div class="mt-2">
