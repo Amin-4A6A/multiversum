@@ -1,9 +1,11 @@
 <?php
 require "Controller.php";
 require "../model/AdresModel.php";
+require "../model/ProductModel.php";
 require "../model/OrderModel.php";
 require "../model/ShoppingModel.php";
 require "../model/OrderProductsModel.php";
+require_once "../model/HTMLElements.php";
 
 /**
  * The betaal controller
@@ -31,6 +33,11 @@ class BetaalController extends Controller {
      * @access private
      */
     private $mollie;
+
+    /**
+     * @var ShoppingModel
+     * @access private
+     */
     private $cart;
 
     /**
@@ -43,6 +50,7 @@ class BetaalController extends Controller {
         $this->mollie->setApiKey($_ENV["MOLLIE_KEY"]);
         $this->cart = new ShoppingModel();
         $this->orderProducts = new OrderProductsModel();
+        $this->product = new ProductModel();
     }
 
     /**
@@ -59,11 +67,8 @@ class BetaalController extends Controller {
             case 'order':
                 $this->collectOrderStatus();
                 break;
-            case 'cart':
-                $this->collectCart();
-                break;
-            case 'addtocart':
-            $this->collectAddToCart();
+            case 'confirm':
+                $this->collectConfirm();
                 break;
             case 'formulier':
             default:
@@ -198,8 +203,10 @@ class BetaalController extends Controller {
                 $this->orderProducts->createOrderProduct($orderId, $product["EAN"], $product["amount"]);
             }
 
-            // TODO: naar een soort overview pagina met betaal knop naar /betaal/bank?order=1
-            $this->redirect("/betaal/bank?order=" . $orderId); // tijdelijk ding
+            // TODO: naar een soort overview pagina met betaal knop naar /betaal/bank?order=order_id
+            // $this->redirect("/betaal/bank?order=" . $orderId); // tijdelijk ding
+
+            $this->redirect("/betaal/confirm?order=" . $orderId);
 
 
         } else {
@@ -209,41 +216,49 @@ class BetaalController extends Controller {
 
 
     }
+
     /**
-     * the cart method
+     * the confirm method
      *
      * @return void
      */
-    public function collectCart() {
-        $products = $this->cart->readCart();
-        $products["subtotaal"] = "€ ". str_replace(".", ",", $products["subtotaal"]);
-        $products["exBTW"] = "€ ". str_replace(".", ",", $products["exBTW"]);
-        $products["verzendkosten"] = "€ ". str_replace(".", ",", $products["verzendkosten"]);
-        $products["totaal"] = "€ ". str_replace(".", ",", $products["totaal"]);
-        $this->render("betaal/side_cart.twig", compact("products"));
-    }
-    
-    /**
-     * add product to shopingcart
-     *
-     * @param Type $var
-     * @return void
-     */
-    public function collectAddToCart()
-    {
-        if (isset($_GET['ean'])) {
-            if (!isset($_GET['amount'])) {
-               $amount = 1;
-            }else {
-                $amount= $_GET['amount'];
-            }
-            
-            $this->cart->addToCart($_GET['ean'], $amount);
-            
-            
+    public function collectConfirm() {
+
+        if(!isset($_GET["order"]))
+            $this->redirect("/");
+
+        $order = $this->orderProducts->readOrderProducts($_GET["order"]);
+
+        $betaaladresArray = [
+            "Naam: " => $order["betaaladres"]["voornaam"] . " " . $order["betaaladres"]["tussenvoegsel"] . " " . $order["betaaladres"]["achternaam"],
+            "Stad: " => $order["betaaladres"]["stad"],
+            "Straat: " => $order["betaaladres"]["straat"],
+            "Huisnummer: " => $order["betaaladres"]["huisnummer"] . $order["betaaladres"]["toevoeging"],
+            "Postcode: " => $order["betaaladres"]["postcode"],
+        ];
+
+        if($order["betaaladres"]["id"] == $order["bezorgadres"]["id"]) {
+            $bezorgadresArray = $betaaladresArray;
+        } else {
+            $bezorgadresArray = [
+                "Naam: " => $order["bezorgadres"]["voornaam"] . " " . $order["bezorgadres"]["tussenvoegsel"] . " " . $order["bezorgadres"]["achternaam"],
+                "Stad: " => $order["bezorgadres"]["stad"],
+                "Straat: " => $order["bezorgadres"]["straat"],
+                "Huisnummer: " => $order["bezorgadres"]["huisnummer"] . $order["bezorgadres"]["toevoeging"],
+                "Postcode: " => $order["bezorgadres"]["postcode"],
+            ];
         }
-        $this->redirect($_SERVER['HTTP_REFERER']);
-      
+
+        $betaaladresTable = HTMLElements::table($betaaladresArray, "table", false);
+        $bezorgadresTable = HTMLElements::table($bezorgadresArray, "table", false);
+
+
+        $priceArray = $this->product->getPrice($order["products"]);
+
+        $priceTable = HTMLElements::table($priceArray, "table", false);
+
+        $this->render("betaal/confirm.twig", compact("order", "betaaladresTable", "bezorgadresTable", "priceTable"));
+
     }
 
 }

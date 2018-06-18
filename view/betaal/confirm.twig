@@ -1,0 +1,87 @@
+{% extends "layout/no_cart.twig" %}
+
+{% block content %}
+
+    <div class="row">
+
+        <div class="col-12 d-flex">
+            <button onclick="window.history.go(-1); return false;" class="btn btn-secondary mr-auto">Terug</button>
+            <a href="/betaal/bank?order={{ order["id"] }}" class="btn btn-primary ml-auto">Bestel</a>
+        </div>
+
+
+        <div class="col-12 my-4">
+        
+            <h2>Betaaladres{{ order["betaaladres"]["id"] == order["bezorgadres"]["id"] ? " & Bezorgadres" : "" }}:</h2>
+
+            {{ betaaladresTable|raw }}
+
+        </div>
+
+
+        {% if not order["betaaladres"]["id"] == order["bezorgadres"]["id"] %}
+            <div class="col-12 my-4">
+            
+                <h2>Bezorgadres:</h2>
+
+                {{ bezorgadresTable|raw }}
+
+            </div>
+        {% endif %}
+
+        <div class="col-12 my-4">
+
+            <h2>Producten:</h2>
+        
+            <div class="row">
+            
+                {% for product in order["products"] %}
+
+                    <div class="col-md-4">
+                
+                        <div class="card">
+                            <img class="card-img-top" src="/images/product/{{ product["path"] }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h2 class="card-title">{{ product["merk"] }} {{ product["naam"] }}</h2>
+                                <table class="table">
+                                    <tr>
+                                        <th>Aantal: </th>
+                                        <td>{{ product["aantal"] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Prijs: </th>
+                                        <td>€ {{ product["prijs"]|number_format(2, ",", ".") }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Totaal: </th>
+                                        <td>€ {{ (product["prijs"] * product["aantal"])|number_format(2, ",", ".") }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+        
+        </div>
+
+        <div class="col-12 my-4">
+
+            <h2>Prijs:</h2>
+        
+            {{ priceTable|raw }}
+
+        </div>
+
+        <div class="col-12 d-flex">
+            <button onclick="window.history.go(-1); return false;" class="btn btn-secondary mr-auto">Terug</button>
+            <a href="/betaal/bank?order={{ order["id"] }}" class="btn btn-primary ml-auto">Bestel</a>
+        </div>
+
+    </div>
+
+{% endblock content %}

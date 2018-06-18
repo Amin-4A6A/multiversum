@@ -424,4 +424,44 @@ class ProductModel {
         return $product;
     }
 
+    /**
+     * gets the price of products, does expect an aantal in the products
+     *
+     * @param array $products
+     * @param bool $format if you watn a euro sign and a comma
+     * @return array an array with prices
+     */
+    public function getPrice($products, $format = true) {
+        $prices = [];
+        
+        $prices["subtotaal"] = array_reduce($products,
+            function($carry, $item){
+                $carry += floatval($item["prijs"]) * intval($item["aantal"]);
+                return $carry;
+            }
+        );
+
+        $prices["korting"] = array_reduce($products,
+            function($carry, $item){
+                $carry += floatval(($item["prijs"] - $item["korting"])) * intval($item["aantal"]);
+                return $carry;
+            }
+        );
+
+        $prices["min korting"] = $prices["subtotaal"] - $prices["korting"];
+
+        $prices["exclusief BTW"] = $prices["min korting"]/ 121 * 100;
+        $prices["BTW"] = $prices["min korting"] / 121 * 21;
+        $prices["verzendkosten"] = 6.50 ;
+        $prices["totaal"] = $prices["min korting"] + $prices["verzendkosten"];
+
+        if($format) {
+            foreach(["subtotaal", "exclusief BTW", "BTW", "verzendkosten", "totaal", "korting", "min korting"] as $key) {
+                $prices[$key] = "€ " . number_format($prices[$key], 2, ",", ".");
+            }
+        }
+
+        return $prices;
+    }
+
 }
