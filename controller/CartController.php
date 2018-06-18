@@ -1,6 +1,7 @@
 <?php
 require "Controller.php";
 require "../model/ShoppingModel.php";
+require_once "../model/HTMLElements.php";
 
 /**
  * The cart controller
@@ -53,7 +54,15 @@ class CartController extends Controller {
     public function collectCart() {
         $products = $this->cart->readCart();
 
-        $this->render("cart/side_cart.twig", compact("products"));
+        $prices = [];
+
+        foreach(["subtotaal", "BTW", "verzendkosten", "korting", "totaal"] as $key) {
+            $prices[ucfirst($key)] = $products[$key];
+        }
+
+        $priceTable = HTMLElements::table($prices, "table", false);
+
+        $this->render("cart/side_cart.twig", compact("products", "priceTable"));
     }
     
     /**

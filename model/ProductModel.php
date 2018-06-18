@@ -436,27 +436,30 @@ class ProductModel {
         
         $prices["subtotaal"] = array_reduce($products,
             function($carry, $item){
-                $carry += floatval($item["prijs"]) * intval($item["aantal"]);
+                $carry += (floatval($item["prijs"]) / 121 * 100) * intval($item["aantal"]);
                 return $carry;
             }
         );
+        
+        $prices["BTW"] = $prices["subtotaal"] / 100 * 21;
+        $prices["inclusief BTW"] = $prices["subtotaal"] + $prices["BTW"];
 
         $prices["korting"] = array_reduce($products,
             function($carry, $item){
-                $carry += floatval(($item["prijs"] - $item["korting"])) * intval($item["aantal"]);
+
+                if(empty($item["korting"]))
+                    return $carry;
+
+                $carry += (floatval($item["prijs"]) - floatval($item["korting"])) * intval($item["aantal"]);
                 return $carry;
             }
         );
 
-        $prices["min korting"] = $prices["subtotaal"] - $prices["korting"];
-
-        $prices["exclusief BTW"] = $prices["min korting"]/ 121 * 100;
-        $prices["BTW"] = $prices["min korting"] / 121 * 21;
-        $prices["verzendkosten"] = 6.50 ;
-        $prices["totaal"] = $prices["min korting"] + $prices["verzendkosten"];
-
+        $prices["verzendkosten"] = 6.50;
+        $prices["totaal"] = $prices["inclusief BTW"] + $prices["verzendkosten"] - $prices["korting"];
+        
         if($format) {
-            foreach(["subtotaal", "exclusief BTW", "BTW", "verzendkosten", "totaal", "korting", "min korting"] as $key) {
+            foreach(["subtotaal", "inclusief BTW", "BTW", "verzendkosten", "korting", "totaal"] as $key) {
                 $prices[$key] = "€ " . number_format($prices[$key], 2, ",", ".");
             }
         }

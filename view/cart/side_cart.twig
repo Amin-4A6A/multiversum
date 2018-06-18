@@ -38,24 +38,7 @@
   
 
   </div>
- <table class="table">
-  <tr>
-    <th>Subtotaal</th>
-    <td>{{products['subtotaal']}}</td>
-  </tr>
-   <tr>
-    <th>exclusief btw</th>
-    <td>{{products['exclusief BTW']}}</td>
-  </tr>
-   <tr>
-    <th>verzendkosten</th>
-    <td>{{products['verzendkosten']}}</td>
-  </tr>
-   <tr>
-    <th>Totaal</th>
-    <td>{{products['totaal']}}</td>
-  </tr>
- </table>
-   <a  href="/betaal/formulier" class="btn btn-primary">betaal</a>
+  {{ priceTable|raw }}
+  <a href="/betaal/formulier" class="btn btn-primary">betaal</a>
 </div>
 

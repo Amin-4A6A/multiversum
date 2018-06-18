@@ -64,7 +64,7 @@ class ShoppingModel
         );
 
         $products["products"] = $this->product->applySymbols($products["products"]);
-
+        
         return $products;
 
     }
