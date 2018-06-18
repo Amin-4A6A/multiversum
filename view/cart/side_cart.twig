@@ -1,49 +1,48 @@
-
 <div class="card sticky-top mx-3" style="top: 5em;">
-  <h5 class="card-header">Winkelwagen</h5>
-  <div class="card-body">
-  {% for product in products["products"] %}
-  <div class="row">
-    <div class="col-md-3">
-      <img class="w-100 mb-auto d-block" src="/images/product/{{ product["path"] }}" alt="">
-    </div>
-    <div class="col-md-7">
-      <div class="row">
-        <div class="col-md-12">
-          <h5>{{ product["naam"] }}</h5>
-        </div>
-        <div class="col-md-12">
-          {# <small>{{ product["prijs"] }}</small> #}
-          <small>{{ not product["korting"] is empty ? product["korting"] : product["prijs"] }}</small>
-        </div>
-      </div>
-    </div>
-     <div class="col-md-2">
-        <a class="btn btn-danger" href="/cart/deletecart?ean={{ product["EAN"] }}"><i class='fa fa-trash-alt'></i></a>
-    </div>
-    
-  </div>
-  <div class="row">
-    <form action="/cart/updateCart" method="get">
-    <div class="form-group mx-auto my-3">
-    <div class="input-group">
-     <div class="input-group-prepend">
-    <a class="btn btn-primary" href="/cart/updateCart?ean={{ product["EAN"] }}&aantal={{ product["aantal"] - 1 }}"><i class="fas fa-minus"></i></a>
-  </div>
-  <input name="aantal" type="number" class="form-control" value="{{ product["aantal"] }}">
-  <input type="hidden" name="ean" value="{{ product["EAN"] }}">
-  <div class="input-group-append">
-    <a class="btn btn-secondary" href="/cart/updateCart?ean={{ product["EAN"] }}&aantal={{ product["aantal"] + 1 }}"><i class="fas fa-plus"></i></a>
-  </div>
-</div>
-    </div>
-    </form>
-  </div>
-  <hr>
-  {% endfor %}
- 
-  </div>
-  {{ priceTable|raw }}
-  <a href="/betaal/formulier" class="btn btn-primary">betaal</a>
+	<h5 class="card-header">Winkelwagen</h5>
+	<div class="card-body">
+	{% for product in products["products"] %}
+		<div class="row">
+			<div class="col-md-3">
+			<img class="w-100 mb-auto d-block" src="/images/product/{{ product["path"] }}" alt="">
+			</div>
+			<div class="col-md-7">
+			<div class="row">
+				<div class="col-md-12">
+				<h5>{{ product["naam"] }}</h5>
+				</div>
+				<div class="col-md-12">
+				{# <small>{{ product["prijs"] }}</small> #}
+				<small>{{ not product["korting"] is empty ? product["korting"] : product["prijs"] }}</small>
+				</div>
+			</div>
+			</div>
+			<div class="col-md-2">
+				<a class="btn btn-danger" href="/cart/deletecart?ean={{ product["EAN"] }}"><i class='fa fa-trash-alt'></i></a>
+			</div>
+			
+		</div>
+		<form action="/cart/updateCart" method="get">
+			<div class="form-group mt-3 mb-0">
+				<div class="input-group">
+				<div class="input-group-prepend">
+					<a class="btn btn-primary" href="/cart/updateCart?ean={{ product["EAN"] }}&aantal={{ product["aantal"] - 1 }}"><i class="fas fa-minus"></i></a>
+				</div>
+				<input name="aantal" type="number" class="form-control" value="{{ product["aantal"] }}">
+				<input type="hidden" name="ean" value="{{ product["EAN"] }}">
+				<div class="input-group-append">
+					<a class="btn btn-secondary" href="/cart/updateCart?ean={{ product["EAN"] }}&aantal={{ product["aantal"] + 1 }}"><i class="fas fa-plus"></i></a>
+				</div>
+				</div>
+			</div>
+		</form>
+		<hr>
+	{% endfor %}
+
+	</div>
+
+	{{ priceTable|raw }}
+
+	<a href="/betaal/formulier" class="btn btn-primary">betaal</a>
 </div>
 
