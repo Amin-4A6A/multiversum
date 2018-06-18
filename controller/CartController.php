@@ -39,6 +39,9 @@ class CartController extends Controller {
             case 'deletecart':
                 $this->collectDeleteCart();
                 break;
+            case 'updateCart':
+                $this->collectUpdateCart();
+                break;
             case 'cart':
             default:
                 $this->collectCart();
@@ -87,6 +90,29 @@ class CartController extends Controller {
         $this->redirect($_SERVER['HTTP_REFERER']);
       
     }
+
+    /**
+     * update product in shopingcart
+     *
+     * @return void
+     */
+    public function collectUpdateCart()
+    {
+        if (isset($_GET['ean'])) {
+            if (!isset($_GET['aantal'])) {
+                $amount = 1;
+            }else {
+                $amount= $_GET['aantal'];
+            }
+            
+            $this->cart->updateCartProduct($_GET['ean'], $amount);
+            
+            
+        }
+        $this->redirect($_SERVER['HTTP_REFERER']);
+      
+    }
+
     public function collectDeleteCart()
     {
         $this->cart->deleteCartProduct($_GET['ean']);

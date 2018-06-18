@@ -41,6 +41,12 @@ class ShoppingModel
 
     public function updateCartProduct($ean, $amount = 1)
     {
+        if($amount < 1) {
+            $this->deleteCartProduct($ean);
+            return;
+        }
+
+
         $this->cookieHandler->data[$ean] = $amount;
         $this->cookieHandler->saveCookie();
     }

@@ -24,15 +24,20 @@
     
   </div>
   <div class="row">
+    <form action="/cart/updateCart" method="get">
+    <div class="form-group mx-auto my-3">
     <div class="input-group">
      <div class="input-group-prepend">
-    <button class="btn btn-outline-secondary" type="button">-</button>
+    <a class="btn btn-primary" href="/cart/updateCart?ean={{ product["EAN"] }}&aantal={{ product["aantal"] - 1 }}"><i class="fas fa-minus"></i></a>
   </div>
-  <input type="text" class="form-control" value="{{ product["aantal"] }}" aria-label="Recipient's username" aria-describedby="basic-addon2">
+  <input name="aantal" type="number" class="form-control" value="{{ product["aantal"] }}">
+  <input type="hidden" name="ean" value="{{ product["EAN"] }}">
   <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button">+</button>
+    <a class="btn btn-secondary" href="/cart/updateCart?ean={{ product["EAN"] }}&aantal={{ product["aantal"] + 1 }}"><i class="fas fa-plus"></i></a>
   </div>
 </div>
+    </div>
+    </form>
   </div>
   <hr>
   {% endfor %}
