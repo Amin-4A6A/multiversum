@@ -86,5 +86,10 @@ class CartController extends Controller {
         $this->redirect($_SERVER['HTTP_REFERER']);
       
     }
+    public function collectDeleteCart()
+    {
+     
+      
+    }
 
 }
