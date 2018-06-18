@@ -42,7 +42,7 @@ class ShoppingModel
         $this->addToCart($ean, $amount);
         
     }
-    public function deleteCartProduct()
+    public function deleteCartProduct($ean)
     {
         unset($this->cookieHandler->data[$ean]);
         $this->cookieHandler->saveCookie();
