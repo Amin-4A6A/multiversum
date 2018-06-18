@@ -200,11 +200,8 @@ class BetaalController extends Controller {
             );
 
             foreach($cart["products"] as $product) {
-                $this->orderProducts->createOrderProduct($orderId, $product["EAN"], $product["amount"]);
+                $this->orderProducts->createOrderProduct($orderId, $product["EAN"], $product["aantal"]);
             }
-
-            // TODO: naar een soort overview pagina met betaal knop naar /betaal/bank?order=order_id
-            // $this->redirect("/betaal/bank?order=" . $orderId); // tijdelijk ding
 
             $this->redirect("/betaal/confirm?order=" . $orderId);
 

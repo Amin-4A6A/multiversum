@@ -48,6 +48,10 @@ class HTMLElements {
         $output = "<table class=\"$tableClass\">";
 
         foreach($array[0] ?? [] as $key => $value) {
+
+            if(empty($value))
+                continue;
+
             $output .= "
                 <tr>
                     <th>$key</th>

@@ -16,23 +16,27 @@ class CookieHandler
      */
     public $name;
     public $data = array();
+    public $time;
+    public $path;
 
-    public function __construct($name, $time)
+    public function __construct($name, $time, $path = "/")
     {
 
         $this->name = $name;
+        $this->time = time() + $time;
+        $this->path = $path;
 
         if (!isset($_COOKIE[$name])) {
-            setcookie($name, null, time() + $time);
+            setcookie($this->name, null, $this->time, $path, $this->path);
         } else {
-            $this->data = unserialize($_COOKIE[$name]);
+            $this->data = unserialize($_COOKIE[$this->name]);
         }
 
     }
     public function saveCookie()
     {
         // var_dump($this->data);
-        setcookie($this->name, serialize($this->data));
+        setcookie($this->name, serialize($this->data), $this->time, $this->path);
     }
 
     /**
@@ -41,7 +45,7 @@ class CookieHandler
      * @return bool if it will delete
      */
     public function deleteCookie() {
-        return setcookie($this->name, "", time()-3600);
+        return setcookie($this->name, "", time()-3600, $this->path);
     }
 
 }

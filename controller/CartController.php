@@ -78,10 +78,10 @@ class CartController extends Controller {
     public function collectAddToCart()
     {
         if (isset($_GET['ean'])) {
-            if (!isset($_GET['amount'])) {
+            if (!isset($_GET['aantal'])) {
                $amount = 1;
             }else {
-                $amount= $_GET['amount'];
+                $amount= $_GET['aantal'];
             }
             
             $this->cart->addToCart($_GET['ean'], $amount);

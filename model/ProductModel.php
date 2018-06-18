@@ -460,6 +460,9 @@ class ProductModel {
         
         if($format) {
             foreach(["subtotaal", "inclusief BTW", "BTW", "verzendkosten", "korting", "totaal"] as $key) {
+                if(empty($prices[$key])) {
+                    continue;
+                }
                 $prices[$key] = "€ " . number_format($prices[$key], 2, ",", ".");
             }
         }
