@@ -94,6 +94,7 @@ class CartController extends Controller {
     public function collectDeleteCart()
     {
         $this->cart->deleteCartProduct($_GET['ean']);
+        $this->redirect($_SERVER['HTTP_REFERER']);
       
     }
 
