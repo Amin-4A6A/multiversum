@@ -36,10 +36,15 @@ class CartController extends Controller {
             case 'addtocart':
                 $this->collectAddToCart();
                 break;
-
+            case 'deletecart':
+                $this->collectDeleteCart();
+                break;
             case 'cart':
             default:
                 $this->collectCart();
+                break;
+           
+                
 
                 
         }
@@ -88,7 +93,7 @@ class CartController extends Controller {
     }
     public function collectDeleteCart()
     {
-     
+        $this->cart->deleteCartProduct($_GET['ean']);
       
     }
 
