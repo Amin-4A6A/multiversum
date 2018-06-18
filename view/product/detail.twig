@@ -50,8 +50,8 @@
                 <form class="form mb-4" action="/cart/addtocart" method="GET">
                     <div>
                     <label class="form-control-label mt-4" for="">Aantal</label>
-                    <input name="count" value="{{ product["EAN"] }}" type="hidden" min="0" max="99">
-                    <input name="count" value="" type="number" min="0" max="99">
+                    <input name="ean" value="{{ product["EAN"] }}" type="hidden" min="0" max="99">
+                    <input name="aantal" value="1" type="number" min="0" max="99">
                   </div>
 
                     <div class="mt-2">

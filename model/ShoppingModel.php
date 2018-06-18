@@ -31,22 +31,26 @@ class ShoppingModel
         $this->cookieHandler = new CookieHandler("shoppingCart", (24 * 60 * 60 * 2));
         $this->product = new ProductModel();
     }
+
     public function addToCart($ean, $amount = 1)
     {
-        $this->cookieHandler->data[$ean] = $amount;
+        $this->cookieHandler->data[$ean] += $amount;
         $this->cookieHandler->saveCookie();
 
     }
-    public function updateCartProduct($ean, $amount = 2)
+
+    public function updateCartProduct($ean, $amount = 1)
     {
-        $this->addToCart($ean, $amount);
-        
+        $this->cookieHandler->data[$ean] = $amount;
+        $this->cookieHandler->saveCookie();
     }
+
     public function deleteCartProduct($ean)
     {
         unset($this->cookieHandler->data[$ean]);
         $this->cookieHandler->saveCookie();
     }
+    
     public function readCart() {
 
         $products = [
