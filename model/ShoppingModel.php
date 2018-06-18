@@ -22,7 +22,8 @@ class ShoppingModel
      * @var CookieHandler the name of the cookie .
      * @access public
      */
-    public $cookieHandler;
+
+    public $cookieHandler; /* deze is leeg*/
 
     public function __construct()
     {
@@ -58,13 +59,12 @@ class ShoppingModel
         }
         $products["subtotaal"] = array_reduce($products["products"],
             function($carry, $item){
-                $carry += floatval(if (empty($item["prijs"])){}else{$item["korting"]}) * intval($item["amount"]);
+                $carry += floatval($item["prijs"]) * intval($item["amount"]);
                 return $carry;
 
             }
-           
         );
-        $products["exBTW"] = $products["subtotaal"]/ 121 * 100;
+        $products["exBTW"] = round(($products["subtotaal"]/ 121 * 100),2);
         $products["verzendkosten"] = 6.50 ;
         $products["totaal"] = $products["subtotaal"] + $products["verzendkosten"];
         $products["products"] = $this->product->applySymbols($products["products"]);
