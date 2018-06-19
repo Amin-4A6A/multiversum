@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.1
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jun 10, 2018 at 07:46 PM
--- Server version: 10.1.33-MariaDB
--- PHP Version: 7.2.6
+-- Host: 127.0.0.1
+-- Generation Time: Jun 19, 2018 at 09:18 AM
+-- Server version: 10.1.29-MariaDB
+-- PHP Version: 7.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -95,7 +95,6 @@ INSERT INTO `image` (`id`, `path`, `product_EAN`) VALUES
 (80, '5b16b0dbf365b.jpeg', '4718487692866'),
 (81, '5b16b0dbf4089.jpeg', '4718487692866'),
 (82, '5b16b2a09de19.png', '0841698100029'),
-(83, '5b16b33a7e68f.png', '0187774000891'),
 (84, '5b16b33a7f021.png', '0187774000891'),
 (85, '5b16b47759b89.png', '8713439213225'),
 (86, '5b16b4775a926.png', '8713439213225'),
@@ -128,7 +127,11 @@ INSERT INTO `image` (`id`, `path`, `product_EAN`) VALUES
 (119, '5b1c4751ec8bb.png', '8917164709174'),
 (120, '5b1c4751ecb45.png', '8917164709174'),
 (121, '5b1c4751ecb78.png', '8917164709174'),
-(123, '5b1c4751ecbd7.png', '8917164709174');
+(123, '5b1c4751ecbd7.png', '8917164709174'),
+(124, '5b28ad3daec3c.png', '0187774000891'),
+(125, '5b28adf359274.png', '3760071190020'),
+(126, '5b28adf35980a.png', '3760071190020'),
+(127, '5b28adf359c5d.jpeg', '3760071190020');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
