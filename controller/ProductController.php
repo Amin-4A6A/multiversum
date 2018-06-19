@@ -233,6 +233,11 @@ class ProductController extends Controller {
 
     }
 
+    /**
+     * the delete product method
+     *
+     * @return void
+     */
     public function collectDeleteProduct() {
 
         $this->requireLogin();
@@ -247,6 +252,11 @@ class ProductController extends Controller {
 
     }
 
+    /**
+     * the admin page method
+     *
+     * @return void
+     */
     public function collectAdminProduct() {
 
         $this->requireLogin();
