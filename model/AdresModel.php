@@ -68,6 +68,8 @@ class AdresModel {
             $geslacht = 0;
         }
 
+        $postcode = str_replace(" ", "", $postcode);
+
         return $this->dataHandler->createData(
             "INSERT INTO `adres`(`straat`, `huisnummer`, `toevoeging`, `postcode`, `land`, `stad`, `voornaam`, `tussenvoegsel`, `achternaam`, `geslacht`) VALUES (:straat, :huisnummer, :toevoeging, :postcode, :land, :stad, :voornaam, :tussenvoegsel, :achternaam, :geslacht)",
             [

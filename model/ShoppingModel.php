@@ -57,7 +57,7 @@ class ShoppingModel
         $this->cookieHandler->saveCookie();
     }
     
-    public function readCart() {
+    public function readCart($format = true) {
 
         $products = [
             "products" => [],
@@ -70,7 +70,7 @@ class ShoppingModel
         
         $products = array_merge(
             $products,
-            $this->product->getPrice($products["products"])
+            $this->product->getPrice($products["products"], $format)
         );
 
         $products["products"] = $this->product->applySymbols($products["products"]);

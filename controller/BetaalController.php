@@ -189,7 +189,7 @@ class BetaalController extends Controller {
                 $bezorgAdres = $betaalAdres;
             }
 
-            $cart = $this->cart->readCart();
+            $cart = $this->cart->readCart(false);
 
             $orderId = $this->order->createOrder(
                 $cart["totaal"],

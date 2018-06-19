@@ -19,7 +19,7 @@
         </div>
 
 
-        {% if not order["betaaladres"]["id"] == order["bezorgadres"]["id"] %}
+        {% if order["betaaladres"]["id"] != order["bezorgadres"]["id"] %}
             <div class="col-12 my-4">
             
                 <h2>Bezorgadres:</h2>
@@ -52,9 +52,15 @@
                                         <th>Prijs: </th>
                                         <td>€ {{ product["prijs"]|number_format(2, ",", ".") }}</td>
                                     </tr>
+                                    {% if product["korting"] is not empty %}
+                                        <tr>
+                                            <th>Korting: </th>
+                                            <td>€ {{ product["korting"]|number_format(2, ",", ".") }}</td>
+                                        </tr>
+                                    {% endif %}
                                     <tr>
                                         <th>Totaal: </th>
-                                        <td>€ {{ (product["prijs"] * product["aantal"])|number_format(2, ",", ".") }}</td>
+                                        <td>€ {{ ((product["prijs"] - product["korting"]) * product["aantal"])|number_format(2, ",", ".") }}</td>
                                     </tr>
                                 </table>
                             </div>
