@@ -228,7 +228,7 @@ class BetaalController extends Controller {
 
         $betaaladresArray = [
             "Naam: " => $order["betaaladres"]["voornaam"] . " " . $order["betaaladres"]["tussenvoegsel"] . " " . $order["betaaladres"]["achternaam"],
-            "Stad: " => $order["betaaladres"]["stad"],
+            "Woonplaats: " => $order["betaaladres"]["stad"],
             "Straat: " => $order["betaaladres"]["straat"],
             "Huisnummer: " => $order["betaaladres"]["huisnummer"] . $order["betaaladres"]["toevoeging"],
             "Postcode: " => $order["betaaladres"]["postcode"],
@@ -239,7 +239,7 @@ class BetaalController extends Controller {
         } else {
             $bezorgadresArray = [
                 "Naam: " => $order["bezorgadres"]["voornaam"] . " " . $order["bezorgadres"]["tussenvoegsel"] . " " . $order["bezorgadres"]["achternaam"],
-                "Stad: " => $order["bezorgadres"]["stad"],
+                "Woonplaats: " => $order["bezorgadres"]["stad"],
                 "Straat: " => $order["bezorgadres"]["straat"],
                 "Huisnummer: " => $order["bezorgadres"]["huisnummer"] . $order["bezorgadres"]["toevoeging"],
                 "Postcode: " => $order["bezorgadres"]["postcode"],
