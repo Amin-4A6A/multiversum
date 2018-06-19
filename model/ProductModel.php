@@ -277,7 +277,7 @@ class ProductModel {
      */
     public function searchProductsOneImage(string $query, int $pagination) {
         return $this->dataHandler->readData(
-            "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` WHERE `product`.`ean` LIKE :q OR `product`.`beschrijving` LIKE :q OR `product`.`naam` LIKE :q OR `product`.`merk` LIKE :q GROUP BY `product`.`EAN` ORDER BY `product`.`korting` DESC",
+            "SELECT * FROM `product` LEFT JOIN `image` ON `product`.`EAN` = `image`.`product_EAN` WHERE `product`.`ean` LIKE :q OR `product`.`beschrijving` LIKE :q OR `product`.`naam` LIKE :q OR `product`.`merk` LIKE :q OR CONCAT(`product`.`merk`, \" \", `product`.`naam`) LIKE :q GROUP BY `product`.`EAN` ORDER BY `product`.`korting` DESC",
             [":q" => "%$query%"],
             true,
             $pagination
