@@ -79,14 +79,8 @@ class ProductController extends Controller {
             case "read":
                 $this->collectReadProduct();
                 break;
-            case 'detail':
-                $this->render("product/detail.twig");
-                break;
-            case 'cart':
-                $this->render("partials/side_cart.twig");
-                break;
             case 'contact':
-                $this->render("contact.twig");
+                $this->collectContact();
                 break;
             case 'overview':
                 $this->collectOverviewProduct();
@@ -100,6 +94,15 @@ class ProductController extends Controller {
                 break;
         }
 
+    }
+
+    /**
+     * the contact page method
+     *
+     * @return void
+     */
+    public function collectContact() {
+        $this->render("contact.twig");
     }
 
     /**
