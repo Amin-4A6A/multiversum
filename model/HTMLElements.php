@@ -112,40 +112,6 @@ class HTMLElements {
         return $output;
     }
 
-    public static function tableSpec($array) {
-
-        $array = ArrayHelper::to2DArray($array);
-
-        $table = "";
-        $table .= "<div class='row'>";
-
-      $table .= "<div class='spec-card mt-5'>
-            <div class='card mt-5>
-        <div class='card-header'>
-          <!-- Specificaties : -->
-            <h4>  Specificaties :</h4>
-        </div>
-        <div class='card-body'>
-
-
-            <table class='table'>";
-              foreach ($array[0] ?? [] as $k => $v) {
-              $table .= "<tr>
-                <th>$k</th>
-                <td>$v</td>
-              </tr>";
-            }
-      $table .= "
-            </table>
-
-            </div>
-          </div>
-          </div>";
-      $table .= "</div>";
-
-      return $table;
-    }
-
 
     /**
      * checks if array is an associative array
