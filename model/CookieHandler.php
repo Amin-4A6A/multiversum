@@ -1,7 +1,7 @@
 <?php
 
 /**
- * The model of schoppingCart
+ * The cookiehandler used to store information in
  *
  * @category   Model
  * @author     Leon in 't Veld <leon3110l@gmail.com>
@@ -19,6 +19,14 @@ class CookieHandler
     public $time;
     public $path;
 
+     /**
+     * constructor for the cookiehandler
+     *
+     * @param string $name the name of  the cookie
+     * @param int $time how long the cookie wil exist
+     * @param string $path the path of the cookie
+     */
+
     public function __construct($name, $time, $path = "/")
     {
 
@@ -33,6 +41,12 @@ class CookieHandler
         }
 
     }
+
+    /**
+     * an function that saves cookies\\
+     *
+     * @return void
+     */
     public function saveCookie()
     {
         // var_dump($this->data);

@@ -39,6 +39,13 @@ class ShoppingModel
 
     }
 
+    /**
+     * update the product in the cart
+     *
+     * @param string $ean
+     * @param integer $amount
+     * @return void
+     */
     public function updateCartProduct($ean, $amount = 1)
     {
         if($amount < 1) {
@@ -50,7 +57,12 @@ class ShoppingModel
         $this->cookieHandler->data[$ean] = $amount;
         $this->cookieHandler->saveCookie();
     }
-
+    /**
+     * delete the product in the cart
+     *
+     * @param string $ean
+     * @return void
+     */
     public function deleteCartProduct($ean)
     {
         unset($this->cookieHandler->data[$ean]);
