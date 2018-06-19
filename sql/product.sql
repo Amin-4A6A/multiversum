@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.1
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jun 10, 2018 at 07:46 PM
--- Server version: 10.1.33-MariaDB
--- PHP Version: 7.2.6
+-- Host: 127.0.0.1
+-- Generation Time: Jun 19, 2018 at 09:18 AM
+-- Server version: 10.1.29-MariaDB
+-- PHP Version: 7.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 --
 
 INSERT INTO `product` (`EAN`, `naam`, `prijs`, `beschrijving`, `merk`, `resolutie`, `refresh rate`, `gezichtsveld`, `aansluitingen`, `accessoires`, `accelerometer`, `camera`, `gyroscoop`, `verstelbare lenzen`, `magnetometer`, `koptelefoon`, `microfoon`, `kleur`, `platform`, `korting`) VALUES
-('0187774000891', 'iWear Video Headphones ', '277.44', '', 'Vuzix', '1280x720', 60, 55, 'HDMI, USB 2.0', 'Kabels', 1, 0, 1, 0, 1, 1, 1, 'Zwart', 'PC, PlayStation 4, Smartphone, Xbox One', NULL),
+('0187774000891', 'iWear Video Headphones ', '277.44', '', 'Vuzix', '1280x720', 60, 55, '', '', 1, 0, 1, 0, 1, 1, 1, 'Zwart', 'PC, PlayStation 4, Smartphone, Xbox One', NULL),
 ('0191999086226', 'Explorer Headset', '456.55', '', 'Lenovo', '2880x1440', 90, 110, 'USB 3.0', '', 1, 1, 1, 0, 1, 0, 0, 'Zwart', 'PC', NULL),
 ('0192018001602', 'Windows Mixed Reality headset', '399.00', '', 'HP', '2880x1440', 90, 95, '3.5mm, HDMI, USB 3.0', 'Controller(s), Headset bedraad, Kabels', 1, 1, 1, 0, 0, 0, 0, 'Zwart', 'PC', NULL),
 ('0471848768757', 'Vive', '599.00', '', 'HTC', '2160x1200', 90, 110, 'HDMI, USB 2.0, USB 3.0', 'Controller(s), Headset bedraad, Kabels', 1, 1, 1, 1, 0, 0, 0, 'Zwart', 'PC', NULL),
@@ -38,7 +38,7 @@ INSERT INTO `product` (`EAN`, `naam`, `prijs`, `beschrijving`, `merk`, `resoluti
 ('0815820020103', 'Rift Bundle (Rift + Touch)', '449.00', '', 'Oculus', '2160x1200', 90, 110, 'HDMI, USB 2.0, 3x USB 3.0', 'Afstandbediening, Controller(s)', 1, 0, 1, 0, 1, 1, 0, 'Zilver', 'PC', NULL),
 ('0841698100029', 'Glyph', '296.00', '', 'Avegant', '1280x720', 120, 40, 'HDMI', '	Koptelefoon, Verstelbare lenzen', 0, 0, 0, 1, 0, 1, 0, 'Wit', '', NULL),
 ('0884116285380', 'Visor + ViIsor controllers ', '364.33', '	Windows Mixed Reality headset\r\nTe bedienen met: Motion controllers, Xbox-controller, Toetsenbord en muis, Cortana Voice.\r\n\r\nInclusief 2x Dell Visor controllers.', 'Dell', '2880x1440', 90, 110, '3.5mm, HDMI, USB 3.0', '	Headset bedraad', 1, 1, 1, 0, 1, 0, 0, '', 'PC', NULL),
-('3760071190020', 'Smartphone Virtual Reality Headset', '35.00', '	Inclusief: 1 paar lenzen, 3 paar lenshouders, opbergtas, hoofdband', 'Homido', NULL, NULL, NULL, '', '1 paar lenzen, 3 paar lenshouders, opbergtas, hoofdband', 1, 0, 1, 1, 0, 0, 0, 'Zwart', 'Smartphone', NULL),
+('3760071190020', 'Smartphone Virtual Reality Headset', '35.00', 'Inclusief: 1 paar lenzen, 3 paar lenshouders, opbergtas, hoofdband', 'Homido', NULL, NULL, NULL, '', '', 1, 0, 1, 1, 0, 0, 0, 'Zwart', 'Smartphone', NULL),
 ('4015625616662', 'Erazer X1000 Mixed Reality Headset', '449.00', '', 'Medion', '2880x1440', 90, 110, '3.5mm, HDMI, USB 2.0', 'Controller(s), Headset bedraad', 1, 1, 1, 0, 0, 0, 1, 'Blauw, Zwart', 'PC', NULL),
 ('4047865190398', 'Zeiss VR One Plus', '56.82', '	Smartphones with display size between 4.7 and 5.5 inches except LG G4 and SONY XPERIA Z5 Premium', 'Carl Zeiss', NULL, NULL, 100, '', '', 0, 0, 0, 1, 0, 0, 0, 'Wit', 'Smartphone', NULL),
 ('4713883398558', 'Mixed Reality Headset', '389.69', '', 'Acer', '2880x1440', 90, 100, 'HDMI, USB 3.0', 'Controller(s), Headset bedraad', 1, 1, 1, 0, 0, 0, 0, 'Blauw', 'PC', NULL),
