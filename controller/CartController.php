@@ -112,7 +112,11 @@ class CartController extends Controller {
         $this->redirect($_SERVER['HTTP_REFERER']);
       
     }
-
+/**
+ * deletes products from shopping cart
+ *
+ * @return void
+ */
     public function collectDeleteCart()
     {
         $this->cart->deleteCartProduct($_GET['ean']);

@@ -31,7 +31,13 @@ class ShoppingModel
         $this->cookieHandler = new CookieHandler("shoppingCart", (24 * 60 * 60 * 2));
         $this->product = new ProductModel();
     }
-
+/**
+ * function that adds a product to the cart
+ *
+ * @param string $ean
+ * @param integer $amount
+ * @return void
+ */
     public function addToCart($ean, $amount = 1)
     {
         $this->cookieHandler->data[$ean] += $amount;
@@ -68,7 +74,12 @@ class ShoppingModel
         unset($this->cookieHandler->data[$ean]);
         $this->cookieHandler->saveCookie();
     }
-    
+    /**
+     * an function that returns all prduducts in the shopping cart
+     *
+     * @param boolean $format
+     * @return array $products
+     */
     public function readCart($format = true) {
 
         $products = [
