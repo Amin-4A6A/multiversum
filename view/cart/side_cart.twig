@@ -46,6 +46,6 @@
 
 	{{ priceTable|raw }}
 
-	<a href="/betaal/formulier" class="btn btn-primary">betaal</a>
+	<a href="/betaal/formulier" class="btn btn-primary {{ products["products"]|length > 0 ? "" : "disabled" }}">betaal</a>
 </div>
 
