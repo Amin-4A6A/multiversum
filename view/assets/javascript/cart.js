@@ -16,6 +16,13 @@ const clickEvent = url => e => {
 		.then(res => {
 			if(res.status == 200) {
 				updateCart();
+				document.getElementById('alert-box').innerHTML =
+				`<div class='alert alert-primary alert-dismissible fade show fixed-top' style='top: 3.3em' role='alert'>
+				<strong>U heeft een product toegevoegd!</strong>
+					<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+					<span aria-hidden='true'>&times;</span>
+				</button>
+				</div>`
 			}
 		})
 	return false;
@@ -39,6 +46,7 @@ function updateCart() {
 		.then(res => res.text())
 		.then(res => {
 			document.getElementById('cart-col').innerHTML = res;
+			
 			addBindings();
 		});
 }
