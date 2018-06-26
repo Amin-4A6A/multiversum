@@ -76,6 +76,9 @@ class ProductController extends Controller {
             case "delete":
                 $this->collectDeleteProduct();
                 break;
+            case "deleteImage":
+                $this->collectDeleteImage();
+                break;
             case "read":
                 $this->collectReadProduct();
                 break;
@@ -162,14 +165,24 @@ class ProductController extends Controller {
 
             $this->image->createImagesUpload($_FILES["product_images"], $_POST["EAN"]);
 
-            foreach ($_POST["delete_image"] as $key => $value) {
-                $this->image->deleteImage($key);
-            }
+            // foreach ($_POST["delete_image"] as $key => $value) {
+            //     $this->image->deleteImage($key);
+            // }
 
             $this->redirect("/product/" . $_POST["EAN"]);
 
         }
 
+    }
+
+    public function collectDeleteImage() {
+
+        $this->requireLogin();
+
+        if(!isset($_GET["image"]))
+            $this->redirect("/product/admin");
+
+        $this->image->deleteImage($_GET["image"]);
     }
 
     /**

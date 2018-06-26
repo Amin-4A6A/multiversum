@@ -1,4 +1,4 @@
-{% extends "layout/app.twig" %}
+{% extends "layout/no_cart.twig" %}
 
 {% block content %}
     <h1 class="mb-5">Product {{ update ? "wijzigen" : "toevoegen" }}</h1>
@@ -127,15 +127,18 @@
         </div>
 
         {% if images|length > 0 %}
-        <small class="form-text text-muted">Check om te verwijderen</small>
+        {# <small class="form-text text-muted">Check om te verwijderen</small> #}
         <div class="form-group border rounded p-3">
             <div class="form-row">
                 {% for image in images %}
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 my-3">
                     
-                        <input type="checkbox" id="image_delete_{{ image["id"] }}" name="delete_image[{{ image["id"] }}]">
-
-                        <label for="image_delete_{{ image["id"] }}"><img class="img-fluid img-thumbnail" src="/images/product/{{ image["path"] }}" alt=""></label>
+                        <div class="d-inline-block position-relative">
+                            <a href="/product/deleteImage?image={{ image["id"] }}" class="btn btn-danger position-absolute remove-image-button rounded-circle" style="right: -1em; top: -1em;">
+                                <i class="fas fa-times"></i>
+                            </a>
+                            <img class="img-fluid img-thumbnail" src="/images/product/{{ image["path"] }}" alt="">
+                        </div>
 
                     </div>
                 {% endfor %}

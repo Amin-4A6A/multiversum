@@ -140,8 +140,6 @@ class ImageModel {
 
         $image = $this->readImage($id);
 
-        var_dump($image);
-
         if($this->fileHandler->deleteFile($image["path"])) {
             return $this->dataHandler->deleteData(
                 "DELETE FROM `image` WHERE id = :id",
