@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 const clickEvent = url => e => {
 	e.preventDefault();
 
@@ -16,26 +18,28 @@ const clickEvent = url => e => {
 		.then(res => {
 			if(res.status == 200) {
 				updateCart();
-				document.getElementById('alert-box').innerHTML =
-				`<div class='alert alert-primary alert-dismissible fade show fixed-top' style='top: 3.3em' role='alert'>
-				<strong>U heeft een product toegevoegd!</strong>
-					<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-					<span aria-hidden='true'>&times;</span>
-				</button>
-				</div>`
 			}
 		})
 	return false;
+};
+
+const showAlert = e => {
+	$("#alert-box").addClass("show");
+	setTimeout(() => {
+		$("#alert-box").removeClass("show");
+	}, 4000);
 };
 
 if (document.getElementById('cart-col')) {
 
 	document.querySelectorAll("a[href^=\"/cart\"]").forEach(x => {
 		x.addEventListener("click", clickEvent(x.href));
+		x.addEventListener("click", showAlert);
 	});
 
 	document.querySelectorAll("form[action^=\"/cart\"]").forEach(x => {
 		x.addEventListener("submit", clickEvent());
+		x.addEventListener("submit", showAlert);
 	});
 
 	updateCart();
